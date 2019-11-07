@@ -1,0 +1,1387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BandItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Applications">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BandID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Sent" Type="datetime" Nullable="false" />
+          <Property Name="Message" Type="text" Nullable="false" />
+          <Property Name="Result" Type="bit" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BandGenres">
+          <Key>
+            <PropertyRef Name="BandID" />
+            <PropertyRef Name="GenreID" />
+          </Key>
+          <Property Name="BandID" Type="int" Nullable="false" />
+          <Property Name="GenreID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BandMessages">
+          <Key>
+            <PropertyRef Name="BandID" />
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="BandID" Type="int" Nullable="false" />
+          <Property Name="MessageID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bands">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="225" />
+          <Property Name="Latitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="ProfilePicture" Type="varchar" MaxLength="225" />
+          <Property Name="InviteMessage" Type="text" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BandUsers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermisionID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="BandID" Type="int" />
+        </EntityType>
+        <EntityType Name="BandUserSkills">
+          <Key>
+            <PropertyRef Name="BandUserID" />
+            <PropertyRef Name="SkillID" />
+          </Key>
+          <Property Name="BandUserID" Type="int" Nullable="false" />
+          <Property Name="SkillID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Blocks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlockerID" Type="int" Nullable="false" />
+          <Property Name="ReceiverID" Type="int" Nullable="false" />
+          <Property Name="Blocked" Type="datetime" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Files">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Invites">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BandID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Sent" Type="datetime" Nullable="false" />
+          <Property Name="Result" Type="bit" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderID" Type="int" Nullable="false" />
+          <Property Name="Sent" Type="datetime" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BandID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="Sent" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NotificationTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Message" Type="text" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Permissions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="225" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProfileFiles">
+          <Key>
+            <PropertyRef Name="ProfileID" />
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="ProfileID" Type="int" Nullable="false" />
+          <Property Name="FileID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profiles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="225" />
+          <Property Name="LastName" Type="varchar" MaxLength="225" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="Latitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="ProfilePicture" Type="varchar" MaxLength="225" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProfileSkills">
+          <Key>
+            <PropertyRef Name="ProfileID" />
+            <PropertyRef Name="SkillID" />
+          </Key>
+          <Property Name="ProfileID" Type="int" Nullable="false" />
+          <Property Name="SkillID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserMessages">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="MessageID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Salt" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Applicati__BandI__5F141958">
+          <End Role="Bands" Type="Self.Bands" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Applicati__UserI__60083D91">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandGenre__BandI__5B438874">
+          <End Role="Bands" Type="Self.Bands" Multiplicity="1" />
+          <End Role="BandGenres" Type="Self.BandGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandGenres">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandGenre__Genre__5C37ACAD">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="BandGenres" Type="Self.BandGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandGenres">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandMessa__BandI__4EDDB18F">
+          <End Role="Bands" Type="Self.Bands" Multiplicity="1" />
+          <End Role="BandMessages" Type="Self.BandMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandMessages">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandMessa__Messa__4FD1D5C8">
+          <End Role="Messages" Type="Self.Messages" Multiplicity="1" />
+          <End Role="BandMessages" Type="Self.BandMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandMessages">
+              <PropertyRef Name="MessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandUsers__BandI__3F9B6DFF">
+          <End Role="Bands" Type="Self.Bands" Multiplicity="0..1" />
+          <End Role="BandUsers" Type="Self.BandUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandUsers">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandUserS__BandU__731B1205">
+          <End Role="BandUsers" Type="Self.BandUsers" Multiplicity="1" />
+          <End Role="BandUserSkills" Type="Self.BandUserSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BandUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandUserSkills">
+              <PropertyRef Name="BandUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandUsers__Permi__3DB3258D">
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="0..1" />
+          <End Role="BandUsers" Type="Self.BandUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandUsers">
+              <PropertyRef Name="PermisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandUserS__Skill__740F363E">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="BandUserSkills" Type="Self.BandUserSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandUserSkills">
+              <PropertyRef Name="SkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandUsers__UserI__3EA749C6">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="BandUsers" Type="Self.BandUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandUsers">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Blocks__BlockerI__4460231C">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Blocks" Type="Self.Blocks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Blocks">
+              <PropertyRef Name="BlockerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Blocks__Receiver__45544755">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Blocks" Type="Self.Blocks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Blocks">
+              <PropertyRef Name="ReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invites__BandID__62E4AA3C">
+          <End Role="Bands" Type="Self.Bands" Multiplicity="1" />
+          <End Role="Invites" Type="Self.Invites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Invites">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invites__UserID__63D8CE75">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Invites" Type="Self.Invites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Invites">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__Sender__4830B400">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notificat__BandI__689D8392">
+          <End Role="Bands" Type="Self.Bands" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notificat__TypeI__6A85CC04">
+          <End Role="NotificationTypes" Type="Self.NotificationTypes" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notificat__UserI__6991A7CB">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permissio__UserI__3AD6B8E2">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Permissions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProfileFi__FileI__567ED357">
+          <End Role="Files" Type="Self.Files" Multiplicity="1" />
+          <End Role="ProfileFiles" Type="Self.ProfileFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProfileFiles">
+              <PropertyRef Name="FileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProfileFi__Profi__558AAF1E">
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="1" />
+          <End Role="ProfileFiles" Type="Self.ProfileFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profiles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProfileFiles">
+              <PropertyRef Name="ProfileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profiles__UserID__52AE4273">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Profiles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProfileSk__Profi__6F4A8121">
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="1" />
+          <End Role="ProfileSkills" Type="Self.ProfileSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profiles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProfileSkills">
+              <PropertyRef Name="ProfileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProfileSk__Skill__703EA55A">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="ProfileSkills" Type="Self.ProfileSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProfileSkills">
+              <PropertyRef Name="SkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserMessa__Messa__4C0144E4">
+          <End Role="Messages" Type="Self.Messages" Multiplicity="1" />
+          <End Role="UserMessages" Type="Self.UserMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserMessages">
+              <PropertyRef Name="MessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserMessa__UserI__4B0D20AB">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserMessages" Type="Self.UserMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserMessages">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BandItModelStoreContainer">
+          <EntitySet Name="Applications" EntityType="Self.Applications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BandGenres" EntityType="Self.BandGenres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BandMessages" EntityType="Self.BandMessages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bands" EntityType="Self.Bands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BandUsers" EntityType="Self.BandUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BandUserSkills" EntityType="Self.BandUserSkills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Blocks" EntityType="Self.Blocks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invites" EntityType="Self.Invites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationTypes" EntityType="Self.NotificationTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permissions" EntityType="Self.Permissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProfileFiles" EntityType="Self.ProfileFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProfileSkills" EntityType="Self.ProfileSkills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMessages" EntityType="Self.UserMessages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Applicati__BandI__5F141958" Association="Self.FK__Applicati__BandI__5F141958">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Applicati__UserI__60083D91" Association="Self.FK__Applicati__UserI__60083D91">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandGenre__BandI__5B438874" Association="Self.FK__BandGenre__BandI__5B438874">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="BandGenres" EntitySet="BandGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandGenre__Genre__5C37ACAD" Association="Self.FK__BandGenre__Genre__5C37ACAD">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="BandGenres" EntitySet="BandGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandMessa__BandI__4EDDB18F" Association="Self.FK__BandMessa__BandI__4EDDB18F">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="BandMessages" EntitySet="BandMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandMessa__Messa__4FD1D5C8" Association="Self.FK__BandMessa__Messa__4FD1D5C8">
+            <End Role="Messages" EntitySet="Messages" />
+            <End Role="BandMessages" EntitySet="BandMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandUsers__BandI__3F9B6DFF" Association="Self.FK__BandUsers__BandI__3F9B6DFF">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="BandUsers" EntitySet="BandUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandUserS__BandU__731B1205" Association="Self.FK__BandUserS__BandU__731B1205">
+            <End Role="BandUsers" EntitySet="BandUsers" />
+            <End Role="BandUserSkills" EntitySet="BandUserSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandUsers__Permi__3DB3258D" Association="Self.FK__BandUsers__Permi__3DB3258D">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="BandUsers" EntitySet="BandUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandUserS__Skill__740F363E" Association="Self.FK__BandUserS__Skill__740F363E">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="BandUserSkills" EntitySet="BandUserSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandUsers__UserI__3EA749C6" Association="Self.FK__BandUsers__UserI__3EA749C6">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BandUsers" EntitySet="BandUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Blocks__BlockerI__4460231C" Association="Self.FK__Blocks__BlockerI__4460231C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Blocks" EntitySet="Blocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Blocks__Receiver__45544755" Association="Self.FK__Blocks__Receiver__45544755">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Blocks" EntitySet="Blocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invites__BandID__62E4AA3C" Association="Self.FK__Invites__BandID__62E4AA3C">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="Invites" EntitySet="Invites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invites__UserID__63D8CE75" Association="Self.FK__Invites__UserID__63D8CE75">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Invites" EntitySet="Invites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__Sender__4830B400" Association="Self.FK__Messages__Sender__4830B400">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__BandI__689D8392" Association="Self.FK__Notificat__BandI__689D8392">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__TypeI__6A85CC04" Association="Self.FK__Notificat__TypeI__6A85CC04">
+            <End Role="NotificationTypes" EntitySet="NotificationTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__UserI__6991A7CB" Association="Self.FK__Notificat__UserI__6991A7CB">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permissio__UserI__3AD6B8E2" Association="Self.FK__Permissio__UserI__3AD6B8E2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Permissions" EntitySet="Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProfileFi__FileI__567ED357" Association="Self.FK__ProfileFi__FileI__567ED357">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="ProfileFiles" EntitySet="ProfileFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProfileFi__Profi__558AAF1E" Association="Self.FK__ProfileFi__Profi__558AAF1E">
+            <End Role="Profiles" EntitySet="Profiles" />
+            <End Role="ProfileFiles" EntitySet="ProfileFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profiles__UserID__52AE4273" Association="Self.FK__Profiles__UserID__52AE4273">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Profiles" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProfileSk__Profi__6F4A8121" Association="Self.FK__ProfileSk__Profi__6F4A8121">
+            <End Role="Profiles" EntitySet="Profiles" />
+            <End Role="ProfileSkills" EntitySet="ProfileSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProfileSk__Skill__703EA55A" Association="Self.FK__ProfileSk__Skill__703EA55A">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="ProfileSkills" EntitySet="ProfileSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserMessa__Messa__4C0144E4" Association="Self.FK__UserMessa__Messa__4C0144E4">
+            <End Role="Messages" EntitySet="Messages" />
+            <End Role="UserMessages" EntitySet="UserMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserMessa__UserI__4B0D20AB" Association="Self.FK__UserMessa__UserI__4B0D20AB">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserMessages" EntitySet="UserMessages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BandItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Application">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BandID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Result" Type="Boolean" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Band" Relationship="Self.FK__Applicati__BandI__5F141958" FromRole="Applications" ToRole="Bands" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Applicati__UserI__60083D91" FromRole="Applications" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Band">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="Longitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="ProfilePicture" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="InviteMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Applications" Relationship="Self.FK__Applicati__BandI__5F141958" FromRole="Bands" ToRole="Applications" />
+          <NavigationProperty Name="BandUsers" Relationship="Self.FK__BandUsers__BandI__3F9B6DFF" FromRole="Bands" ToRole="BandUsers" />
+          <NavigationProperty Name="Invites" Relationship="Self.FK__Invites__BandID__62E4AA3C" FromRole="Bands" ToRole="Invites" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__BandI__689D8392" FromRole="Bands" ToRole="Notifications" />
+          <NavigationProperty Name="Genres" Relationship="Self.BandGenres" FromRole="Bands" ToRole="Genres" />
+          <NavigationProperty Name="Messages" Relationship="Self.BandMessages" FromRole="Bands" ToRole="Messages" />
+        </EntityType>
+        <EntityType Name="BandUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermisionID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="BandID" Type="Int32" />
+          <NavigationProperty Name="Band" Relationship="Self.FK__BandUsers__BandI__3F9B6DFF" FromRole="BandUsers" ToRole="Bands" />
+          <NavigationProperty Name="Permission" Relationship="Self.FK__BandUsers__Permi__3DB3258D" FromRole="BandUsers" ToRole="Permissions" />
+          <NavigationProperty Name="User" Relationship="Self.FK__BandUsers__UserI__3EA749C6" FromRole="BandUsers" ToRole="Users" />
+          <NavigationProperty Name="Skills" Relationship="Self.BandUserSkills" FromRole="BandUsers" ToRole="Skills" />
+        </EntityType>
+        <EntityType Name="Block">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlockerID" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverID" Type="Int32" Nullable="false" />
+          <Property Name="Blocked" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Blocks__BlockerI__4460231C" FromRole="Blocks" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__Blocks__Receiver__45544755" FromRole="Blocks" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Profiles" Relationship="Self.ProfileFiles" FromRole="Files" ToRole="Profiles" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Bands" Relationship="Self.BandGenres" FromRole="Genres" ToRole="Bands" />
+        </EntityType>
+        <EntityType Name="Invite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BandID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Result" Type="Boolean" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Band" Relationship="Self.FK__Invites__BandID__62E4AA3C" FromRole="Invites" ToRole="Bands" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Invites__UserID__63D8CE75" FromRole="Invites" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderID" Type="Int32" Nullable="false" />
+          <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Messages__Sender__4830B400" FromRole="Messages" ToRole="Users" />
+          <NavigationProperty Name="Bands" Relationship="Self.BandMessages" FromRole="Messages" ToRole="Bands" />
+          <NavigationProperty Name="Users" Relationship="Self.UserMessages" FromRole="Messages" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BandID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Band" Relationship="Self.FK__Notificat__BandI__689D8392" FromRole="Notifications" ToRole="Bands" />
+          <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__TypeI__6A85CC04" FromRole="Notifications" ToRole="NotificationTypes" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Notificat__UserI__6991A7CB" FromRole="Notifications" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="NotificationType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__TypeI__6A85CC04" FromRole="NotificationTypes" ToRole="Notifications" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BandUsers" Relationship="Self.FK__BandUsers__Permi__3DB3258D" FromRole="Permissions" ToRole="BandUsers" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Permissio__UserI__3AD6B8E2" FromRole="Permissions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Longitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="Latitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="ProfilePicture" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Profiles__UserID__52AE4273" FromRole="Profiles" ToRole="Users" />
+          <NavigationProperty Name="Files" Relationship="Self.ProfileFiles" FromRole="Profiles" ToRole="Files" />
+          <NavigationProperty Name="Skills" Relationship="Self.ProfileSkills" FromRole="Profiles" ToRole="Skills" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BandUsers" Relationship="Self.BandUserSkills" FromRole="Skills" ToRole="BandUsers" />
+          <NavigationProperty Name="Profiles" Relationship="Self.ProfileSkills" FromRole="Skills" ToRole="Profiles" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Applications" Relationship="Self.FK__Applicati__UserI__60083D91" FromRole="Users" ToRole="Applications" />
+          <NavigationProperty Name="BandUsers" Relationship="Self.FK__BandUsers__UserI__3EA749C6" FromRole="Users" ToRole="BandUsers" />
+          <NavigationProperty Name="Blocks" Relationship="Self.FK__Blocks__BlockerI__4460231C" FromRole="Users" ToRole="Blocks" />
+          <NavigationProperty Name="Blocks1" Relationship="Self.FK__Blocks__Receiver__45544755" FromRole="Users" ToRole="Blocks" />
+          <NavigationProperty Name="Invites" Relationship="Self.FK__Invites__UserID__63D8CE75" FromRole="Users" ToRole="Invites" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__Sender__4830B400" FromRole="Users" ToRole="Messages" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__UserI__6991A7CB" FromRole="Users" ToRole="Notifications" />
+          <NavigationProperty Name="Permissions" Relationship="Self.FK__Permissio__UserI__3AD6B8E2" FromRole="Users" ToRole="Permissions" />
+          <NavigationProperty Name="Profiles" Relationship="Self.FK__Profiles__UserID__52AE4273" FromRole="Users" ToRole="Profiles" />
+          <NavigationProperty Name="Messages1" Relationship="Self.UserMessages" FromRole="Users" ToRole="Messages" />
+        </EntityType>
+        <Association Name="FK__Applicati__BandI__5F141958">
+          <End Role="Bands" Type="Self.Band" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Applicati__UserI__60083D91">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandUsers__BandI__3F9B6DFF">
+          <End Role="Bands" Type="Self.Band" Multiplicity="0..1" />
+          <End Role="BandUsers" Type="Self.BandUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandUsers">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invites__BandID__62E4AA3C">
+          <End Role="Bands" Type="Self.Band" Multiplicity="1" />
+          <End Role="Invites" Type="Self.Invite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Invites">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notificat__BandI__689D8392">
+          <End Role="Bands" Type="Self.Band" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bands">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="BandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandUsers__Permi__3DB3258D">
+          <End Role="Permissions" Type="Self.Permission" Multiplicity="0..1" />
+          <End Role="BandUsers" Type="Self.BandUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandUsers">
+              <PropertyRef Name="PermisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BandUsers__UserI__3EA749C6">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="BandUsers" Type="Self.BandUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BandUsers">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Blocks__BlockerI__4460231C">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Blocks" Type="Self.Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Blocks">
+              <PropertyRef Name="BlockerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Blocks__Receiver__45544755">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Blocks" Type="Self.Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Blocks">
+              <PropertyRef Name="ReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invites__UserID__63D8CE75">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Invites" Type="Self.Invite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Invites">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__Sender__4830B400">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notificat__TypeI__6A85CC04">
+          <End Role="NotificationTypes" Type="Self.NotificationType" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notificat__UserI__6991A7CB">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permissio__UserI__3AD6B8E2">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Permissions" Type="Self.Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Permissions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profiles__UserID__52AE4273">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Profiles" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Profiles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BandGenres">
+          <End Role="Bands" Type="Self.Band" Multiplicity="*" />
+          <End Role="Genres" Type="Self.Genre" Multiplicity="*" />
+        </Association>
+        <Association Name="BandMessages">
+          <End Role="Bands" Type="Self.Band" Multiplicity="*" />
+          <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+        </Association>
+        <Association Name="BandUserSkills">
+          <End Role="BandUsers" Type="Self.BandUser" Multiplicity="*" />
+          <End Role="Skills" Type="Self.Skill" Multiplicity="*" />
+        </Association>
+        <Association Name="ProfileFiles">
+          <End Role="Files" Type="Self.File" Multiplicity="*" />
+          <End Role="Profiles" Type="Self.Profile" Multiplicity="*" />
+        </Association>
+        <Association Name="ProfileSkills">
+          <End Role="Profiles" Type="Self.Profile" Multiplicity="*" />
+          <End Role="Skills" Type="Self.Skill" Multiplicity="*" />
+        </Association>
+        <Association Name="UserMessages">
+          <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BandItEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Applications" EntityType="Self.Application" />
+          <EntitySet Name="Bands" EntityType="Self.Band" />
+          <EntitySet Name="BandUsers" EntityType="Self.BandUser" />
+          <EntitySet Name="Blocks" EntityType="Self.Block" />
+          <EntitySet Name="Files" EntityType="Self.File" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="Invites" EntityType="Self.Invite" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="NotificationTypes" EntityType="Self.NotificationType" />
+          <EntitySet Name="Permissions" EntityType="Self.Permission" />
+          <EntitySet Name="Profiles" EntityType="Self.Profile" />
+          <EntitySet Name="Skills" EntityType="Self.Skill" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Applicati__BandI__5F141958" Association="Self.FK__Applicati__BandI__5F141958">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Applicati__UserI__60083D91" Association="Self.FK__Applicati__UserI__60083D91">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandUsers__BandI__3F9B6DFF" Association="Self.FK__BandUsers__BandI__3F9B6DFF">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="BandUsers" EntitySet="BandUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invites__BandID__62E4AA3C" Association="Self.FK__Invites__BandID__62E4AA3C">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="Invites" EntitySet="Invites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__BandI__689D8392" Association="Self.FK__Notificat__BandI__689D8392">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandUsers__Permi__3DB3258D" Association="Self.FK__BandUsers__Permi__3DB3258D">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="BandUsers" EntitySet="BandUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BandUsers__UserI__3EA749C6" Association="Self.FK__BandUsers__UserI__3EA749C6">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BandUsers" EntitySet="BandUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Blocks__BlockerI__4460231C" Association="Self.FK__Blocks__BlockerI__4460231C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Blocks" EntitySet="Blocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Blocks__Receiver__45544755" Association="Self.FK__Blocks__Receiver__45544755">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Blocks" EntitySet="Blocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invites__UserID__63D8CE75" Association="Self.FK__Invites__UserID__63D8CE75">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Invites" EntitySet="Invites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__Sender__4830B400" Association="Self.FK__Messages__Sender__4830B400">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__TypeI__6A85CC04" Association="Self.FK__Notificat__TypeI__6A85CC04">
+            <End Role="NotificationTypes" EntitySet="NotificationTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__UserI__6991A7CB" Association="Self.FK__Notificat__UserI__6991A7CB">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permissio__UserI__3AD6B8E2" Association="Self.FK__Permissio__UserI__3AD6B8E2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Permissions" EntitySet="Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profiles__UserID__52AE4273" Association="Self.FK__Profiles__UserID__52AE4273">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Profiles" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="BandGenres" Association="Self.BandGenres">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="Genres" EntitySet="Genres" />
+          </AssociationSet>
+          <AssociationSet Name="BandMessages" Association="Self.BandMessages">
+            <End Role="Bands" EntitySet="Bands" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="BandUserSkills" Association="Self.BandUserSkills">
+            <End Role="BandUsers" EntitySet="BandUsers" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="ProfileFiles" Association="Self.ProfileFiles">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Profiles" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="ProfileSkills" Association="Self.ProfileSkills">
+            <End Role="Profiles" EntitySet="Profiles" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="UserMessages" Association="Self.UserMessages">
+            <End Role="Messages" EntitySet="Messages" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BandItModelStoreContainer" CdmEntityContainer="BandItEntities">
+          <EntitySetMapping Name="Applications">
+            <EntityTypeMapping TypeName="BandItModel.Application">
+              <MappingFragment StoreEntitySet="Applications">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BandID" ColumnName="BandID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bands">
+            <EntityTypeMapping TypeName="BandItModel.Band">
+              <MappingFragment StoreEntitySet="Bands">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="InviteMessage" ColumnName="InviteMessage" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BandUsers">
+            <EntityTypeMapping TypeName="BandItModel.BandUser">
+              <MappingFragment StoreEntitySet="BandUsers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PermisionID" ColumnName="PermisionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BandID" ColumnName="BandID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blocks">
+            <EntityTypeMapping TypeName="BandItModel.Block">
+              <MappingFragment StoreEntitySet="Blocks">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BlockerID" ColumnName="BlockerID" />
+                <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
+                <ScalarProperty Name="Blocked" ColumnName="Blocked" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="BandItModel.File">
+              <MappingFragment StoreEntitySet="Files">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="BandItModel.Genre">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invites">
+            <EntityTypeMapping TypeName="BandItModel.Invite">
+              <MappingFragment StoreEntitySet="Invites">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BandID" ColumnName="BandID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="BandItModel.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="BandItModel.Notification">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BandID" ColumnName="BandID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationTypes">
+            <EntityTypeMapping TypeName="BandItModel.NotificationType">
+              <MappingFragment StoreEntitySet="NotificationTypes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="BandItModel.Permission">
+              <MappingFragment StoreEntitySet="Permissions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profiles">
+            <EntityTypeMapping TypeName="BandItModel.Profile">
+              <MappingFragment StoreEntitySet="Profiles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="BandItModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BandItModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BandGenres" TypeName="BandItModel.BandGenres" StoreEntitySet="BandGenres">
+            <EndProperty Name="Bands">
+              <ScalarProperty Name="ID" ColumnName="BandID" />
+            </EndProperty>
+            <EndProperty Name="Genres">
+              <ScalarProperty Name="ID" ColumnName="GenreID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="BandMessages" TypeName="BandItModel.BandMessages" StoreEntitySet="BandMessages">
+            <EndProperty Name="Bands">
+              <ScalarProperty Name="ID" ColumnName="BandID" />
+            </EndProperty>
+            <EndProperty Name="Messages">
+              <ScalarProperty Name="ID" ColumnName="MessageID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="BandUserSkills" TypeName="BandItModel.BandUserSkills" StoreEntitySet="BandUserSkills">
+            <EndProperty Name="BandUsers">
+              <ScalarProperty Name="ID" ColumnName="BandUserID" />
+            </EndProperty>
+            <EndProperty Name="Skills">
+              <ScalarProperty Name="ID" ColumnName="SkillID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ProfileFiles" TypeName="BandItModel.ProfileFiles" StoreEntitySet="ProfileFiles">
+            <EndProperty Name="Files">
+              <ScalarProperty Name="ID" ColumnName="FileID" />
+            </EndProperty>
+            <EndProperty Name="Profiles">
+              <ScalarProperty Name="ID" ColumnName="ProfileID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ProfileSkills" TypeName="BandItModel.ProfileSkills" StoreEntitySet="ProfileSkills">
+            <EndProperty Name="Profiles">
+              <ScalarProperty Name="ID" ColumnName="ProfileID" />
+            </EndProperty>
+            <EndProperty Name="Skills">
+              <ScalarProperty Name="ID" ColumnName="SkillID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserMessages" TypeName="BandItModel.UserMessages" StoreEntitySet="UserMessages">
+            <EndProperty Name="Messages">
+              <ScalarProperty Name="ID" ColumnName="MessageID" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
