@@ -81,7 +81,6 @@
     <Compile Include="Block.cs">
       <DependentUpon>BandIt.tt</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="File.cs">
       <DependentUpon>BandIt.tt</DependentUpon>
     </Compile>
