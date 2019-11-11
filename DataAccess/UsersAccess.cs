@@ -19,7 +19,7 @@ namespace DataAccess
             var users = db.Users.Where(user =>
             user.Username.Contains(search) || user.Email.Contains(search) || user.Profiles.First().FirstName.Contains(search) || user.Profiles.First().LastName.Contains(search));
 
-            return usersQuery.ToList<User>();
+            return users.ToList();
         }
         public User FindByUserame(string username)
         {

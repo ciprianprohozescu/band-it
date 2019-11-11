@@ -13,9 +13,7 @@
     filter.Add(username);
     filter.Add(email);
 }
-
-@ViewBag.Content
-    @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+    @using (Html.BeginForm("Index", "User", FormMethod.Get))
     {
         @Html.TextBox("Search")
         <input type="submit" value="Search" />
@@ -33,7 +31,7 @@
             if (Model.Users.Count() == 0)
             {
                 <tr>
-                    <td colspan="2">User Not Found</td>
+                    <td colspan="2">No users found.</td>
                 </tr>
             }
             else
@@ -53,3 +51,5 @@
         }
     </tbody>
 </table>
+
+@ViewBag.Content

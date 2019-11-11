@@ -12,7 +12,7 @@ using ClientMVC.Models;
 
 namespace ClientMVC.Controllers
 {
-    public class SearchController : Controller
+    public class UserController : Controller
     {
         public ActionResult Index(string search)
         {
