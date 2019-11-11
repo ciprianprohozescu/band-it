@@ -11,22 +11,22 @@ using ProfileDB = ModelsDB.Profile;
 
 namespace Controllers
 {
-    class UserController
+    public class UserController
     {
         public List<UserLogic> Get(string search)
         {
             var usersAccess = new UsersAccess();
-            var profileAccess = new ProfilesAccess();
+            var profilesAccess = new ProfilesAccess();
             var userDB = usersAccess.Get(search);
-            var profileDB = profileAccess.GetAllProfiles();
-            var userLogic = new List<UserLogic>();
+            var profileDB = profilesAccess.GetAllProfiles();
+            var usersLogic = new List<UserLogic>();
 
             for(int i = 0; i < userDB.Count; i++)
             {
-                userLogic.Add(DBToLogic(userDB[i], profileDB[i]));
+                usersLogic.Add(DBToLogic(userDB[i], profileDB[i]));
             }
 
-            return userLogic;
+            return usersLogic;
         }
         //public void Add(UserLogic userLogic)
         //{

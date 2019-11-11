@@ -12,12 +12,10 @@ namespace DataAccess
         BandItEntities db = new BandItEntities();
         public List<User> Get(string search)
         {
-            var usersQuery = from user in db.Users
-                             orderby user.ID descending
-                             select user;
-
-            var users = db.Users.Where(user =>
-            user.Username.Contains(search) || user.Email.Contains(search) || user.Profiles.First().FirstName.Contains(search) || user.Profiles.First().LastName.Contains(search));
+            var users = db.Users
+                .Where(user => user.Username.Contains(search) || user.Email.Contains(search) || user.Profiles.FirstOrDefault().FirstName.Contains(search) 
+                || user.Profiles.FirstOrDefault().LastName.Contains(search))
+                .OrderByDescending(user => user.ID);
 
             return users.ToList();
         }

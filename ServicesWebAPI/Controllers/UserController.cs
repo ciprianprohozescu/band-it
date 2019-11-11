@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 
 using Models;
-using Controllers;
+using UserControllerLogic = Controllers.UserController;
 
 namespace ServicesWebAPI.Controllers
 {
@@ -14,7 +14,7 @@ namespace ServicesWebAPI.Controllers
     {
         public List<User> Get(string search = "")
         {
-            var userController = new UserController();
+            var userController = new UserControllerLogic();
             var users = userController.Get(search);
 
             return users;
