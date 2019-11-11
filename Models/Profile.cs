@@ -17,14 +17,16 @@ namespace Models
         [DataMember]
         public string LastName { get; set; }
         [DataMember]
-        public String Description { get; set; }
+        public string Description { get; set; }
         [DataMember]
-        public decimal Longitude { get; set; }
+        public Nullable<decimal> Longitude { get; set; }
         [DataMember]
-        public decimal Latitude { get; set; }
+        public Nullable<decimal> Latitude { get; set; }
         [DataMember]
         public string ProfilePicture { get; set; }
-        
+        [DataMember]
+        public Nullable<System.DateTime> Deleted { get; set; }
+
         public Profile (int id, string firstName, string lastName, string description, decimal longitude, decimal latitude, string profilePicture )
         {
             this.ID = id;
