@@ -1,0 +1,55 @@
+﻿@model ClientMVC.Models.UserIndex
+
+<br />
+
+@{
+    List<SelectListItem> filter = new List<SelectListItem>();
+    SelectListItem fname = new SelectListItem() { Text = "First Name", Value = "fname" };
+    SelectListItem lname = new SelectListItem() { Text = "Last Name", Value = "lname" };
+    SelectListItem username = new SelectListItem() { Text = "Username", Value = "username" };
+    SelectListItem email = new SelectListItem() { Text = "Email", Value = "email" };
+    filter.Add(fname);
+    filter.Add(lname);
+    filter.Add(username);
+    filter.Add(email);
+}
+
+@ViewBag.Content
+    @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+    {
+        @Html.TextBox("Search")
+        <input type="submit" value="Search" />
+        <p></p>
+        <p>
+            Search By:
+            @Html.DropDownList("searchBy", filter, "Select Filter")
+        </p>
+    }
+
+<table class="table table-striped">
+    <tbody>
+        @if (Model.Users != null)
+        {
+            if (Model.Users.Count() == 0)
+            {
+                <tr>
+                    <td colspan="2">User Not Found</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model.Users)
+                {
+                    <tr>
+                        <td>
+                            <b>@item.FirstName @item.LastName</b>
+                            <p></p>
+                            <p>@item.Username</p>
+                            <p>@item.Email</p>
+                        </td>  
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
