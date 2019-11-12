@@ -44,45 +44,47 @@ namespace DataAccessTest
         static BandItEntities db;
 
         [ClassInitialize]
-        public static void setupUsers(TestContext context)
+        public static void Initialize(TestContext context)
         {
-
-
             usersAccess = new UsersAccess();
             db = new BandItEntities();
 
+            #region Test data
             db.Profiles.RemoveRange(db.Profiles.ToList());
             db.Users.RemoveRange(db.Users.ToList());
 
-            var user1 = new User();
-            var user2 = new User();
-            var profile1 = new Profile();
-            var profile2 = new Profile();
+            var user = new User();
+            var profile = new Profile();
 
-            user1.Username = "Andrei1337";
-            user1.Email = "andrei@gmail.com";
-            user1.Password = "1234";
-            user1.Salt = "sgsefwer";
+            user.Username = "Andrei1337";
+            user.Email = "andrei@gmail.com";
+            user.Password = "1234";
+            user.Salt = "sgsefwer";
 
-            profile1.FirstName = "Andrei";
-            profile1.LastName = "Mataoanu";
+            profile.FirstName = "Andrei";
+            profile.LastName = "Mataoanu";
 
-            user2.Username = "Ciprian1337";
-            user2.Email = "ciprian@gmail.com";
-            user2.Password = "1234";
-            user2.Salt = "sgsefwer";
-            profile2.FirstName = "Ciprian";
-            profile2.LastName = "Prohozescu";
+            db.Profiles.Add(profile);
+            user.Profiles.Add(profile);
+            db.Users.Add(user);
 
-            db.Profiles.Add(profile1);
-            db.Profiles.Add(profile2);
+            user = new User();
+            profile = new Profile();
 
-            user1.Profiles.Add(profile1);
-            user2.Profiles.Add(profile2);
+            user.Username = "Ciprian1337";
+            user.Email = "ciprian@gmail.com";
+            user.Password = "1234";
+            user.Salt = "sgsefwer";
+            profile.FirstName = "Ciprian";
+            profile.LastName = "Prohozescu";
 
-            db.Users.Add(user1);
-            db.Users.Add(user2);
+            
+            db.Profiles.Add(profile);
+            user.Profiles.Add(profile);
+            db.Users.Add(user);
+
             db.SaveChanges();
+            #endregion
         }
 
         #region Additional test attributes
@@ -112,14 +114,17 @@ namespace DataAccessTest
         {
             var users = usersAccess.Get("");
 
+            #region Assert
             Assert.AreEqual("Ciprian1337", users[0].Username);
             Assert.AreEqual("Prohozescu", users[0].Profiles.FirstOrDefault().LastName);
+
             Assert.AreEqual("Andrei1337", users[1].Username);
             Assert.AreEqual("Mataoanu", users[1].Profiles.FirstOrDefault().LastName);
+            #endregion
         }
-        
+
         [ClassCleanup]
-        public static void deleteUsers()
+        public static void Cleanup()
         {
             db = new BandItEntities();
             db.Profiles.RemoveRange(db.Profiles.ToList());
