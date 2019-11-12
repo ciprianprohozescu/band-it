@@ -1,4 +1,3 @@
-        public string Description { get; set; }
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +14,12 @@ namespace Models
         public string Username { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
-
-        public User(int id, string email, string username, string password, string salt)
-        {
-            this.ID = id;
-            this.Email = email;
-            this.Username = username;
-            this.Password = password;
-            this.Salt = salt;
-        }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Description { get; set; }
+        public Nullable<decimal> Longitude { get; set; }
+        public Nullable<decimal> Latitude { get; set; }
+        public string ProfilePicture { get; set; }
         public User() { }
     }
 }
