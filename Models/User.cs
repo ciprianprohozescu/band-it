@@ -7,27 +7,22 @@ using System.Runtime.Serialization;
 
 namespace Models
 {
-    [DataContract]
     public class User
     {
-        [DataMember]
         public int ID { get; set; }
-        [DataMember]
         public string Email { get; set; }
-        [DataMember]
-        public string UserName { get; set; }
-        [DataMember]
+        public string Username { get; set; }
         public string Password { get; set; }
-        [DataMember]
         public string Salt { get; set; }
 
-        public User(int id, string email, string userName, string password, string salt)
+        public User(int id, string email, string username, string password, string salt)
         {
             this.ID = id;
             this.Email = email;
-            this.UserName = userName;
+            this.Username = username;
             this.Password = password;
             this.Salt = salt;
         }
+        public User() { }
     }
 }
