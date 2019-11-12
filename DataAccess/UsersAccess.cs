@@ -13,9 +13,12 @@ namespace DataAccess
         public List<User> Get(string search)
         {
             var users = db.Users
-                .Where(user => user.Username.Contains(search) || user.Email.Contains(search) || user.Profiles.FirstOrDefault().FirstName.Contains(search) 
-                || user.Profiles.FirstOrDefault().LastName.Contains(search))
-                .OrderByDescending(user => user.ID);
+                .Where(user => user.Username.Contains(search)
+                || user.Email.Contains(search)
+                || user.Profiles.FirstOrDefault().FirstName.Contains(search)
+                || user.Profiles.FirstOrDefault().LastName.Contains(search)
+                || search == null)
+                .Where(user => user.Deleted == null).OrderByDescending(user => user.ID);
 
             return users.ToList();
         }

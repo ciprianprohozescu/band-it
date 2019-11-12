@@ -20,18 +20,14 @@ namespace ClientMVC.Controllers
             var request = new RestRequest("user", Method.GET);
             request.AddParameter("search", search);
             var content = client.Execute(request).Content;
-            ViewBag.Content = content;
 
-            //var users = JsonConvert.DeserializeObject<List<User>>(content);
+            var users = JsonConvert.DeserializeObject<List<User>>(content);
 
             var model = new UserIndex();
             model.Search = search;
-            model.Users = new List<User>();
+            model.Users = users;
 
             return View(model);
-
-            //return View(db.Profiles.Where(s => s.FirstName.StartsWith(search)
-            //    || s.LastName.StartsWith(search) || search == null).ToList());
         }
     }
 }

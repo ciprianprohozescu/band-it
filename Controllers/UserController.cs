@@ -16,14 +16,12 @@ namespace Controllers
         public List<UserLogic> Get(string search)
         {
             var usersAccess = new UsersAccess();
-            var profilesAccess = new ProfilesAccess();
             var userDB = usersAccess.Get(search);
-            var profileDB = profilesAccess.GetAllProfiles();
             var usersLogic = new List<UserLogic>();
 
             for(int i = 0; i < userDB.Count; i++)
             {
-                usersLogic.Add(DBToLogic(userDB[i], profileDB[i]));
+                usersLogic.Add(DBToLogic(userDB[i], userDB[i].Profiles.FirstOrDefault()));
             }
 
             return usersLogic;

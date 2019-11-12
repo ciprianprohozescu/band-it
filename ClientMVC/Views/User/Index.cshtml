@@ -2,26 +2,11 @@
 
 <br />
 
-@{
-    List<SelectListItem> filter = new List<SelectListItem>();
-    SelectListItem fname = new SelectListItem() { Text = "First Name", Value = "fname" };
-    SelectListItem lname = new SelectListItem() { Text = "Last Name", Value = "lname" };
-    SelectListItem username = new SelectListItem() { Text = "Username", Value = "username" };
-    SelectListItem email = new SelectListItem() { Text = "Email", Value = "email" };
-    filter.Add(fname);
-    filter.Add(lname);
-    filter.Add(username);
-    filter.Add(email);
-}
     @using (Html.BeginForm("Index", "User", FormMethod.Get))
     {
         @Html.TextBox("Search")
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search" class="btn btn-success"/>
         <p></p>
-        <p>
-            Search By:
-            @Html.DropDownList("searchBy", filter, "Select Filter")
-        </p>
     }
 
 <table class="table table-striped">
@@ -31,7 +16,7 @@
             if (Model.Users.Count() == 0)
             {
                 <tr>
-                    <td colspan="2">No users found.</td>
+                    <td colspan="1">No users found.</td>
                 </tr>
             }
             else
@@ -51,5 +36,3 @@
         }
     </tbody>
 </table>
-
-@ViewBag.Content
