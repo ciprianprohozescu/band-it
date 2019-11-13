@@ -1,0 +1,35 @@
+﻿@model ClientMVC.Models.UserIndex
+
+<br />
+
+    @using (Html.BeginForm("Index", "User", FormMethod.Get))
+    {
+        <div class="form-group form-inline">
+            <input type="text" name="Search" class="form-control" value="@Model.Search" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    }
+
+<table class="table table-striped">
+    <tbody>
+        @if (Model.Users.Count() == 0)
+        {
+            <tr>
+                <td colspan="1">No users found.</td>
+            </tr>
+        } else
+        {
+            foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>
+                        <b>@item.FirstName @item.LastName</b>
+                        <p></p>
+                        <p>@item.Username</p>
+                        <p>@item.Email</p>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
