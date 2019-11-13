@@ -11,7 +11,7 @@ using ProfileDB = ModelsDB.Profile;
 
 namespace Controllers
 {
-    public class UserController
+    public class UserController : IUserController
     {
         public List<UserLogic> Get(string search)
         {

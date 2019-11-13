@@ -3,22 +3,22 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using DataAccess;
+using Controllers;
 using ModelsDB;
 using System.Linq;
 
-namespace DataAccessTest
+namespace ControllersTest
 {
     /// <summary>
-    /// Summary description for UsersAccessTest
+    /// Summary description for UserControllerTest
     /// </summary>
     [TestClass]
-    public class UsersAccessTest
+    public class UserControllerTest
     {
-        static UsersAccess usersAccess;
+        static IUserController userController;
         static BandItEntities db;
 
-        public UsersAccessTest()
+        public UserControllerTest()
         {
         }
 
@@ -40,10 +40,32 @@ namespace DataAccessTest
             }
         }
 
-        [ClassInitialize]
-        public static void Initialize(TestContext context)
+        #region Additional test attributes
+        //
+        // You can use the following additional attributes as you write your tests:
+        //
+        // Use ClassInitialize to run code before running the first test in the class
+        // [ClassInitialize()]
+        // public static void MyClassInitialize(TestContext testContext) { }
+        //
+        // Use ClassCleanup to run code after all tests in a class have run
+        // [ClassCleanup()]
+        // public static void MyClassCleanup() { }
+        //
+        // Use TestInitialize to run code before running each test 
+        // [TestInitialize()]
+        // public void MyTestInitialize() { }
+        //
+        // Use TestCleanup to run code after each test has run
+        // [TestCleanup()]
+        // public void MyTestCleanup() { }
+        //
+        #endregion
+
+        [ClassInitialize()]
+        public static void Initialize(TestContext testContext) 
         {
-            usersAccess = new UsersAccess();
+            userController = new UserController();
             db = new BandItEntities();
 
             #region Test data
@@ -75,7 +97,7 @@ namespace DataAccessTest
             profile.FirstName = "Ciprian";
             profile.LastName = "Prohozescu";
 
-            
+
             db.Profiles.Add(profile);
             user.Profiles.Add(profile);
             db.Users.Add(user);
@@ -84,63 +106,40 @@ namespace DataAccessTest
             #endregion
         }
 
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [TestMethod]
-        public void GetAllUsersTest()
+        public void GetTest()
         {
-            var users = usersAccess.Get("");
+            var users = userController.Get("");
 
             #region Assert
             Assert.AreEqual(2, users.Count);
 
             Assert.AreEqual("Ciprian1337", users[0].Username);
-            Assert.AreEqual("Prohozescu", users[0].Profiles.FirstOrDefault().LastName);
+            Assert.AreEqual("Prohozescu", users[0].LastName);
 
             Assert.AreEqual("Andrei1337", users[1].Username);
-            Assert.AreEqual("Mataoanu", users[1].Profiles.FirstOrDefault().LastName);
+            Assert.AreEqual("Mataoanu", users[1].LastName);
             #endregion
 
-            users = usersAccess.Get("Ciprian");
+            users = userController.Get("Ciprian");
 
             #region Assert
             Assert.AreEqual(1, users.Count);
 
             Assert.AreEqual("Ciprian1337", users[0].Username);
-            Assert.AreEqual("Prohozescu", users[0].Profiles.FirstOrDefault().LastName);
+            Assert.AreEqual("Prohozescu", users[0].LastName);
             #endregion
 
-            users = usersAccess.Get("Anon");
+            users = userController.Get("Anon");
 
             #region Assert
             Assert.AreEqual(0, users.Count);
             #endregion
         }
 
-        [ClassCleanup]
+        [ClassCleanup()]
         public static void Cleanup()
         {
-            db = new BandItEntities();
             db.Profiles.RemoveRange(db.Profiles.ToList());
             db.Users.RemoveRange(db.Users.ToList());
             db.SaveChanges();
