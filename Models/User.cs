@@ -17,9 +17,7 @@ namespace Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Description { get; set; }
-        public Nullable<decimal> Longitude { get; set; }
-        public Nullable<decimal> Latitude { get; set; }
+        public LatLng Location { get; set; }
         public string ProfilePicture { get; set; }
-        public User() { }
     }
 }

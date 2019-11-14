@@ -161,6 +161,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\map.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -196,7 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ModelsDB\ModelsDB.csproj">
-      <Project>{F80AD705-FB45-40C1-A124-67C75DD6DA60}</Project>
+      <Project>{f80ad705-fb45-40c1-a124-67c75dd6da60}</Project>
       <Name>ModelsDB</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">

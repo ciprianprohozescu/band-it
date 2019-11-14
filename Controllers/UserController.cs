@@ -6,44 +6,62 @@ using System.Threading.Tasks;
 
 using DataAccess;
 using UserDB = ModelsDB.User;
-using UserLogic = Models.User;
-using ProfileDB = ModelsDB.Profile;
+using Models;
 
 namespace Controllers
 {
     public class UserController : IUserController
     {
-        public List<UserLogic> Get(string search)
+        UsersAccess usersAccess;
+        public UserController()
         {
-            var usersAccess = new UsersAccess();
-            var userDB = usersAccess.Get(search);
-            var usersLogic = new List<UserLogic>();
+            usersAccess = new UsersAccess();
+        }
+        public List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0)
+        {
+            var usersDB = usersAccess.Get(search);
+            var users = new List<User>();
 
-            for(int i = 0; i < userDB.Count; i++)
+            usersDB.ForEach(userDB => users.Add(DBToLogic(userDB)));
+
+            if (distance == -1)
             {
-                usersLogic.Add(DBToLogic(userDB[i], userDB[i].Profiles.FirstOrDefault()));
+                return users;
             }
 
-            return usersLogic;
+            var marker = new LatLng(markerLat, markerLng);
+            var filteredUsers = new List<User>();
+
+            foreach (var user in users)
+            {
+                if (user.Location == null)
+                {
+                    continue;
+                }
+                var userDistance = Helpers.HaversineDistance(marker, user.Location);
+                if (userDistance <= distance)
+                {
+                    filteredUsers.Add(user);
+                }
+            }
+            return filteredUsers;
         }
-        private UserLogic DBToLogic(UserDB userDB, ProfileDB profileDB)
+        private User DBToLogic(UserDB userDB)
         {
-            var userLogic = new UserLogic();
+            var user = new User();
 
-            userLogic.ID = userDB.ID;
-            userLogic.Username = userDB.Username;
-            userLogic.Email = userDB.Email;
-            userLogic.Password = userDB.Password;
-            userLogic.Salt = userDB.Salt;
-            userLogic.FirstName = profileDB.FirstName;
-            userLogic.LastName = profileDB.LastName;
-            userLogic.Description = profileDB.Description;
-            userLogic.Longitude = profileDB.Longitude;
-            userLogic.Latitude = profileDB.Latitude;
-            userLogic.ProfilePicture = profileDB.ProfilePicture;
+            user.ID = userDB.ID;
+            user.Username = userDB.Username;
+            user.Email = userDB.Email;
+            user.Password = userDB.Password;
+            user.Salt = userDB.Salt;
+            user.FirstName = userDB.FirstName;
+            user.LastName = userDB.LastName;
+            user.Description = userDB.Description;
+            user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
+            user.ProfilePicture = userDB.ProfilePicture;
 
-
-            return userLogic;
+            return user;
         }
     }
 }

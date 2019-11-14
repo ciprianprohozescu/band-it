@@ -18,7 +18,7 @@ namespace ModelsDB
         public Skill()
         {
             this.BandUsers = new HashSet<BandUser>();
-            this.Profiles = new HashSet<Profile>();
+            this.Users = new HashSet<User>();
         }
     
         public int ID { get; set; }
@@ -28,6 +28,6 @@ namespace ModelsDB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BandUser> BandUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }
