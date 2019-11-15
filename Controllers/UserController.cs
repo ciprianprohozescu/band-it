@@ -87,5 +87,18 @@ namespace Controllers
         {
             return DBToLogic(usersAccess.FindByID(id));
         }
+
+        private UserDB LogicToDB(UserLogic userLogic)
+        {
+            var userDB = new UserDB();
+
+            userDB.ID = userLogic.ID;
+            userDB.Email = userLogic.Email;
+            userDB.Username = userLogic.Username;
+            userDB.Password = userLogic.Password;
+            userDB.Salt = userLogic.Salt;
+
+            return userDB;
+        }
     }
 }

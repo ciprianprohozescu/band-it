@@ -137,6 +137,41 @@ namespace DataAccessTest
             Assert.AreEqual("Mataoanu", user.LastName);
             #endregion
         }
+        [TestMethod]
+        public void GetByUsername()
+        {
+            var user = usersAccess.FindByUsername("Andrei1337");
+
+            Console.WriteLine(user.Username);
+
+            Assert.AreEqual("andrei@gmail.com", user.Email);
+        }
+
+        [TestMethod]
+        public void GetByEmail()
+        {
+            var user = usersAccess.FindByEmail("ciprian@gmail.com");
+
+            Console.WriteLine(user.Email);
+
+            Assert.AreEqual("Ciprian1337", user.Username);
+        }
+
+        [TestMethod]
+        public void AddUser()
+        {
+            var user = new User();
+            user.Email = "Test Email";
+            user.Username = "Test Username";
+            user.Password = "Test Password";
+            user.Salt = "Test Salt";
+
+            usersAccess.Add(user);
+
+            var user2 = db.Users.Where(u => u.Username == "Test Username").ToList().FirstOrDefault();
+
+            Assert.AreEqual(user2.Email, user.Email);
+        }
 
         [TestMethod]
         public void Delete()

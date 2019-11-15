@@ -61,8 +61,8 @@ namespace ControllersTest
         //
         #endregion
 
-        [ClassInitialize()]
-        public static void Initialize(TestContext testContext) 
+        [ClassInitialize]
+        public static void Initialize(TestContext context) 
         {
             userController = new UserController();
             db = new ModelsDB.BandItEntities();
