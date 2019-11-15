@@ -15,14 +15,14 @@ namespace DataAccess
             var users = db.Users
                 .Where(user => user.Username.Contains(search)
                 || user.Email.Contains(search)
-                || user.Profiles.FirstOrDefault().FirstName.Contains(search)
-                || user.Profiles.FirstOrDefault().LastName.Contains(search)
+                || user.FirstName.Contains(search)
+                || user.LastName.Contains(search)
                 || search == null)
                 .Where(user => user.Deleted == null).OrderByDescending(user => user.ID);
 
             return users.ToList();
         }
-        public User FindByUserame(string username)
+        public User FindByUsername(string username)
         {
             var user = db.Users
                 .Where(x => x.Username == username)

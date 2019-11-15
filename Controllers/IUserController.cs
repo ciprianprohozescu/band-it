@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using UserDB = ModelsDB.User;
-using UserLogic = Models.User;
-using ProfileDB = ModelsDB.Profile;
+using Models;
 
 namespace Controllers
 {
     public interface IUserController
     {
-        List<UserLogic> Get(string search);
+        List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0);
     }
 }

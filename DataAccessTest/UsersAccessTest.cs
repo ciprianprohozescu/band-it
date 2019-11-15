@@ -47,37 +47,28 @@ namespace DataAccessTest
             db = new BandItEntities();
 
             #region Test data
-            db.Profiles.RemoveRange(db.Profiles.ToList());
             db.Users.RemoveRange(db.Users.ToList());
 
             var user = new User();
-            var profile = new Profile();
 
             user.Username = "Andrei1337";
             user.Email = "andrei@gmail.com";
             user.Password = "1234";
             user.Salt = "sgsefwer";
+            user.FirstName = "Andrei";
+            user.LastName = "Mataoanu";
 
-            profile.FirstName = "Andrei";
-            profile.LastName = "Mataoanu";
-
-            db.Profiles.Add(profile);
-            user.Profiles.Add(profile);
             db.Users.Add(user);
-
+            
             user = new User();
-            profile = new Profile();
 
             user.Username = "Ciprian1337";
             user.Email = "ciprian@gmail.com";
             user.Password = "1234";
             user.Salt = "sgsefwer";
-            profile.FirstName = "Ciprian";
-            profile.LastName = "Prohozescu";
+            user.FirstName = "Ciprian";
+            user.LastName = "Prohozescu";
 
-            
-            db.Profiles.Add(profile);
-            user.Profiles.Add(profile);
             db.Users.Add(user);
 
             db.SaveChanges();
@@ -115,10 +106,10 @@ namespace DataAccessTest
             Assert.AreEqual(2, users.Count);
 
             Assert.AreEqual("Ciprian1337", users[0].Username);
-            Assert.AreEqual("Prohozescu", users[0].Profiles.FirstOrDefault().LastName);
+            Assert.AreEqual("Prohozescu", users[0].LastName);
 
             Assert.AreEqual("Andrei1337", users[1].Username);
-            Assert.AreEqual("Mataoanu", users[1].Profiles.FirstOrDefault().LastName);
+            Assert.AreEqual("Mataoanu", users[1].LastName);
             #endregion
 
             users = usersAccess.Get("Ciprian");
@@ -127,7 +118,7 @@ namespace DataAccessTest
             Assert.AreEqual(1, users.Count);
 
             Assert.AreEqual("Ciprian1337", users[0].Username);
-            Assert.AreEqual("Prohozescu", users[0].Profiles.FirstOrDefault().LastName);
+            Assert.AreEqual("Prohozescu", users[0].LastName);
             #endregion
 
             users = usersAccess.Get("Anon");
@@ -141,7 +132,6 @@ namespace DataAccessTest
         public static void Cleanup()
         {
             db = new BandItEntities();
-            db.Profiles.RemoveRange(db.Profiles.ToList());
             db.Users.RemoveRange(db.Users.ToList());
             db.SaveChanges();
         }

@@ -25,8 +25,9 @@ namespace ModelsDB
             this.Messages = new HashSet<Message>();
             this.Notifications = new HashSet<Notification>();
             this.Permissions = new HashSet<Permission>();
-            this.Profiles = new HashSet<Profile>();
+            this.Files = new HashSet<File>();
             this.Messages1 = new HashSet<Message>();
+            this.Skills = new HashSet<Skill>();
         }
     
         public int ID { get; set; }
@@ -34,6 +35,12 @@ namespace ModelsDB
         public string Email { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Description { get; set; }
+        public Nullable<decimal> Longitude { get; set; }
+        public Nullable<decimal> Latitude { get; set; }
+        public string ProfilePicture { get; set; }
         public Nullable<System.DateTime> Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,8 +60,10 @@ namespace ModelsDB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Permission> Permissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<File> Files { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> Messages1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Skill> Skills { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace ClientMVC.Models
     public class UserIndex
     {
         public string Search { get; set; }
+        public double Distance { get; set; }
+        public bool DistanceEnabled { get; set; }
         public List<User> Users { get; set; }
     }
 }

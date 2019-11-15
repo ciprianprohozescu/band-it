@@ -3,8 +3,11 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Controllers;
+using Models;
 using ModelsDB;
+using UserLogic = Models.User;
+using UserDB = ModelsDB.User;
+using Controllers;
 using System.Linq;
 
 namespace ControllersTest
@@ -16,11 +19,7 @@ namespace ControllersTest
     public class UserControllerTest
     {
         static IUserController userController;
-        static BandItEntities db;
-
-        public UserControllerTest()
-        {
-        }
+        static ModelsDB.BandItEntities db;
 
         private TestContext testContextInstance;
 
@@ -66,40 +65,37 @@ namespace ControllersTest
         public static void Initialize(TestContext testContext) 
         {
             userController = new UserController();
-            db = new BandItEntities();
+            db = new ModelsDB.BandItEntities();
 
             #region Test data
-            db.Profiles.RemoveRange(db.Profiles.ToList());
             db.Users.RemoveRange(db.Users.ToList());
 
-            var user = new User();
-            var profile = new Profile();
+            var user = new UserDB();
 
             user.Username = "Andrei1337";
             user.Email = "andrei@gmail.com";
             user.Password = "1234";
             user.Salt = "sgsefwer";
 
-            profile.FirstName = "Andrei";
-            profile.LastName = "Mataoanu";
+            user.FirstName = "Andrei";
+            user.LastName = "Mataoanu";
+            user.Latitude = (decimal)57.006620;
+            user.Longitude = (decimal)9.879727;
 
-            db.Profiles.Add(profile);
-            user.Profiles.Add(profile);
             db.Users.Add(user);
 
-            user = new User();
-            profile = new Profile();
+            user = new UserDB();
 
             user.Username = "Ciprian1337";
             user.Email = "ciprian@gmail.com";
             user.Password = "1234";
             user.Salt = "sgsefwer";
-            profile.FirstName = "Ciprian";
-            profile.LastName = "Prohozescu";
 
+            user.FirstName = "Ciprian";
+            user.LastName = "Prohozescu";
+            user.Latitude = (decimal)52.006620;
+            user.Longitude = (decimal)14.879727;
 
-            db.Profiles.Add(profile);
-            user.Profiles.Add(profile);
             db.Users.Add(user);
 
             db.SaveChanges();
@@ -137,12 +133,26 @@ namespace ControllersTest
             #endregion
         }
 
+        [TestMethod]
+        public void GetByDistanceTest()
+        {
+            var distance = 75.0;
+            var marker = new Models.LatLng(57.006617, 9.879724);
+
+            List<UserLogic> users = userController.Get("", distance, marker.Latitude, marker.Longitude);
+
+            #region Assert
+            Assert.AreEqual(1, users.Count);
+            Assert.AreEqual("Andrei1337", users[0].Username);
+            #endregion
+        }
+
         [ClassCleanup()]
         public static void Cleanup()
         {
-            db.Profiles.RemoveRange(db.Profiles.ToList());
             db.Users.RemoveRange(db.Users.ToList());
             db.SaveChanges();
+        
         }
     }
 }

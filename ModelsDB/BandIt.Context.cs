@@ -36,7 +36,6 @@ namespace ModelsDB
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<NotificationType> NotificationTypes { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
-        public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
