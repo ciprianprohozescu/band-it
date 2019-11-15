@@ -22,7 +22,7 @@ namespace DataAccess
 
             return users.ToList();
         }
-        public User FindByUserame(string username)
+        public User FindByUsername(string username)
         {
             var user = db.Users
                 .Where(u => u.Username == username)

@@ -10,6 +10,6 @@ namespace ClientMVC.Models
     public class UserIndex
     {
         public string Search { get; set; }
-        public List<User> Users { get; set; }
+        public List<global::Models.User> Users { get; set; }
     }
 }

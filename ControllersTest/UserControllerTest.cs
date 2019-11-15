@@ -62,8 +62,8 @@ namespace ControllersTest
         //
         #endregion
 
-        [ClassInitialize()]
-        public static void Initialize(TestContext testContext) 
+        [ClassInitialize]
+        public static void Initialize(TestContext context) 
         {
             userController = new UserController();
             db = new BandItEntities();
@@ -140,21 +140,21 @@ namespace ControllersTest
         [TestMethod]
         public void GetByUsername()
         {
-            var user = userController.GetByUsername("Username");
+            var user = userController.GetByUsername("Ciprian1337");
 
             Console.WriteLine(user.Username);
 
-            Assert.AreEqual("Email", user.Email);
+            Assert.AreEqual("ciprian@gmail.com", user.Email);
         }
 
         [TestMethod]
         public void GetByEmail()
         {
-            var user = userController.GetByEmail("Email");
+            var user = userController.GetByEmail("andrei@gmail.com");
 
             Console.WriteLine(user.Email);
 
-            Assert.AreEqual("Username", user.Username);
+            Assert.AreEqual("Andrei1337", user.Username);
         }
         [TestMethod]
         public void GetAll()
@@ -163,7 +163,7 @@ namespace ControllersTest
 
             Console.WriteLine(users[1].Email);
 
-            Assert.AreEqual("Username2", users[1].Username);
+            Assert.AreEqual("Ciprian1337", users[1].Username);
         }
 
         [ClassCleanup]

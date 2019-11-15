@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace ClientMVC.Models
 {
-    public class User
+    public class UserForm
     {
         [Required]
         [EmailAddress]

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using User = Models.User;
+using UserLogic = Models.User;
 using ClientMVC.Models;
 
 namespace ClientMVC.Controllers
@@ -21,7 +21,7 @@ namespace ClientMVC.Controllers
             request.AddParameter("search", search);
             var content = client.Execute(request).Content;
 
-            var users = JsonConvert.DeserializeObject<List<User>>(content);
+            var users = JsonConvert.DeserializeObject<List<UserLogic>>(content);
 
             var model = new UserIndex();
             model.Search = search;
@@ -36,7 +36,7 @@ namespace ClientMVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(UserMVC user)
+        public ActionResult Register(UserForm user)
         {
             if (ModelState.IsValid)
             {
@@ -52,14 +52,15 @@ namespace ClientMVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult doesUserNameExist(string UserName)
+        public JsonResult doesUserNameExist(string Username)
         {
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest("user", Method.POST);
-            var content = client.Execute(request).Content;
-            request.AddParameter("username", UserName);
+            request.AddParameter("username", Username);
 
-            var user = JsonConvert.DeserializeObject<User>(content);
+
+            var content = client.Execute(request).Content;
+            var user = JsonConvert.DeserializeObject<UserLogic>(content);
             return Json(!(user == null));
 
         }
@@ -72,12 +73,12 @@ namespace ClientMVC.Controllers
             request.AddParameter("email", Email);
 
             var content = client.Execute(request).Content;
-            var user = JsonConvert.DeserializeObject<User>(content);
+            var user = JsonConvert.DeserializeObject<UserLogic>(content);
 
             return Json(!(user == null));
         }
 
-        private UserLogic MVCToLogic(UserMVC userMVC)
+        private UserLogic MVCToLogic(UserForm userMVC)
         {
             var userLogic = new UserLogic();
 
