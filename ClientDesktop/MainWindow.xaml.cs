@@ -23,6 +23,7 @@ namespace ClientDesktop
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }
