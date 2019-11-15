@@ -11,9 +11,12 @@ namespace Controllers
 {
     public interface IUserController
     {
+        List<UserLogic> Get(string search);
+        void Add(UserLogic userLogic);
+        List<UserLogic> Get();
+        UserLogic GetByUsername(string username);
+        UserLogic GetByEmail(string email);
         List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0);
         void Delete(int id);
-        User Get(int id);
-        User GetByUsername(string username);
     }
 }

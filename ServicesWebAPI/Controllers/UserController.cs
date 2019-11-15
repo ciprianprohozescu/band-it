@@ -4,18 +4,32 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
-using Models;
 using Controllers;
 using UserControllerLogic = Controllers.UserController;
+using Models;
 
 namespace ServicesWebAPI.Controllers
 {
     public class UserController : ApiController
     {
-        IUserController userController;
+        public void Post(User user)
+        {
+            IUserController userController = new UserControllerLogic ();
+            userController.Add(user);           
+        }
 
-        public UserController()
+        public void GetUsername(String username)
+        {
+            IUserController userController = new UserControllerLogic();
+            userController.GetByUsername(username);
+        }
+        public void GetEmail(String email)
+        {
+            IUserController userController = new UserControllerLogic();
+            userController.GetByEmail(email);
+        }
+
+        public List<User> Get(string search = "")
         {
             userController = new UserControllerLogic();
         }
