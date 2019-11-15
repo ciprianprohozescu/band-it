@@ -13,5 +13,9 @@ namespace Controllers
     public interface IUserController
     {
         List<UserLogic> Get(string search);
+        void Add(UserLogic userLogic);
+        List<UserLogic> Get();
+        UserLogic GetByUsername(string username);
+        UserLogic GetByEmail(string email);
     }
 }

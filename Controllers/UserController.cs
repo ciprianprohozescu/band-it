@@ -19,12 +19,54 @@ namespace Controllers
             var userDB = usersAccess.Get(search);
             var usersLogic = new List<UserLogic>();
 
-            for(int i = 0; i < userDB.Count; i++)
             {
+            for(int i = 0; i < userDB.Count; i++)
                 usersLogic.Add(DBToLogic(userDB[i], userDB[i].Profiles.FirstOrDefault()));
             }
 
             return usersLogic;
+        }
+
+        public void Add(UserLogic userLogic)
+        {
+            var userAccess = new UsersAccess();
+            var userDB = userAccess.FindByUsername(userLogic.Username);
+            if(userDB == null)
+            {
+                userDB = userAccess.FindByEmail(userLogic.Email);
+                if(userDB == null)
+                {
+                    userLogic.Salt = StringCipher.RandomString();
+                    userLogic.Password = StringCipher.Encrypt(userLogic.Password, userLogic.Salt);
+                    userDB = LogicToDB(userLogic);
+                    userAccess.Add(userDB);
+                }
+            }
+        }
+        public List<UserLogic> Get()
+        {
+            var usersAccess = new UsersAccess();
+            var userDB = usersAccess.FindAll();
+            var usersLogic = new List<UserLogic>();
+
+            for (int i = 0; i < userDB.Count; i++)
+            {
+                usersLogic.Add(DBToLogic(userDB[i]));
+            }
+
+            return usersLogic;
+        }
+        public UserLogic GetByUsername(string username)
+        {
+            var userAccess = new UsersAccess();
+            var userDB = userAccess.FindByUsername(username);
+            return DBToLogic(userDB);
+        }
+        public UserLogic GetByEmail(string email)
+        {
+            var userAccess = new UsersAccess();
+            var userDB = userAccess.FindByEmail(email);
+            return DBToLogic(userDB);
         }
         private UserLogic DBToLogic(UserDB userDB, ProfileDB profileDB)
         {
@@ -42,6 +84,19 @@ namespace Controllers
             userLogic.Latitude = profileDB.Latitude;
             userLogic.ProfilePicture = profileDB.ProfilePicture;
 
+
+            return userLogic;
+        }
+
+        private UserLogic DBToLogic(UserDB userDB)
+        {
+            var userLogic = new UserLogic();
+
+            userLogic.ID = userDB.ID;
+            userLogic.Email = userDB.Email;
+            userLogic.Username = userDB.Username;
+            userLogic.Password = userDB.Password;
+            userLogic.Salt = userDB.Salt;
 
             return userLogic;
         }
