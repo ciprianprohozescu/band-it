@@ -40,7 +40,7 @@
         </Style>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush Stretch="UniformToFill" ImageSource="C:\Band-It\band-it\ClientMVC\Content\img\guitar.jpg"/>
+        <ImageBrush Stretch="UniformToFill" ImageSource="Images/guitar.jpg"/>
     </Window.Background>
     <Border Padding="30" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" >
         <StackPanel Orientation="Vertical" Width="400">
