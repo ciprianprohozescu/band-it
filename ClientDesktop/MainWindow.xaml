@@ -45,7 +45,7 @@
     <Border Padding="30" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" >
         <StackPanel Orientation="Vertical" Width="400">
             <TextBlock FontSize="50" TextAlignment="Center" Foreground="#fff" Margin="0 0 0 20" Text="Sign in" />
-            <TextBox Text="Username" FontSize="40" Margin="0 0 0 10"/>
+            <TextBox Style="{StaticResource WatermarkTextbox}"  FontSize="40" Margin="0 0 0 10"/>
             <TextBox Text="Email" FontSize="40" Margin="0 0 0 10"/>
             <PasswordBox  FontSize="40" Margin="0 0 0 10"/>
             <Button Content="Next" Style="{StaticResource NewButtonStyle}" IsEnabled="False" HorizontalAlignment="Center">
