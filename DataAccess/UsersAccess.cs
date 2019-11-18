@@ -30,6 +30,14 @@ namespace DataAccess
 
             return user;
         }
+        public User FindByID(int id)
+        {
+            var user = db.Users
+                .Where(x => x.ID == id)
+                .FirstOrDefault<User>();
+
+            return user;
+        }
         public void AddUser(User user)
         {
             db.Users.Add(user);

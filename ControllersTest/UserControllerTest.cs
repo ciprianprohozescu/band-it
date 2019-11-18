@@ -134,6 +134,15 @@ namespace ControllersTest
         }
 
         [TestMethod]
+        public void GetByIDTest()
+        {
+            var userExpected = userController.Get("Ciprian")[0];
+            var userActual = userController.Get(userExpected.ID);
+
+            Assert.AreEqual(userExpected.Username, userActual.Username);
+        }
+
+        [TestMethod]
         public void GetByDistanceTest()
         {
             var distance = 75.0;
