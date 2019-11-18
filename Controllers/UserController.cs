@@ -46,6 +46,19 @@ namespace Controllers
             }
             return filteredUsers;
         }
+        public User GetByUsername(string username)
+        {
+            var userDB = usersAccess.FindByUsername(username);
+            return DBToLogic(userDB);
+        }
+
+        public void Delete(int id)
+        {
+
+            usersAccess.Delete(id);
+        }
+
+
         public User Get(int id)
         {
             return DBToLogic(usersAccess.FindByID(id));
@@ -53,19 +66,41 @@ namespace Controllers
         private User DBToLogic(UserDB userDB)
         {
             var user = new User();
+            if (userDB != null)
+            {
+                user.ID = userDB.ID;
+                user.Username = userDB.Username;
+                user.Email = userDB.Email;
+                user.Password = userDB.Password;
+                user.Salt = userDB.Salt;
+                user.FirstName = userDB.FirstName;
+                user.LastName = userDB.LastName;
+                user.Description = userDB.Description;
+                user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
+                user.ProfilePicture = userDB.ProfilePicture;
 
-            user.ID = userDB.ID;
-            user.Username = userDB.Username;
-            user.Email = userDB.Email;
-            user.Password = userDB.Password;
-            user.Salt = userDB.Salt;
-            user.FirstName = userDB.FirstName;
-            user.LastName = userDB.LastName;
-            user.Description = userDB.Description;
-            user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
-            user.ProfilePicture = userDB.ProfilePicture;
+                return user;
+            }
+            return null;
+        }
 
-            return user;
+        private UserDB LogicToDB(User user)
+        {
+            var userDB = new UserDB();
+
+            userDB.ID = user.ID;
+            userDB.Username = user.Username;
+            userDB.Email = user.Email;
+            userDB.Password = user.Password;
+            userDB.Salt = user.Salt;
+            userDB.FirstName = user.FirstName;
+            userDB.LastName = user.LastName;
+            userDB.Description = user.Description;
+            userDB.Latitude = (decimal)user.Location.Latitude;
+            userDB.Longitude = (decimal)user.Location.Longitude;
+            userDB.ProfilePicture = user.ProfilePicture;
+
+            return userDB;
         }
     }
 }

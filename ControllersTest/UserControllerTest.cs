@@ -155,11 +155,22 @@ namespace ControllersTest
             Assert.AreEqual("Andrei1337", users[0].Username);
             #endregion
         }
+        
+        [TestMethod]
+        public void Delete()
+        {
+            var user = userController.GetByUsername("Ciprian1337");
+            userController.Delete(user.ID);
+            var user2 = userController.GetByUsername("Ciprian1337");
+            #region Assert
+            Assert.IsNull(user2);
+            #endregion
+        }
 
         [ClassCleanup()]
         public static void Cleanup()
         {
-            db.Users.RemoveRange(db.Users.ToList());
+            //db.Users.RemoveRange(db.Users.ToList());
             db.SaveChanges();
         
         }

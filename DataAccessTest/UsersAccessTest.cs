@@ -139,6 +139,13 @@ namespace DataAccessTest
         }
 
         [TestMethod]
+        public void Delete()
+        {
+            var user = usersAccess.FindByUsername("Andrei1337");
+            usersAccess.Delete(user.ID);
+        }
+
+        [TestMethod]
         public void FindByIDTest()
         {
             var userExpected = usersAccess.FindByUsername("Andrei1337");
@@ -155,7 +162,7 @@ namespace DataAccessTest
         public static void Cleanup()
         {
             db = new BandItEntities();
-            db.Users.RemoveRange(db.Users.ToList());
+           // db.Users.RemoveRange(db.Users.ToList());
             db.SaveChanges();
         }
     }

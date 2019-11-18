@@ -30,6 +30,13 @@ namespace ServicesWebAPI.Controllers
             return userController.Get(search);
         }
 
+        public void Delete(int id)
+        {
+            IUserController userController = new UserControllerLogic();
+            userController.Delete(id);
+
+        }
+
         [Route("api/user/{id}")]
         public User Get(int id)
         {
