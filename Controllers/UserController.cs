@@ -46,6 +46,10 @@ namespace Controllers
             }
             return filteredUsers;
         }
+        public User Get(int id)
+        {
+            return DBToLogic(usersAccess.FindByID(id));
+        }
         private User DBToLogic(UserDB userDB)
         {
             var user = new User();

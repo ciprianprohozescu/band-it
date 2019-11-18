@@ -123,9 +123,32 @@ namespace DataAccessTest
 
             users = usersAccess.Get("Anon");
 
-            #region Assert
             Assert.AreEqual(0, users.Count);
+        }
+
+        [TestMethod]
+        public void FindByUsernameTest()
+        {
+            var user = usersAccess.FindByUsername("Andrei1337");
+
+            #region Assert
+            Assert.AreEqual("andrei@gmail.com", user.Email);
+            Assert.AreEqual("Andrei", user.FirstName);
+            Assert.AreEqual("Mataoanu", user.LastName);
             #endregion
+        }
+
+        [TestMethod]
+        public void FindByIDTest()
+        {
+            var userExpected = usersAccess.FindByUsername("Andrei1337");
+            var userActual = usersAccess.FindByID(userExpected.ID);
+
+            Assert.AreEqual(userExpected.Username, userActual.Username);
+
+            userActual = usersAccess.FindByID(-5);
+
+            Assert.IsNull(userActual);
         }
 
         [ClassCleanup]

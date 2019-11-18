@@ -51,5 +51,19 @@ namespace ClientMVC.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult Show(int id)
+        {
+            var model = new UserShow();
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest($"user/{id}", Method.GET);
+
+            var content = client.Execute(request);
+            model.User = JsonConvert.DeserializeObject<User>(content.Content);
+
+            return View(model);
+        }
     }
 }
