@@ -6,21 +6,24 @@
         xmlns:local="clr-namespace:ClientDesktop"
         mc:Ignorable="d"
         Title="MainWindow"
+        MinHeight="450"
+        MinWidth="800"
         >
     <Window.Resources>
+        
         <Style 
                 TargetType="Button" x:Key="NewButtonStyle">
-            <Setter Property="FontFamily" Value="Resources/teen bd.ttf#Teen" />
-            <Setter Property="FontSize" Value="32" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="26" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Border BorderThickness="0" 
-                                    CornerRadius="3"
-                                    Padding="60 12"
+                                    CornerRadius="8"
+                                    Padding="35 7.5"
                                     x:Name="ButtonBorder"
-                                    Background="#0069d9"
+                                    Background="#007bff"
                                 >
                                 <Border.BorderBrush>
                                     <SolidColorBrush x:Name="ButtonBorderBrush" Color="DarkGray"/>
@@ -39,20 +42,87 @@
             </Setter>
         </Style>
     </Window.Resources>
+
     <Window.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="Images/guitar.jpg"/>
     </Window.Background>
-    <Border Padding="30" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" >
-        <StackPanel Orientation="Vertical" Width="400">
-            <TextBlock FontSize="50" TextAlignment="Center" Foreground="#fff" Margin="0 0 0 20" Text="Sign in" />
-            <TextBox Style="{StaticResource WatermarkTextbox}"  FontSize="40" Margin="0 0 0 10"/>
-            <TextBox Text="Email" FontSize="40" Margin="0 0 0 10"/>
-            <PasswordBox  FontSize="40" Margin="0 0 0 10"/>
-            <Button Content="Next" Style="{StaticResource NewButtonStyle}" IsEnabled="False" HorizontalAlignment="Center">
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0.4" ShadowDepth="4.5" Opacity="0.9"/>
-                </Button.BitmapEffect>
-            </Button>
-        </StackPanel>
+    <Border>
+        <Border.Background>
+            <SolidColorBrush Color="#212529" Opacity="0.3"/>
+        </Border.Background>
+        <Border Padding="30" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Border.Background>
+                <SolidColorBrush Color="#fff" Opacity="0.27"/>
+
+            </Border.Background>
+            <StackPanel Orientation="Vertical" Width="Auto" Grid.IsSharedSizeScope="true">
+                <TextBlock FontSize="50" TextAlignment="Center" Foreground="#fff" Margin="0 0 0 20" Text="Register">
+                    <TextBlock.Effect>
+                       <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <Grid Margin="2" HorizontalAlignment="Center">
+                 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition SharedSizeGroup="FormGroup" />
+                        <RowDefinition SharedSizeGroup="FormGroup" />
+                        <RowDefinition SharedSizeGroup="FormGroup" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Margin="0,5"  Foreground="white" Content="User " VerticalContentAlignment="Center" FontSize="26"
+                       HorizontalContentAlignment="Right">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </Label.Effect>
+                    </Label>
+                    <TextBox Padding="2 0" Grid.Row="0" Grid.Column="1" x:Name="txtUser" Margin="0,5" FontSize="26" FontFamily="Resources/teen bd.ttf#Teen"
+                           VerticalContentAlignment="Center" HorizontalContentAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </TextBox.Effect>
+                    </TextBox>
+
+                    <Label Grid.Row="1" Grid.Column="0" Margin="0,5" Content="Email " Foreground="white" VerticalContentAlignment="Center" FontSize="26"
+                       HorizontalContentAlignment="Right">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </Label.Effect>
+                    </Label>
+                    <TextBox  Padding="2 0" Grid.Row="1" Grid.Column="1" x:Name="txtEmail" Margin="0,5" FontSize="26" FontFamily="Resources/teen bd.ttf#Teen"
+                           VerticalContentAlignment="Center" HorizontalContentAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </TextBox.Effect>
+                    </TextBox>
+
+
+                    <Label Grid.Row="2" Grid.Column="0" Margin="0,5"  Foreground="white" Content="Password " FontFamily="Resources/teen bd.ttf#Teen" FontSize="26"
+                       VerticalContentAlignment="Center" HorizontalContentAlignment="Right">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </Label.Effect>
+                    </Label>
+                    <PasswordBox Padding="2 0" Grid.Row="2" Grid.Column="1" x:Name="txtPassword" Margin="0,5" FontSize="26" 
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Left">
+                        <PasswordBox.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </PasswordBox.Effect>
+                    </PasswordBox>
+
+                    <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Content="Sign up!" Style="{StaticResource NewButtonStyle}" Foreground="White" IsEnabled="False" HorizontalAlignment="Center" Margin=" 10">
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.8" ShadowDepth="3" Opacity="0.7"/>
+                        </Button.BitmapEffect>
+                    </Button>
+
+                </Grid>
+
+            </StackPanel>
+        </Border>
     </Border>
 </Window>
