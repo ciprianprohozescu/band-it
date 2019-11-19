@@ -17,6 +17,7 @@ namespace DataAccess
                 || user.Email.Contains(search)
                 || user.FirstName.Contains(search)
                 || user.LastName.Contains(search)
+                || (user.Skills.Where(skill => skill.Name.Contains(search)).Count()>0)
                 || search == null)
                 .Where(user => user.Deleted == null).OrderByDescending(user => user.ID);
 
