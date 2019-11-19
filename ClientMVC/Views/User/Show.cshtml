@@ -1,10 +1,36 @@
 ﻿@model ClientMVC.Models.UserShow
 
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "Your Profile";
 }
 
-<h1>@Model.User.Username</h1>
+<div class="row">
+    <div class="col-md-4">
+        <img src="~/Content/Images/profile-placeholder.png" />
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <h1>@Model.User.Username <span class="text-muted" id="full-name">(@Model.User.FirstName @Model.User.LastName)</span></h1>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <style>
+        img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var fullName = document.getElementById('full-name');
+
+        if ("@Model.User.FirstName" == "" && "@Model.User.LastName" == "") {
+            fullName.style.display = 'none';
+        }
+    </script>
+}
 
 
 @using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit="return deleteClicked();" }))
