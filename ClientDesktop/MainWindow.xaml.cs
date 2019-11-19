@@ -26,9 +26,11 @@ namespace ClientDesktop
             
         }
 
-        private void TextBox_Collapsed(object sender, RoutedEventArgs e)
+        private void LinkClick(object sender, RoutedEventArgs e)
         {
-
+            LoginPage loginPage = new LoginPage();
+            this.Content = loginPage;
         }
+        
     }
 }
