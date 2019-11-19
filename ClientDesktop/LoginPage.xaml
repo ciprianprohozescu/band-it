@@ -101,7 +101,7 @@
                             </PasswordBox.Effect>
                         </PasswordBox>
 
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Content="Sign up!" Style="{StaticResource NewButtonStyle}" Foreground="White" IsEnabled="False" HorizontalAlignment="Center" Margin=" 10">
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Content="Sign in!" Style="{StaticResource NewButtonStyle}" Foreground="White" IsEnabled="False" HorizontalAlignment="Center" Margin=" 10">
                             <Button.BitmapEffect>
                                 <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.8" ShadowDepth="3" Opacity="0.7"/>
                             </Button.BitmapEffect>
