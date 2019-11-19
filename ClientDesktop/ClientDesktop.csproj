@@ -66,6 +66,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Compile Include="UserIndex.xaml.cs">
       <DependentUpon>UserIndex.xaml</DependentUpon>
     </Compile>
@@ -78,6 +82,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BoolToVisibilityConverter.cs" />
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -130,6 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\guitar.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AttachedProperties\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
