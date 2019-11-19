@@ -23,14 +23,6 @@ namespace ClientDesktop
         public MainWindow()
         {
             InitializeComponent();
-            
         }
-
-        private void LinkClick(object sender, RoutedEventArgs e)
-        {
-            LoginPage loginPage = new LoginPage();
-            this.Content = loginPage;
-        }
-        
     }
 }
