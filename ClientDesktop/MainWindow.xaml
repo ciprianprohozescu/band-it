@@ -8,6 +8,7 @@
         Title="MainWindow"
         MinHeight="450"
         MinWidth="800"
+        Icon="favicon.ico"
         >
     <Window.Resources>
         
@@ -73,6 +74,7 @@
                         <RowDefinition SharedSizeGroup="FormGroup" />
                         <RowDefinition SharedSizeGroup="FormGroup" />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Margin="0,5"  Foreground="white" Content="User " VerticalContentAlignment="Center" FontSize="26"
                        HorizontalContentAlignment="Right">
@@ -119,6 +121,14 @@
                             <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.8" ShadowDepth="3" Opacity="0.7"/>
                         </Button.BitmapEffect>
                     </Button>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Foreground="#fff" FontSize="16">
+                        <TextBlock.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </TextBlock.Effect>
+                        Click <Hyperlink Click="LinkClick"> 
+                        here </Hyperlink> to log in
+                    </TextBlock>
 
                 </Grid>
 
