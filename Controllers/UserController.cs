@@ -13,9 +13,11 @@ namespace Controllers
     public class UserController : IUserController
     {
         UsersAccess usersAccess;
+        ISkillController skillController;
         public UserController()
         {
             usersAccess = new UsersAccess();
+            skillController = new SkillController();
         }
         public List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0)
         {
@@ -64,6 +66,12 @@ namespace Controllers
             user.Description = userDB.Description;
             user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
             user.ProfilePicture = userDB.ProfilePicture;
+            user.Skills = new List<Skill>();
+
+            foreach (var skill in userDB.Skills)
+            {
+                user.Skills.Add(skillController.DBToLogic(skill));
+            }
 
             return user;
         }
