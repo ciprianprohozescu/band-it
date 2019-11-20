@@ -61,9 +61,6 @@ namespace DataAccess
                 try
                 {
                     db.Users.Add(user);
-                    Profile profile = new Profile();
-                    profile.User = user;
-                    db.Profiles.Add(new Profile());
                     db.SaveChanges();
                     dbTransaction.Commit();
                 }

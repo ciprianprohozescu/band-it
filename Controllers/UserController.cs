@@ -47,7 +47,7 @@ namespace Controllers
             return filteredUsers;
         }
 
-        public void Add(UserLogic userLogic)
+        public void Add(User userLogic)
         {
             var userAccess = new UsersAccess();
             var userDB = userAccess.FindByUsername(userLogic.Username);
@@ -63,16 +63,20 @@ namespace Controllers
                     userAccess.Add(userDB);
             }
         }
-        public UserLogic GetByEmail(string email)
+        public User GetByEmail(string email)
         {
             var userAccess = new UsersAccess();
             var userDB = userAccess.FindByEmail(email);
             return DBToLogic(userDB);
-        private UserLogic DBToLogic(UserDB userDB, ProfileDB profileDB)
         }
         public User GetByUsername(string username)
         {
             var userDB = usersAccess.FindByUsername(username);
+            return DBToLogic(userDB);
+        }
+        public User GetByID(int id)
+        {
+            var userDB = usersAccess.FindByID(id);
             return DBToLogic(userDB);
         }
 
@@ -88,7 +92,7 @@ namespace Controllers
             return DBToLogic(usersAccess.FindByID(id));
         }
 
-        private UserDB LogicToDB(UserLogic userLogic)
+        private UserDB LogicToDB(User userLogic)
         {
             var userDB = new UserDB();
 
@@ -99,6 +103,18 @@ namespace Controllers
             userDB.Salt = userLogic.Salt;
 
             return userDB;
+        }
+        private User DBToLogic(UserDB userDB)
+        {
+            var userLogic = new User();
+
+            userLogic.ID = userDB.ID;
+            userLogic.Email = userDB.Email;
+            userLogic.Username = userDB.Username;
+            userLogic.Password = userDB.Password;
+            userLogic.Salt = userDB.Salt;
+
+            return userLogic;
         }
     }
 }

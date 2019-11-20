@@ -29,14 +29,10 @@ namespace ServicesWebAPI.Controllers
             userController.GetByEmail(email);
         }
 
-        public List<User> Get(string search = "")
-        {
-            userController = new UserControllerLogic();
-        }
-
         [Route("api/user")]
         public List<User> Get(string search = "", double distance = -1, double markerLat = 0, double markerLng = 0)
         {
+            IUserController userController = new UserControllerLogic();
             if (distance > -1)
             {
                 return userController.Get(search, distance, markerLat, markerLng);
@@ -54,7 +50,8 @@ namespace ServicesWebAPI.Controllers
         [Route("api/user/{id}")]
         public User Get(int id)
         {
-            return userController.Get(id);
+            IUserController userController = new UserControllerLogic();
+            return userController.GetByID(id);
         }
     }
 }

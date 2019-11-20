@@ -137,7 +137,7 @@ namespace ControllersTest
         public void GetByIDTest()
         {
             var userExpected = userController.Get("Ciprian")[0];
-            var userActual = userController.Get(userExpected.ID);
+            var userActual = userController.GetByID(userExpected.ID);
 
             Assert.AreEqual(userExpected.Username, userActual.Username);
         }

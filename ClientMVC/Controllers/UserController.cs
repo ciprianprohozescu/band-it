@@ -96,7 +96,7 @@ namespace ClientMVC.Controllers
 
 
             var content = client.Execute(request).Content;
-            var user = JsonConvert.DeserializeObject<UserLogic>(content);
+            var user = JsonConvert.DeserializeObject<User>(content);
             return Json(!(user == null));
 
         }
@@ -109,14 +109,14 @@ namespace ClientMVC.Controllers
             request.AddParameter("email", Email);
 
             var content = client.Execute(request).Content;
-            var user = JsonConvert.DeserializeObject<UserLogic>(content);
+            var user = JsonConvert.DeserializeObject<User>(content);
 
             return Json(!(user == null));
         }
 
-        private UserLogic MVCToLogic(UserForm userMVC)
+        private User MVCToLogic(UserForm userMVC)
         {
-            var userLogic = new UserLogic();
+            var userLogic = new User();
 
             userLogic.Email = userMVC.Email;
             userLogic.Username = userMVC.Username;
