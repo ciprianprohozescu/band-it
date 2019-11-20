@@ -116,5 +116,31 @@ namespace Controllers
 
             return userLogic;
         }
+
+        private UserLogic DBToLogic(UserDB userDB)
+        {
+            var userLogic = new UserLogic();
+
+            userLogic.ID = userDB.ID;
+            userLogic.Email = userDB.Email;
+            userLogic.Username = userDB.Username;
+            userLogic.Password = userDB.Password;
+            userLogic.Salt = userDB.Salt;
+
+            return userLogic;
+        }
+
+        private UserDB LogicToDB(UserLogic userLogic)
+        {
+            var userDB = new UserDB();
+
+            userDB.ID = userLogic.ID;
+            userDB.Email = userLogic.Email;
+            userDB.Username = userLogic.Username;
+            userDB.Password = userLogic.Password;
+            userDB.Salt = userLogic.Salt;
+
+            return userDB;
+        }
     }
 }
