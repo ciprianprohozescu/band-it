@@ -6,26 +6,32 @@
     ViewBag.Title = "Search";
 }
 
-<form method="get">
-    <div class="form-group">
-        <input type="checkbox" id="dist-checkbox" class="checkbox-inline" onchange="toggleDistanceFilter()" />
-        <label for="distance" id="dist-label" class="text-muted">Maximum distance: 
-        <span id="dist-val"></span></label>
-        <input type="range" min="1" max="100" value="50" class="form-control-range" id="dist-slider" 
-               name="distance" oninput="showDistance(event)" disabled>
+<div class="row">
+    <div class="col-md-4">
+        <form method="get">
+            <div class="form-group">
+                <input type="checkbox" id="dist-checkbox" class="checkbox-inline" onchange="toggleDistanceFilter()" />
+                <label for="distance" id="dist-label" class="text-muted">
+                    Maximum distance:
+                    <span id="dist-val"></span>
+                </label>
+                <input type="range" min="1" max="100" value="50" class="form-control-range" id="dist-slider"
+                       name="distance" oninput="showDistance(event)" disabled>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <input type="hidden" id="marker-lat" name="markerLat" />
+                    <input type="hidden" id="marker-lng" name="markerLng" />
+                    <div id="map"></div>
+                </div>
+            </div>
+            <div class="form-group form-inline">
+                <input type="text" name="Search" class="form-control" value="@Model.Search" />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
     </div>
-    <div class="row form-group">
-        <div class="col-md-6">
-            <input type="hidden" id="marker-lat" name="markerLat" />
-            <input type="hidden" id="marker-lng" name="markerLng" />
-            <div id="map"></div>
-        </div>
-    </div>
-    <div class="form-group form-inline">
-        <input type="text" name="Search" class="form-control" value="@Model.Search" />
-        <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-</form>
+</div>
 
 <h3>Users</h3>
 <table class="table table-striped">

@@ -25,16 +25,15 @@
 
 </head>
 
-<body >
-
-    
-
+<body>
     <!-- Navigation -->
     @RenderPage("components/navbar.cshtml")
-    @RenderBody()
 
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
 
-
+    @RenderSection("scripts", required: false)
 
     <!-- Bootstrap core JavaScript -->
     <script src="Content/vendor/jquery/jquery.min.js"></script>
