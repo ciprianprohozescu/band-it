@@ -48,14 +48,21 @@
         {
             foreach (var item in Model.Users)
             {
-                <tr>
-                    <td>
-                        <b>@item.FirstName @item.LastName</b>
-                        <p></p>
-                        <p>@item.Username</p>
-                        <p>@item.Email</p>
-                    </td>
-                </tr>
+    <tr>
+        <td>
+            <b><Span style="color:red">@item.FirstName @item.LastName </Span></b>
+            <p></p>
+            <p> <span style="color:blue">Username: </span> @item.Username</p>
+            <p> <span style="color:blue"> Email ID: </span> @item.Email</p>
+            <span style="color:blue"> Description: </span> <p>  @item.Description</p>
+            <p> <span style="color:blue"> Skills: </span></p>
+            <p> <span style="color:blue"> Address: </span></p>
+        </td>
+        <td>
+            <p> @item.ProfilePicture</p>
+        </td>
+
+    </tr>
             }
         }
     </tbody>
