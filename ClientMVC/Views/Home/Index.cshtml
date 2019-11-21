@@ -1,31 +1,96 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    Layout = "";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/favicon-32x32.png" />
+    <link rel="icon" type="image/x-icon" href="~/Content/img/favicon-32x32.png" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="~/Content/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/css/landing-page.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- Navigation -->
+    @{ /*RenderPage("components/navbar.cshtml") */}
+
+    <nav class="navbar navbar-dark bg-dark static-top" style="z-index: 2">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="font-size: 32px; ">Band<span style="color:#007bff; font-weight: bold">It!</span></a>
+
+            <form class="form-inline">
+                <input type="email" class="form-control mr-2" placeholder="Email/Username" />
+                <input type="password" class="form-control mr-2" placeholder="Password" />
+                <a class="btn btn-primary" href="#">Log in!</a>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="padding:0">
+        <div class="overlay" style="z-index: 1"></div>
+        <header class="masthead text-white text-center" style="z-index: 2">
+            <div class="container">
+                <div class="row">
+                    <div class="mx-auto col-xl-9" style="padding:30px; background-color:rgba(255, 255, 255, 0.27); border-radius:20px">
+                        <div class=" mx-auto">
+                            <h1 class="mb-5" style="text-shadow:0px 0px 8px rgba(0, 0, 0, 0.55);">Join the community of musicians <br /> from all over the world!</h1>
+                        </div>
+                        <div class="col-md-8 col-lg-7 col-xl-6 mx-auto mb-md-0">
+                            <form>
+                                <div class="form-group">
+
+                                    <input type="text" style="box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.78);"
+                                           class="form-control form-control-lg mb-2 mb-md-0" placeholder="Username">
+                                </div>
+                                <div class="form-group">
+
+                                    <input type="email" style="box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.78);"
+                                           class="form-control form-control-lg mb-2 mb-md-0" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+
+                                    <input type="password" style="box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.78);"
+                                           class="form-control form-control-lg mb-2 mb-md-0" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" style="box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.78);" class="btn btn-block btn-lg btn-primary col-12 col-md-4 offset-md-4 ">Sign up!</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="Content/vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
+
+
+
+<! ---------------------------------------------------------------------------------->

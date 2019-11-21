@@ -49,6 +49,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DumpExtensions, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DumpExtensions.2.0.0\lib\net45\DumpExtensions.dll</HintPath>
@@ -84,12 +88,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UserIndex.xaml.cs">
-      <DependentUpon>UserIndex.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DeleteUser.xaml.cs">
-      <DependentUpon>DeleteUser.xaml</DependentUpon>
-    </Compile>
+
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -97,6 +96,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserIndex.xaml.cs">
+      <DependentUpon>UserIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BoolToVisibilityConverter.cs" />
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -140,7 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClientMVC\ClientMVC.csproj">
-      <Project>{620CF6BA-5876-43F4-BA56-27CE8E60B288}</Project>
+      <Project>{620cf6ba-5876-43f4-ba56-27ce8e60b288}</Project>
       <Name>ClientMVC</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelsDB\ModelsDB.csproj">
@@ -153,16 +159,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
+
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,8 +10,10 @@ namespace ClientMVC.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if(!User.Identity.IsAuthenticated) return View("Index");
+            return View("Logged");
         }
+
 
         public ActionResult About()
         {
