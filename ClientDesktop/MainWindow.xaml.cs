@@ -15,22 +15,16 @@ using System.Windows.Shapes;
 
 namespace ClientDesktop
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            
         }
-
         private void LinkClick(object sender, RoutedEventArgs e)
         {
             LoginPage loginPage = new LoginPage();
             this.Content = loginPage;
         }
-        
     }
 }

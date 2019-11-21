@@ -22,7 +22,7 @@ using ClientMVC.Models;
 
 namespace ClientDesktop
 {
-    public partial class UserIndex : Window
+    public partial class UserIndex : Page
     {
         public UserIndex()
         {
