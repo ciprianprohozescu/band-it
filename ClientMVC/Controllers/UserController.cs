@@ -39,7 +39,7 @@ namespace ClientMVC.Controllers
                 model.Distance = -1;
                 model.DistanceEnabled = false;
             }
-            
+
             var content = client.Execute(request).Content;
             var users = JsonConvert.DeserializeObject<List<User>>(content);
 
@@ -58,12 +58,22 @@ namespace ClientMVC.Controllers
             var model = new UserShow();
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"user/{id}", Method.GET);
+            var request = new RestRequest($"user/{id}", Method.GET);;
 
             var content = client.Execute(request);
             model.User = JsonConvert.DeserializeObject<User>(content.Content);
 
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        { 
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest($"delete/{id}", Method.DELETE);
+            client.Execute(request);
+
+            return RedirectToAction("Index", "User");
         }
     }
 }

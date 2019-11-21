@@ -19,6 +19,7 @@ namespace Models
         public string Description { get; set; }
         public LatLng Location { get; set; }
         public string ProfilePicture { get; set; }
+        public DateTime Deleted { get; set; }
         public List<Skill> Skills { get; set; }
     }
 }
