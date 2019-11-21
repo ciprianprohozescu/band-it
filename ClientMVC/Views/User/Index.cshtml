@@ -1,13 +1,15 @@
 ﻿@model ClientMVC.Models.UserIndex
 
+
+
 <h1> Find musicians </h1>
 
-@{ 
+@{
     ViewBag.Title = "Search";
 }
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-12">
         <form method="get">
             <div class="form-group">
                 <input type="checkbox" id="dist-checkbox" class="checkbox-inline" onchange="toggleDistanceFilter()" />
@@ -85,7 +87,7 @@
 
         function showDistance(event) {
             distanceText.innerText = event.target.value + " km";
-        }        
+        }
 
         function toggleDistanceFilter() {
             if (distanceSlider.hasAttribute('disabled')) {

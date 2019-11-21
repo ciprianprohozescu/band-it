@@ -82,6 +82,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UserIndex.xaml.cs">
+      <DependentUpon>UserIndex.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BoolToVisibilityConverter.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -124,7 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClientMVC\ClientMVC.csproj">
-      <Project>{620CF6BA-5876-43F4-BA56-27CE8E60B288}</Project>
+      <Project>{620cf6ba-5876-43f4-ba56-27ce8e60b288}</Project>
       <Name>ClientMVC</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelsDB\ModelsDB.csproj">

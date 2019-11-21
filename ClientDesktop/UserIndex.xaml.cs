@@ -28,6 +28,7 @@ namespace ClientDesktop
         {
             InitializeComponent();
         }
+
         private void Search_Button_Click(object sender, RoutedEventArgs e)
         {
             string search = SearchText.Text;

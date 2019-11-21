@@ -29,8 +29,12 @@
     <!-- Navigation -->
     @RenderPage("components/navbar.cshtml")
 
-    <div class="container-fluid">
-        @RenderBody()
+    <div class="container-fluid px-0" >
+        <div class="body-content mx-auto col-xl-9 ">
+                
+                     @RenderBody()
+
+        </div>
     </div>
 
     @RenderSection("scripts", required: false)

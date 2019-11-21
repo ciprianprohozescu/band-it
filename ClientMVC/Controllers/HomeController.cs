@@ -10,8 +10,8 @@ namespace ClientMVC.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "BandIt! - Login in or sign up";
-            return View();
+            if(!User.Identity.IsAuthenticated) return View("Index");
+            return View("Logged");
         }
 
 
