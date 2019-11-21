@@ -71,6 +71,17 @@ namespace DataAccessTest
 
             db.Users.Add(user);
 
+            user = new User();
+
+            user.Username = "Radu1337";
+            user.Email = "radu@gmail.com";
+            user.Password = "1234";
+            user.Salt = "sgsefwer";
+            user.FirstName = "Radu";
+            user.LastName = "Matusa";
+
+            db.Users.Add(user);
+
             db.SaveChanges();
             #endregion
         }
@@ -135,6 +146,18 @@ namespace DataAccessTest
             Assert.AreEqual("andrei@gmail.com", user.Email);
             Assert.AreEqual("Andrei", user.FirstName);
             Assert.AreEqual("Mataoanu", user.LastName);
+            #endregion
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var user = usersAccess.FindByUsername("Radu1337");
+            usersAccess.Delete(user.ID);
+            var user2 = usersAccess.FindByUsername("Radu1337");
+
+            #region Assert
+            Assert.IsNull(user2);
             #endregion
         }
 

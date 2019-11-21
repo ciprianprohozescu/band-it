@@ -27,6 +27,7 @@ namespace DataAccess
         {
             var user = db.Users
                 .Where(x => x.Username == username)
+                .Where(x => x.Deleted == null)
                 .FirstOrDefault<User>();
 
             return user;
@@ -35,6 +36,7 @@ namespace DataAccess
         {
             var user = db.Users
                 .Where(x => x.ID == id)
+                .Where(x => x.Deleted == null)
                 .FirstOrDefault<User>();
 
             return user;
@@ -42,6 +44,12 @@ namespace DataAccess
         public void AddUser(User user)
         {
             db.Users.Add(user);
+            db.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            var user = db.Users.SingleOrDefault(u => u.ID == id);
+            user.Deleted = DateTime.Now;
             db.SaveChanges();
         }
     }

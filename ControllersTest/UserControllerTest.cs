@@ -98,6 +98,20 @@ namespace ControllersTest
 
             db.Users.Add(user);
 
+            user = new UserDB();
+
+            user.Username = "Radu1337";
+            user.Email = "radu@gmail.com";
+            user.Password = "1234";
+            user.Salt = "sgsefwer";
+
+            user.FirstName = "Radu";
+            user.LastName = "Matusa";
+            user.Latitude = (decimal)53.003310;
+            user.Longitude = (decimal)13.982130;
+
+            db.Users.Add(user);
+
             db.SaveChanges();
             #endregion
         }
@@ -143,6 +157,15 @@ namespace ControllersTest
         }
 
         [TestMethod]
+        public void GetByUsernameTest()
+        {
+            var user = userController.GetByUsername("Ciprian1337");
+            #region Assert
+            Assert.AreEqual(user.Email, "ciprian@gmail.com");
+            #endregion
+        }
+
+        [TestMethod]
         public void GetByDistanceTest()
         {
             var distance = 75.0;
@@ -153,6 +176,17 @@ namespace ControllersTest
             #region Assert
             Assert.AreEqual(1, users.Count);
             Assert.AreEqual("Andrei1337", users[0].Username);
+            #endregion
+        }
+        
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var user = userController.GetByUsername("Radu1337");
+            userController.Delete(user.ID);
+            var user2 = userController.GetByUsername("Radu1337");
+            #region Assert
+            Assert.IsNull(user2);
             #endregion
         }
 
