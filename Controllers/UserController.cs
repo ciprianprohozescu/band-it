@@ -64,6 +64,7 @@ namespace Controllers
         {
             return DBToLogic(usersAccess.FindByID(id));
         }
+
         private User DBToLogic(UserDB userDB)
         {
             var user = new User();
@@ -80,31 +81,37 @@ namespace Controllers
                 user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
                 user.ProfilePicture = userDB.ProfilePicture;
 
-            user.Skills = new List<Skill>();
+                user.Skills = new List<Skill>();
 
-            foreach (var skill in userDB.Skills)
-            {
-                user.Skills.Add(skillController.DBToLogic(skill));
+                foreach (var skill in userDB.Skills)
+                {
+                    user.Skills.Add(skillController.DBToLogic(skill));
+                }
+
+                return user;
             }
-
-            return user;
+            return null;
+        }
         private UserDB LogicToDB(User user)
         {
             var userDB = new UserDB();
+            if (user != null)
+            {
+                userDB.ID = user.ID;
+                userDB.Username = user.Username;
+                userDB.Email = user.Email;
+                userDB.Password = user.Password;
+                userDB.Salt = user.Salt;
+                userDB.FirstName = user.FirstName;
+                userDB.LastName = user.LastName;
+                userDB.Description = user.Description;
+                userDB.Latitude = (decimal)user.Location.Latitude;
+                userDB.Longitude = (decimal)user.Location.Longitude;
+                userDB.ProfilePicture = user.ProfilePicture;
 
-            userDB.ID = user.ID;
-            userDB.Username = user.Username;
-            userDB.Email = user.Email;
-            userDB.Password = user.Password;
-            userDB.Salt = user.Salt;
-            userDB.FirstName = user.FirstName;
-            userDB.LastName = user.LastName;
-            userDB.Description = user.Description;
-            userDB.Latitude = (decimal)user.Location.Latitude;
-            userDB.Longitude = (decimal)user.Location.Longitude;
-            userDB.ProfilePicture = user.ProfilePicture;
-
-            return userDB;
+                return userDB;
+            }
+            return null;
         }
     }
 }
