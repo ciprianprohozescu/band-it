@@ -22,12 +22,13 @@ using ClientMVC.Models;
 
 namespace ClientDesktop
 {
-    public partial class UserIndex : Window
+    public partial class UserIndex : Page
     {
         public UserIndex()
         {
             InitializeComponent();
         }
+
         private void Search_Button_Click(object sender, RoutedEventArgs e)
         {
             string search = SearchText.Text;
