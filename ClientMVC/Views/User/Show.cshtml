@@ -6,6 +6,39 @@
 
 <h1>@Model.User.Username</h1>
 
+<h2>Skills</h2>
+@if (Model.User.Skills.Count() == 0)
+{
+    <p>No skills found.</p>
+}
+else
+{
+    foreach (var item in Model.User.Skills)
+    {
+        if (item.ID == 1)
+        {
+            <ul>
+                <li><img src="~/Content/img/guitarist.jpg" width="25" height="25"/>@item.Name</li>
+            </ul>
+        }
+        else if (item.ID == 2)
+        {
+            <ul>
+                <li><img src="~/Content/img/drum.jpg" width="25" height="25"/>@item.Name</li>
+            </ul>
+        }
+        else if (item.ID == 3)
+        {
+            <ul>
+                <li><img src="~/Content/img/piano.jpg" width="25" height="25"/>@item.Name</li>
+            </ul>
+        }
+        else if (item.ID == 4)
+        {
+            <ul>
+                <li><img src="~/Content/img/trumpet.jpg" width="25" height="25"/>@item.Name</li>
+            </ul>
+        }
 
 @using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit="return deleteClicked();" }))
 {
