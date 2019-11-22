@@ -5,24 +5,110 @@
 }
 
 <div class="row">
-    <div class="col-md-4">
-        <img src="~/Content/Images/profile-placeholder.png" />
+    <div class="col-xs-3">
+        <img src="~/Content/Images/profile-placeholder.png" style="margin-top: 3vh" />
     </div>
-    <div class="col-md-8">
-        <div class="row">
-            <h1>@Model.User.Username <span class="text-muted" id="full-name">(@Model.User.FirstName @Model.User.LastName)</span></h1>
+
+    <div class="col-xs-9">
+        <h2>@Model.User.Username <span class="text-muted" id="full-name">(@Model.User.FirstName @Model.User.LastName)</span></h2>
+        <div style="max-height: 30vh; overflow-y: scroll;">
+            @Model.User.Description
         </div>
     </div>
 </div>
 
-@section scripts{
+<div class="row" style="margin-top: 3vh">
+    <div class="col-sm-9">
+        <div class="row">
+            <div class="col-sm-6">
+                <div>
+                    <h4>Home location</h4>
+                    <img src="~/Content/Images/map-placeholder.png" />
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div>
+                    <h4>Skills</h4>
+                    <ul>
+                        <li>Guitarist</li>
+                        <li>Pianist</li>
+                        <li>Vocalist</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div>
+                    <h4>Invitations</h4>
+                    <table class="table-striped">
+                        <tr>
+                            <td>Hello</td>
+                        </tr>
+                        <tr>
+                            <td>Hej</td>
+                        </tr>
+                        <tr>
+                            <td>Hellojsa</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div>
+                    <h4>Applications</h4>
+                    <table class="table-striped">
+                        <tr>
+                            <td>Hello</td>
+                        </tr>
+                        <tr>
+                            <td>Hej</td>
+                        </tr>
+                        <tr>
+                            <td>Hellojsa</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div>
+            <h4>Music</h4>
+            <ul>
+                <li>file1.mp3</li>
+                <li>file2.wav</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4>Gallery</h4>
+        <div>
+        @{
+            Html.RenderPartial("_Gallery");
+        }
+        </div>
+    </div>
+</div>
+
+@section styles{
     <style>
         img {
             width: 100%;
-            height: auto;
         }
     </style>
 
+    @Styles.Render("~/Content/gallery.css")
+}
+
+@section scripts{
     <script type="text/javascript">
         var fullName = document.getElementById('full-name');
 
@@ -30,6 +116,8 @@
             fullName.style.display = 'none';
         }
     </script>
+
+    @Scripts.Render("~/Scripts/gallery.js")
 }
 
 
