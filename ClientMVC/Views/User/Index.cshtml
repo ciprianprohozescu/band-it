@@ -36,6 +36,11 @@
 </div>
 
 <h3>Users</h3>
+<style>
+    table, tr, td, th {
+        border: 2px solid black;
+    }
+</style>
 <table class="table table-striped">
     <tbody>
         @if (Model.Users.Count() == 0)
@@ -48,23 +53,34 @@
         {
             foreach (var item in Model.Users)
             {
-    <tr>
-        <td>
-            <b><Span style="color:red">@item.FirstName @item.LastName </Span></b>
-            <p></p>
-            <p> <span style="color:blue">Username: </span> @item.Username</p>
-            <p> <span style="color:blue"> Email ID: </span> @item.Email</p>
-            <span style="color:blue"> Description: </span> <p>  @item.Description</p>
-            <p> <span style="color:blue"> Skills: </span></p>
-            <p> <span style="color:blue"> Address: </span></p>
-        </td>
-        <td>
-            <p> @item.ProfilePicture</p>
-        </td>
+               
+                <tr>
+                    <td>
+                        <b><Span style="color:red">@item.FirstName @item.LastName </Span></b>
+                        <p></p>
+                        <p> <span style="color:orangered ">Username: </span> @item.Username</p>
+                        <p> <span style="color:orangered"> Email ID: </span> @item.Email</p>
+                        <span style="color:orangered"> Description: </span> <p>  @item.Description</p>
+                        {
+                        foreach (var item in Model.Skills)
+                        {
+                        <p> <span style="color:orangered"> Skills:@item.Skills </span></p>
+                        }
+                        }
 
-    </tr>
+
+                        @Html.ActionLink("Profile Page", "Show")
+                    </td>
+                    <td align="center">
+                        <p> @item.ProfilePicture</p>
+                    </td>
+
+
+                </tr>
+
             }
         }
+
     </tbody>
 </table>
 
