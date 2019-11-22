@@ -184,7 +184,6 @@
     <Content Include="Content\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Content\vendor\simple-line-icons\css\simple-line-icons.css" />
     <Content Include="Content\vendor\simple-line-icons\fonts\Simple-Line-Icons.svg" />
-    <Content Include="Content\Images\profile-placeholder.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -269,7 +268,6 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Show.cshtml" />
     <Content Include="Views\Home\Logged.cshtml" />
-    <Content Include="Views\Shared\_Gallery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
