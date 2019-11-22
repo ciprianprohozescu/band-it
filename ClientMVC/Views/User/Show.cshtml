@@ -7,6 +7,7 @@
 <h1>@Model.User.Username</h1>
 
 <h2>Skills</h2>
+
 @if (Model.User.Skills.Count() == 0)
 {
     <p>No skills found.</p>
@@ -26,9 +27,135 @@ else
     <input type="submit" class="btn btn-danger" value="Delete your account" />
 }
 
+<div class="row">
+    <div class="col-md-3">
+        <img src="~/Content/Images/profile-placeholder.png" style="margin-top: 3vh" />
+    </div>
+
+    <div class="col-md-9">
+        <h2>@Model.User.Username <span class="text-muted" id="full-name">(@Model.User.FirstName @Model.User.LastName)</span></h2>
+        <div style="max-height: 30vh; overflow-y: scroll;">
+            @Model.User.Description
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 3vh">
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <h4>Home location</h4>
+                    <img src="~/Content/Images/map-placeholder.png" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div>
+                    <h4>Skills</h4>
+                    <ul>
+                        <li>Guitarist</li>
+                        <li>Pianist</li>
+                        <li>Vocalist</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <h4>Invitations</h4>
+                    <table class="table-striped">
+                        <tr>
+                            <td>Hello</td>
+                        </tr>
+                        <tr>
+                            <td>Hej</td>
+                        </tr>
+                        <tr>
+                            <td>Hellojsa</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div>
+                    <h4>Applications</h4>
+                    <table class="table-striped">
+                        <tr>
+                            <td>Hello</td>
+                        </tr>
+                        <tr>
+                            <td>Hej</td>
+                        </tr>
+                        <tr>
+                            <td>Hellojsa</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div>
+            <h4>Music</h4>
+            <ul>
+                <li>file1.mp3</li>
+                <li>file2.wav</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h4>Gallery</h4>
+        <div>
+            @{
+                Html.RenderPartial("_Gallery");
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="delete-form">
+            @using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
+            {
+                <input type="submit" class="btn btn-danger" value="Delete your account" />
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        img {
+            width: 100%;
+        }
+
+        .delete-form {
+            margin-left: 37.5%; 
+            width: 50%; 
+            margin-top: 10vh
+        }
+    </style>
+
+    @Styles.Render("~/Content/gallery.css")
+}
+
 @section scripts{
     <script type="text/javascript">
+        var fullName = document.getElementById('full-name');
         var formDelete = document.getElementById('form-delete');
+
+        if ("@Model.User.FirstName" == "" && "@Model.User.LastName" == "") {
+            fullName.style.display = 'none';
+        }
 
         function deleteClicked() {
             if (confirm('Are you sure you want to permanently delete your account?')) {
@@ -38,3 +165,5 @@ else
         }
     </script>
 }
+
+@Scripts.Render("~/Scripts/gallery.js")
