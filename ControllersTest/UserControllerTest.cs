@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Models;
 using ModelsDB;
+using DataAccess;
 using UserLogic = Models.User;
 using UserDB = ModelsDB.User;
 using Controllers;
@@ -18,6 +19,7 @@ namespace ControllersTest
     [TestClass]
     public class UserControllerTest
     {
+        static TestHelpers testHelpers;
         static IUserController userController;
         static ModelsDB.BandItEntities db;
 
@@ -64,56 +66,12 @@ namespace ControllersTest
         [ClassInitialize()]
         public static void Initialize(TestContext testContext) 
         {
+            testHelpers = new TestHelpers();
             userController = new UserController();
             db = new ModelsDB.BandItEntities();
 
-            #region Test data
-            db.Users.RemoveRange(db.Users.ToList());
-
-            var user = new UserDB();
-
-            user.Username = "Andrei1337";
-            user.Email = "andrei@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
-
-            user.FirstName = "Andrei";
-            user.LastName = "Mataoanu";
-            user.Latitude = (decimal)57.006620;
-            user.Longitude = (decimal)9.879727;
-
-            db.Users.Add(user);
-
-            user = new UserDB();
-
-            user.Username = "Ciprian1337";
-            user.Email = "ciprian@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
-
-            user.FirstName = "Ciprian";
-            user.LastName = "Prohozescu";
-            user.Latitude = (decimal)52.006620;
-            user.Longitude = (decimal)14.879727;
-
-            db.Users.Add(user);
-
-            user = new UserDB();
-
-            user.Username = "Radu1337";
-            user.Email = "radu@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
-
-            user.FirstName = "Radu";
-            user.LastName = "Matusa";
-            user.Latitude = (decimal)53.003310;
-            user.Longitude = (decimal)13.982130;
-
-            db.Users.Add(user);
-
-            db.SaveChanges();
-            #endregion
+            testHelpers.ClearData();
+            testHelpers.InsertTestData();
         }
 
         [TestMethod]
@@ -193,9 +151,7 @@ namespace ControllersTest
         [ClassCleanup()]
         public static void Cleanup()
         {
-            db.Users.RemoveRange(db.Users.ToList());
-            db.SaveChanges();
-        
+            testHelpers.ClearData();
         }
     }
 }

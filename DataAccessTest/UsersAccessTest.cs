@@ -15,6 +15,7 @@ namespace DataAccessTest
     [TestClass]
     public class UsersAccessTest
     {
+        static TestHelpers testHelpers;
         static UsersAccess usersAccess;
         static BandItEntities db;
 
@@ -43,47 +44,12 @@ namespace DataAccessTest
         [ClassInitialize]
         public static void Initialize(TestContext context)
         {
+            testHelpers = new TestHelpers();
             usersAccess = new UsersAccess();
             db = new BandItEntities();
 
-            #region Test data
-            db.Users.RemoveRange(db.Users.ToList());
-
-            var user = new User();
-
-            user.Username = "Andrei1337";
-            user.Email = "andrei@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
-            user.FirstName = "Andrei";
-            user.LastName = "Mataoanu";
-
-            db.Users.Add(user);
-            
-            user = new User();
-
-            user.Username = "Ciprian1337";
-            user.Email = "ciprian@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
-            user.FirstName = "Ciprian";
-            user.LastName = "Prohozescu";
-
-            db.Users.Add(user);
-
-            user = new User();
-
-            user.Username = "Radu1337";
-            user.Email = "radu@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
-            user.FirstName = "Radu";
-            user.LastName = "Matusa";
-
-            db.Users.Add(user);
-
-            db.SaveChanges();
-            #endregion
+            testHelpers.ClearData();
+            testHelpers.InsertTestData();
         }
 
         #region Additional test attributes
@@ -177,9 +143,7 @@ namespace DataAccessTest
         [ClassCleanup]
         public static void Cleanup()
         {
-            db = new BandItEntities();
-            db.Users.RemoveRange(db.Users.ToList());
-            db.SaveChanges();
+            testHelpers.ClearData();
         }
     }
 }
