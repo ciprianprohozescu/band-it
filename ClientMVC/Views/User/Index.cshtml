@@ -40,6 +40,11 @@
     table, tr, td, th {
         border: 2px solid black;
     }
+
+    tr{
+        cursor:pointer;
+        
+    }
 </style>
 <table class="table table-striped">
     <tbody>
@@ -54,21 +59,19 @@
             foreach (var item in Model.Users)
             {
                
-                <tr>
+                <tr onclick="location.href = '@Url.Action("Show", new {id = item.ID})'">
                     <td>
                         <b><Span style="color:red">@item.FirstName @item.LastName </Span></b>
                         <p></p>
                         <p> <span style="color:orangered ">Username: </span> @item.Username</p>
                         <p> <span style="color:orangered"> Email ID: </span> @item.Email</p>
                         <span style="color:orangered"> Description: </span> <p>  @item.Description</p>
-                        <p> <span style="color:orangered"> Skills:</span>@foreach (var skill in item.Skills) {<li>@skill.Name</li> } </p>
-                        @Html.ActionLink("Profile Page", "Show")
+                        <p><span style="color:orangered"> Skills:</span>@foreach (var skill in item.Skills) {<ul><li>@skill.Name</li></ul> } </p>
+                       
                     </td>
                     <td align="center">
                         <p> @item.ProfilePicture</p>
                     </td>
-
-
                 </tr>
 
             }
@@ -117,6 +120,8 @@
             }
         }
     </script>
+
+   
 
     <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
 }
