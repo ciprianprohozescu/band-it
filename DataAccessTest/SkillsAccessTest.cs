@@ -41,6 +41,7 @@ namespace DataAccessTest
             skillsAccess = new SkillsAccess();
             db = new BandItEntities();
 
+            #region Test data
             db.Skills.RemoveRange(db.Skills.ToList());
 
             var skill = new Skill();
@@ -52,7 +53,30 @@ namespace DataAccessTest
             db.Skills.Add(skill);
 
             db.SaveChanges();
+            #endregion
         }
+
+        #region Additional test attributes
+        //
+        // You can use the following additional attributes as you write your tests:
+        //
+        // Use ClassInitialize to run code before running the first test in the class
+        // [ClassInitialize()]
+        // public static void MyClassInitialize(TestContext testContext) { }
+        //
+        // Use ClassCleanup to run code after all tests in a class have run
+        // [ClassCleanup()]
+        // public static void MyClassCleanup() { }
+        //
+        // Use TestInitialize to run code before running each test 
+        // [TestInitialize()]
+        // public void MyTestInitialize() { }
+        //
+        // Use TestCleanup to run code after each test has run
+        // [TestCleanup()]
+        // public void MyTestCleanup() { }
+        //
+        #endregion
 
         [TestMethod]
         public void GetAllSkillsTest()
@@ -65,12 +89,6 @@ namespace DataAccessTest
             Assert.AreEqual("Vocalist", skills[1].Name);
         }
 
-        //[TestMethod]
-        //public void GetByNameTest()
-        //{
-        //    var skill = skillsAccess.GetByName("");
-        //}
-
         [TestMethod]
         public void GetByIDTest()
         {
@@ -79,7 +97,7 @@ namespace DataAccessTest
 
             Assert.AreEqual(skillExpected.Name, skillActual.Name);
 
-            skillActual = skillsAccess.GetByID(1);
+            skillActual = skillsAccess.GetByID(-5);
 
             Assert.IsNull(skillActual);
         }
