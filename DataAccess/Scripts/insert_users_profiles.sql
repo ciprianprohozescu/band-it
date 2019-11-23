@@ -1,6 +1,7 @@
 use BandIt;
 
 delete from Users;
+delete from Skills;
 
 insert into Users (Username, Email, Password, Salt, FirstName, LastName, Latitude, Longitude) 
 values ('greg79', 'greglarrison@yahoo.com', 'aghtswh', 'ihow5ihesto', 'Greg', 'Larrison', 56.982860, 9.638097);
@@ -32,4 +33,15 @@ values ('christianchristian', 'christianolssen@gmail.com', 'jiogwrhgoi', 'ihow5i
 insert into Users (Username, Email, Password, Salt, FirstName, LastName, Latitude, Longitude) 
 values ('piapia', 'piaolssen@gmail.com', 'jiogwrhgoi', 'ihow5ihesto', 'Pia', 'Olssen', 55.580717, 12.926846);
 
+insert into Skills values ('Guitarist', null);
+
+insert into Skills values ('Drummer', null);
+
+insert into Skills values ('Pianist', null);
+
+insert into Skills values ('Trumpeter', null);
+
+
+
 select * from Users;
+select * from Skills;

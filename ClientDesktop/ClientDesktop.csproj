@@ -151,10 +151,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClientMVC\ClientMVC.csproj">
-      <Project>{620cf6ba-5876-43f4-ba56-27ce8e60b288}</Project>
-      <Name>ClientMVC</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ModelsDB\ModelsDB.csproj">
       <Project>{F80AD705-FB45-40C1-A124-67C75DD6DA60}</Project>
       <Name>ModelsDB</Name>

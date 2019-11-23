@@ -149,12 +149,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\landing-page.css" />
     <Content Include="Content\gulpfile.js" />
-    <Content Include="Content\img\drum.jpg" />
+    <Content Include="Content\img\Drummer.jpg" />
     <Content Include="Content\img\favicon-32x32.png" />
     <Content Include="Content\img\guitar.jpg" />
-    <Content Include="Content\img\guitarist.jpg" />
-    <Content Include="Content\img\piano.jpg" />
-    <Content Include="Content\img\trumpet.jpg" />
+    <Content Include="Content\img\Guitarist.jpg" />
+    <Content Include="Content\img\Pianist.jpg" />
+    <Content Include="Content\img\Trumpeter.jpg" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.css" />

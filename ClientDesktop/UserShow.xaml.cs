@@ -16,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using User = Models.User;
-using ClientMVC.Models;
 
 namespace ClientDesktop
 {
@@ -30,15 +29,14 @@ namespace ClientDesktop
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             int id = Convert.ToInt32(SearchText.Text);
-            var model = new ClientMVC.Models.UserShow();
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"user/{id}", Method.GET);
 
             var content = client.Execute(request);
-            model.User = JsonConvert.DeserializeObject<User>(content.Content);
+            var user = JsonConvert.DeserializeObject<User>(content.Content);
 
-            //listSkills.ItemsSource = model;
+            listSkills.ItemsSource = user.Skills;
         }
     }
 }

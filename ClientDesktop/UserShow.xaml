@@ -16,7 +16,8 @@
         </ListView>
         <Label Content="Skills" HorizontalAlignment="Left" Margin="37,93,0,0" VerticalAlignment="Top" Width="91"/>
         <TextBox Name="SearchText" HorizontalAlignment="Left" Height="23" Margin="37,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Search User" HorizontalAlignment="Left" Margin="180,53,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Search" HorizontalAlignment="Left" Margin="180,53,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Label Content="Insert User ID" HorizontalAlignment="Left" Margin="37,18,0,0" VerticalAlignment="Top" Width="91"/>
 
     </Grid>
 </Window>
