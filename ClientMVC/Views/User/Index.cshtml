@@ -61,14 +61,7 @@
                         <p> <span style="color:orangered ">Username: </span> @item.Username</p>
                         <p> <span style="color:orangered"> Email ID: </span> @item.Email</p>
                         <span style="color:orangered"> Description: </span> <p>  @item.Description</p>
-                        {
-                        foreach (var item in Model.Skills)
-                        {
-                        <p> <span style="color:orangered"> Skills:@item.Skills </span></p>
-                        }
-                        }
-
-
+                        <p> <span style="color:orangered"> Skills:</span>@foreach (var skill in item.Skills) {<li>@skill.Name</li> } </p>
                         @Html.ActionLink("Profile Page", "Show")
                     </td>
                     <td align="center">
