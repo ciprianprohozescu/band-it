@@ -14,6 +14,7 @@ namespace DataAccessTest
     [TestClass]
     public class SkillsAccessTest
     {
+        static TestHelpers testHelpers;
         static SkillsAccess skillsAccess;
         static BandItEntities db;
 
@@ -38,22 +39,24 @@ namespace DataAccessTest
         [ClassInitialize]
         public static void Initialize(TestContext context)
         {
+            testHelpers = new TestHelpers();
             skillsAccess = new SkillsAccess();
             db = new BandItEntities();
 
-            #region Test data
-            db.Skills.RemoveRange(db.Skills.ToList());
+            //db.Skills.RemoveRange(db.Skills.ToList());
 
-            var skill = new Skill();
-            skill.Name = "Vocalist";
-            db.Skills.Add(skill);
+            //var skill = new Skill();
+            //skill.Name = "Vocalist";
+            //db.Skills.Add(skill);
 
-            skill = new Skill();
-            skill.Name = "Triangle";
-            db.Skills.Add(skill);
+            //skill = new Skill();
+            //skill.Name = "Triangle";
+            //db.Skills.Add(skill);
 
-            db.SaveChanges();
-            #endregion
+            //db.SaveChanges();
+
+            testHelpers.ClearData();
+            testHelpers.InsertTestData();
         }
 
         #region Additional test attributes
@@ -105,9 +108,11 @@ namespace DataAccessTest
         [ClassCleanup]
         public static void Cleanup()
         {
-            db = new BandItEntities();
-            db.Skills.RemoveRange(db.Skills.ToList());
-            db.SaveChanges();
+            //db = new BandItEntities();
+            //db.Skills.RemoveRange(db.Skills.ToList());
+            //db.SaveChanges();
+
+            testHelpers.ClearData();
         }
     }
 }

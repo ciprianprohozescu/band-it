@@ -12,6 +12,11 @@
 
         <Button Content="Search" HorizontalAlignment="Left" Margin="178,54,0,0" VerticalAlignment="Top" Width="75" Height="23" x:Name="Search_Button" Click="Search_Button_Click"/>
         <DataGrid Name="dataGridUsers" CanUserAddRows="false" ItemsSource="{Binding Items}" AutoGenerateColumns="False" IsReadOnly="True" Margin="40,102,148.6,74">
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                </Style>
+            </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name" Width="150" />
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name" Width="150" />

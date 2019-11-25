@@ -38,9 +38,13 @@ namespace ClientDesktop
 
             var users = JsonConvert.DeserializeObject<List<User>>(content);
 
-          
-
             dataGridUsers.ItemsSource = users;
+        }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UserShow userShow = new UserShow((User)dataGridUsers.SelectedItem);
+            this.Content = userShow;
         }
     }
 }

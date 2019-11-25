@@ -19,8 +19,9 @@ else
             <li>@item.Name</li>
         }
     </ul>
-    
-@using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit="return deleteClicked();" }))
+}
+
+@using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
 {
     <input type="submit" class="btn btn-danger" value="Delete your account" />
 }

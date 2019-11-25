@@ -2,6 +2,7 @@ use BandIt;
 
 delete from Users;
 delete from Skills;
+delete from UserSkills;
 
 insert into Users (Username, Email, Password, Salt, FirstName, LastName, Latitude, Longitude) 
 values ('greg79', 'greglarrison@yahoo.com', 'aghtswh', 'ihow5ihesto', 'Greg', 'Larrison', 56.982860, 9.638097);
@@ -33,15 +34,33 @@ values ('christianchristian', 'christianolssen@gmail.com', 'jiogwrhgoi', 'ihow5i
 insert into Users (Username, Email, Password, Salt, FirstName, LastName, Latitude, Longitude) 
 values ('piapia', 'piaolssen@gmail.com', 'jiogwrhgoi', 'ihow5ihesto', 'Pia', 'Olssen', 55.580717, 12.926846);
 
-insert into Skills values ('Guitarist', null);
+insert into Skills (Name) 
+values ('Guitarist');
 
-insert into Skills values ('Drummer', null);
+insert into Skills (Name)
+values ('Drummer');
 
-insert into Skills values ('Pianist', null);
+insert into Skills (Name)
+values ('Pianist');
 
-insert into Skills values ('Trumpeter', null);
+insert into Skills (Name)
+values ('Trumpeter');
 
+insert into UserSkills (UserID, SkillID) 
+values ((select ID from Users where Username = 'greg79'), (select ID from Skills where Name = 'Guitarist'));
 
+insert into UserSkills (UserID, SkillID) 
+values ((select ID from Users where Username = 'greg79'), (select ID from Skills where Name = 'Drummer'));
+
+insert into UserSkills (UserID, SkillID) 
+values ((select ID from Users where Username = 'michaelcoffee'), (select ID from Skills where Name = 'Guitarist'));
+
+insert into UserSkills (UserID, SkillID) 
+values ((select ID from Users where Username = 'marthaaa'), (select ID from Skills where Name = 'Pianist'));
+
+insert into UserSkills (UserID, SkillID) 
+values ((select ID from Users where Username = 'nadeem'), (select ID from Skills where Name = 'Trumpeter'));
 
 select * from Users;
 select * from Skills;
+select * from UserSkills;

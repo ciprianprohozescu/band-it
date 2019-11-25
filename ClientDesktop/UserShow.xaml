@@ -1,4 +1,4 @@
-﻿<Window x:Class="ClientDesktop.UserShow"
+﻿<Page x:Class="ClientDesktop.UserShow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,9 +15,6 @@
             </ListView.View>
         </ListView>
         <Label Content="Skills" HorizontalAlignment="Left" Margin="37,93,0,0" VerticalAlignment="Top" Width="91"/>
-        <TextBox Name="SearchText" HorizontalAlignment="Left" Height="23" Margin="37,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Search" HorizontalAlignment="Left" Margin="180,53,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Label Content="Insert User ID" HorizontalAlignment="Left" Margin="37,18,0,0" VerticalAlignment="Top" Width="91"/>
 
     </Grid>
-</Window>
+</Page>

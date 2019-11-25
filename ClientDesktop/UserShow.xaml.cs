@@ -19,23 +19,15 @@ using User = Models.User;
 
 namespace ClientDesktop
 {
-    public partial class UserShow : Window
+    public partial class UserShow : Page
     {
-        public UserShow()
+        public User user;
+
+        public UserShow(User user)
         {
             InitializeComponent();
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            int id = Convert.ToInt32(SearchText.Text);
-
-            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"user/{id}", Method.GET);
-
-            var content = client.Execute(request);
-            var user = JsonConvert.DeserializeObject<User>(content.Content);
-
+            this.user = user;
             listSkills.ItemsSource = user.Skills;
         }
     }
