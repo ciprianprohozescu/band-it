@@ -1,6 +1,5 @@
 use BandIt;
 
-
 drop table if exists Invites;
 drop table if exists Notifications;
 drop table if exists NotificationTypes;
@@ -164,8 +163,8 @@ create table Skills (
 );
 
 create table UserSkills (
-	UserID int foreign key references Users(ID),
-	SkillID int foreign key references Skills(ID),
+	UserID int foreign key references Users(ID) on delete cascade,
+	SkillID int foreign key references Skills(ID) on delete cascade,
 	primary key (UserID, SkillID)
 );
 

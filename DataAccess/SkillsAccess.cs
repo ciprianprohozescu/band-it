@@ -18,5 +18,19 @@ namespace DataAccess
                          select skill;
             return skills.ToList<Skill>();
         }
+        public Skill GetByName(string name)
+        {
+            var skill = db.Skills
+                .Where(s => s.Name == name)
+                .FirstOrDefault<Skill>();
+            return skill;
+        }
+        public Skill GetByID(int id)
+        {
+            var skill = db.Skills
+                .Where(s => s.ID == id)
+                .FirstOrDefault<Skill>();
+            return skill;
+        }
     }
 }

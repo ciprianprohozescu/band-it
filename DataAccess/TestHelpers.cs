@@ -18,6 +18,7 @@ namespace DataAccess
         public void ClearData()
         {
             db.Users.RemoveRange(db.Users.ToList());
+            db.Skills.RemoveRange(db.Skills.ToList());
             db.SaveChanges();
         }
         public void InsertTestData()
@@ -60,6 +61,16 @@ namespace DataAccess
             user.Longitude = (decimal)13.982130;
 
             db.Users.Add(user);
+
+            var skill = new Skill();
+            skill.Name = "Vocalist";
+
+            db.Skills.Add(skill);
+
+            skill = new Skill();
+            skill.Name = "Triangle";
+
+            db.Skills.Add(skill);
 
             db.SaveChanges();
         }

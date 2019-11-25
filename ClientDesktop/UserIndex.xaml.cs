@@ -18,11 +18,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using User = Models.User;
-using ClientMVC.Models;
 
 namespace ClientDesktop
 {
-    public partial class UserIndex : Page
+    public partial class UserIndex : Window
     {
         public UserIndex()
         {
@@ -39,11 +38,13 @@ namespace ClientDesktop
 
             var users = JsonConvert.DeserializeObject<List<User>>(content);
 
-            var model = new ClientMVC.Models.UserIndex();
-            model.Search = search;
-            model.Users = users;
-
             dataGridUsers.ItemsSource = users;
+        }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UserShow userShow = new UserShow((User)dataGridUsers.SelectedItem);
+            this.Content = userShow;
         }
     }
 }
