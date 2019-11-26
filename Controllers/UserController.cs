@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DataAccess;
 using UserDB = ModelsDB.User;
 using Models;
+using System.Configuration;
 
 namespace Controllers
 {
@@ -59,7 +60,8 @@ namespace Controllers
                 if(userDB == null)
                 {
                     userLogic.Salt = StringCipher.RandomString();
-                    userLogic.Password = StringCipher.Encrypt(userLogic.Password, userLogic.Salt);
+                    //TODO: Move passphrase (and Google Maps API) to secure location
+                    userLogic.Password = StringCipher.Encrypt(userLogic.Password + userLogic.Salt, "hello");
                     userDB = LogicToDB(userLogic);
                     userAccess.Add(userDB);
                 }
@@ -107,8 +109,14 @@ namespace Controllers
         {
             var user = usersAccess.FindByEmailOrUsername(username);
 
-            // TODO: Decrypt and un-salt the password
-            if (user == null || user.Password != password)
+            if (user == null)
+            {
+                return null;
+            }
+
+            var saltedPassword = StringCipher.Decrypt(user.Password, "hello");
+
+            if (saltedPassword != password + user.Salt)
             {
                 return null;
             }
@@ -129,7 +137,10 @@ namespace Controllers
                 user.FirstName = userDB.FirstName;
                 user.LastName = userDB.LastName;
                 user.Description = userDB.Description;
-                user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
+                if (userDB.Latitude != null && userDB.Longitude != null)
+                {
+                    user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
+                }
                 user.ProfilePicture = userDB.ProfilePicture;
                 user.Skills = new List<Skill>();
                 foreach (var skill in userDB.Skills)

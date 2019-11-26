@@ -160,10 +160,17 @@ namespace ControllersTest
         [TestMethod]
         public void LogInTest()
         {
-            var user = userController.LogIn("Andrei1337", "1234");
-            Assert.AreEqual("andrei@gmail.com", user.Email);
+            var newUser = new UserLogic();
+            newUser.Username = "NewUser";
+            newUser.Email = "newuser@gmail.com";
+            newUser.Password = "iamnewuser";
 
-            user = userController.LogIn("Andrei1337", "1235");
+            userController.Add(newUser);
+
+            var user = userController.LogIn("NewUser", "iamnewuser");
+            Assert.AreEqual("newuser@gmail.com", user.Email);
+
+            user = userController.LogIn("NewUser", "1234");
             Assert.IsNull(user);
         }
 
