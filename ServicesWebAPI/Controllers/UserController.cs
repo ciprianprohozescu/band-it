@@ -50,7 +50,7 @@ namespace ServicesWebAPI.Controllers
             IUserController userController = new UserControllerLogic();
             userController.Delete(id);
 
-            return userController.Get(id);
+            return userController.GetById(id);
         }
 
         [Route("api/user/{id}")]

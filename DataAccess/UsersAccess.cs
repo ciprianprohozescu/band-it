@@ -35,7 +35,7 @@ namespace DataAccess
         public User FindByEmail(string email)
         {
             var user = db.Users
-                .Where(x => x.ID == id)
+                .Where(x => x.Email == email)
                 .Where(x => x.Deleted == null)
                 .FirstOrDefault<User>();
             return user;

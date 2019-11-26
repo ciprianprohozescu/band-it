@@ -96,9 +96,11 @@ namespace Controllers
             usersAccess.Delete(id);
         }
 
-        public User Get(int id)
+        public User GetById(int id)
         {
-            return DBToLogic(usersAccess.FindByID(id));
+            var userAccess = new UsersAccess();
+            var userDB = userAccess.FindByID(id);
+            return DBToLogic(userDB);
         }
 
         private User DBToLogic(UserDB userDB)
@@ -140,39 +142,16 @@ namespace Controllers
                 userDB.FirstName = user.FirstName;
                 userDB.LastName = user.LastName;
                 userDB.Description = user.Description;
-                userDB.Latitude = (decimal)user.Location.Latitude;
-                userDB.Longitude = (decimal)user.Location.Longitude;
+                if(user.Location != null)
+                {
+                    userDB.Latitude = (decimal)user.Location.Latitude;
+                    userDB.Longitude = (decimal)user.Location.Longitude;
+                }
                 userDB.ProfilePicture = user.ProfilePicture;
 
                 return userDB;
             }
             return null;
-        }
-
-        private UserLogic DBToLogic(UserDB userDB)
-        {
-            var userLogic = new UserLogic();
-
-            userLogic.ID = userDB.ID;
-            userLogic.Email = userDB.Email;
-            userLogic.Username = userDB.Username;
-            userLogic.Password = userDB.Password;
-            userLogic.Salt = userDB.Salt;
-
-            return userLogic;
-        }
-
-        private UserDB LogicToDB(User userLogic)
-        {
-            var userDB = new UserDB();
-
-            userDB.ID = userLogic.ID;
-            userDB.Email = userLogic.Email;
-            userDB.Username = userLogic.Username;
-            userDB.Password = userLogic.Password;
-            userDB.Salt = userLogic.Salt;
-
-            return userDB;
         }
     }
 }
