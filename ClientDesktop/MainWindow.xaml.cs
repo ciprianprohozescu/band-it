@@ -24,14 +24,34 @@ namespace ClientDesktop
 {
     public partial class MainWindow : Window
     {
+        object content;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.content = Content;
         }
         private void LinkClick(object sender, RoutedEventArgs e)
         {
-            LoginPage loginPage = new LoginPage();
-            this.Content = loginPage;
+            GoToLogin();
+        }
+
+        public void GoBackToRegister()
+        {
+            Content = content;
+        }
+
+        public void GoToIndex()
+        {
+            UserIndex userIndex = new UserIndex(this);
+            Content = userIndex;
+        }
+
+        public void GoToLogin()
+        {
+            LoginPage loginPage = new LoginPage(this);
+            Content = loginPage;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -51,8 +71,7 @@ namespace ClientDesktop
             request.AddJsonBody(user);
             var response = client.Execute(request);
 
-            LoginPage loginPage = new LoginPage();
-            this.Content = loginPage;
+            GoToLogin();    
         }
 
         private void txtUser_SelectionChanged(object sender, RoutedEventArgs e)

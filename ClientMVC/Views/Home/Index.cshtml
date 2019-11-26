@@ -1,7 +1,8 @@
-﻿@model ClientMVC.Models.UserForm
+﻿@model ClientMVC.Models.HomeIndex
 
 @{
     Layout = "";
+    ViewBag.Title = "BandIt!";
 }
 
 <!DOCTYPE html>
@@ -32,17 +33,15 @@
 </head>
 
 <body>
-    <!-- Navigation -->
-    @{ /*RenderPage("components/navbar.cshtml") */}
-
     <nav class="navbar navbar-dark bg-dark static-top" style="z-index: 2">
         <div class="container">
             <a class="navbar-brand" href="#" style="font-size: 32px; ">Band<span style="color:#007bff; font-weight: bold">It!</span></a>
 
-            <form class="form-inline">
-                <input type="email" class="form-control mr-2" placeholder="Email/Username" />
-                <input type="password" class="form-control mr-2" placeholder="Password" />
-                <a class="btn btn-primary" href="#">Log in!</a>
+            <form class="form-inline" action="~/home/login" method="get">
+                <input class="form-control mr-2 @(Model.LogInFailed ? "is-invalid" : "")" placeholder="Email/Username" name="username" id="username-login" />
+                <input type="password" class="form-control mr-2 @(Model.LogInFailed ? "is-invalid" : "")" placeholder="Password" name="password" />
+                <button type="submit" class="btn btn-primary mr-2" href="#">Log in!</button>
+                <small class="text-danger" style="max-width: 15vw" @(Model.LogInFailed ? "" : "hidden")>The email/username and password combination that you entered is invalid.</small>
             </form>
         </div>
     </nav>
@@ -108,6 +107,11 @@
             </div>
         </header>
     </div>
+
+    <script>
+        var usernameInput = document.getElementById("username-login");
+        var passwordInput = document.getElementById("password-login");
+    </script>
 
     <!-- Bootstrap core JavaScript -->
     <script src="~/Content/vendor/jquery/jquery.min.js"></script>

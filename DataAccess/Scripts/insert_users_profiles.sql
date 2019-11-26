@@ -5,7 +5,7 @@ delete from Skills;
 delete from UserSkills;
 
 insert into Users (Username, Email, Password, Salt, FirstName, LastName, Latitude, Longitude) 
-values ('greg79', 'greglarrison@yahoo.com', 'aghtswh', 'ihow5ihesto', 'Greg', 'Larrison', 56.982860, 9.638097);
+values ('greg79', 'greglarrison@yahoo.com', 'greg', 'ihow5ihesto', 'Greg', 'Larrison', 56.982860, 9.638097);
 
 insert into Users (Username, Email, Password, Salt, FirstName, LastName, Latitude, Longitude) 
 values ('bjornthebear', 'bjornohara@yahoo.com', 'jiogwrhgoi', 'ihow5ihesto', 'Bjorn', 'O''Hara', 57.729286, 10.564563);

@@ -18,14 +18,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using User = Models.User;
+using ClientDesktop.ViewModels;
 
 namespace ClientDesktop
 {
-    public partial class UserIndex : Window
+    public partial class UserIndex : Page
     {
-        public UserIndex()
+        MainWindow mainWindow;
+        public UserIndex(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
         }
 
         private void Search_Button_Click(object sender, RoutedEventArgs e)
@@ -45,6 +48,12 @@ namespace ClientDesktop
         {
             UserShow userShow = new UserShow((User)dataGridUsers.SelectedItem);
             this.Content = userShow;
+        }
+
+        private void LogOut_Button_Click(object sender, RoutedEventArgs e)
+        {
+            LoggedInUser.User = null;
+            mainWindow.GoToLogin();
         }
     }
 }

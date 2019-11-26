@@ -103,6 +103,19 @@ namespace Controllers
             return DBToLogic(userDB);
         }
 
+        public User LogIn(string username, string password)
+        {
+            var user = usersAccess.FindByEmailOrUsername(username);
+
+            // TODO: Decrypt and un-salt the password
+            if (user == null || user.Password != password)
+            {
+                return null;
+            }
+
+            return DBToLogic(user);
+        }
+
         private User DBToLogic(UserDB userDB)
         {
             var user = new User();

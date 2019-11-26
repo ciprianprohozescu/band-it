@@ -18,5 +18,6 @@ namespace Controllers
         List<User> Get();
         List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0);
         void Delete(int id);
+        User LogIn(string username, string password);
     }
 }

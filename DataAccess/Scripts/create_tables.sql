@@ -28,8 +28,8 @@ drop table if exists Users;
 
 create table Users (
 	ID int identity(1,1) primary key,
-	Username varchar(225) NOT NULL UNIQUE,
-	Email varchar(225) NOT NULL UNIQUE,
+	Username varchar(225) NOT NULL,
+	Email varchar(225) NOT NULL,
 	Password varchar(225) NOT NULL,
 	Salt varchar(225) NOT NULL,
 	FirstName varchar(225),

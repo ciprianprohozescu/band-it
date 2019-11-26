@@ -157,6 +157,16 @@ namespace ControllersTest
             #endregion
         }
 
+        [TestMethod]
+        public void LogInTest()
+        {
+            var user = userController.LogIn("Andrei1337", "1234");
+            Assert.AreEqual("andrei@gmail.com", user.Email);
+
+            user = userController.LogIn("Andrei1337", "1235");
+            Assert.IsNull(user);
+        }
+
         [ClassCleanup()]
         public static void Cleanup()
         {

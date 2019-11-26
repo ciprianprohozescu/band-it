@@ -18,6 +18,11 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Index(string search, double distance = -1, double markerLat = 0.0, double markerLng = 0.0)
         {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
             var model = new UserIndex();
 
             model.Search = search;
@@ -55,6 +60,11 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Show(int id)
         {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
             var model = new UserShow();
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
@@ -122,12 +132,17 @@ namespace ClientMVC.Controllers
 
         [HttpGet]
         public ActionResult Delete(int id)
-        { 
+        {
+            if ((int)Session["ID"] != id)
+            {
+                return View("Error");
+            }
+
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"delete/{id}", Method.DELETE);
             client.Execute(request);
 
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("LogOut", "Home");
         }
     }
 }

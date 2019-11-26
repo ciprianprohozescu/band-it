@@ -4,29 +4,56 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using Models;
+using ClientMVC.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System.Configuration;
+
 namespace ClientMVC.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            if(!User.Identity.IsAuthenticated) return View("Index");
-            return View("Logged");
+            if (Session["ID"] == null)
+                return View(new HomeIndex());
+
+            return RedirectToAction("Index", "User");
         }
 
-
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult LogIn(string username, string password)
         {
-            ViewBag.Message = "Your application description page.";
+            var model = new HomeIndex();
 
-            return View();
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest("user/login", Method.GET);
+
+            request.AddParameter("username", username);
+            request.AddParameter("password", password);
+
+            var content = client.Execute(request);
+            
+            var user = JsonConvert.DeserializeObject<User>(content.Content);
+
+            if (user != null)
+            {
+                Session["ID"] = user.ID;
+                return RedirectToAction("Index", "User");
+            }
+
+            model.LogInFailed = true;
+
+            return View("Index", model);
         }
 
-        public ActionResult Contact()
+        [HttpGet]
+        public ActionResult LogOut()
         {
-            ViewBag.Message = "Your contact page.";
+            Session["ID"] = null;
 
-            return View();
+            return View("Index", new HomeIndex());
         }
     }
 }

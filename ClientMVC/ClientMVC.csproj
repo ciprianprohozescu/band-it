@@ -138,6 +138,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeIndex.cs" />
     <Compile Include="Models\UserForm.cs" />
     <Compile Include="Models\UserIndex.cs" />
     <Compile Include="Models\UserShow.cs" />
@@ -152,6 +153,7 @@
     <Content Include="Content\css\landing-page.css" />
     <Content Include="Content\gulpfile.js" />
     <Content Include="Content\img\Drummer.jpg" />
+    <Content Include="Content\Images\user.png" />
     <Content Include="Content\img\favicon-32x32.png" />
     <Content Include="Content\img\guitar.jpg" />
     <Content Include="Content\img\Guitarist.jpg" />
@@ -273,7 +275,6 @@
     <Content Include="Views\Shared\components\navbar.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Show.cshtml" />
-    <Content Include="Views\Home\Logged.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
