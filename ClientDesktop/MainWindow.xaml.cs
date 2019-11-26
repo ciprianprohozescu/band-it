@@ -55,17 +55,6 @@ namespace ClientDesktop
             this.Content = loginPage;
         }
 
-        private Models.User ViewToLogic(ViewModels.MainWindowViewModel userView)
-        {
-            var userLogic = new Models.User();
-
-            userLogic.Email = userView.Email;
-            userLogic.Username = userView.Username;
-            userLogic.Password = userView.Password;
-
-            return userLogic;
-        }
-
         private void txtUser_SelectionChanged(object sender, RoutedEventArgs e)
         {
             string Username = txtUser.Text;

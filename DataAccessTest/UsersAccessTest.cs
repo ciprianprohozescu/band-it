@@ -114,18 +114,9 @@ namespace DataAccessTest
             Assert.AreEqual("Mataoanu", user.LastName);
             #endregion
         }
-        [TestMethod]
-        public void GetByUsername()
-        {
-            var user = usersAccess.FindByUsername("Andrei1337");
-
-            Console.WriteLine(user.Username);
-
-            Assert.AreEqual("andrei@gmail.com", user.Email);
-        }
 
         [TestMethod]
-        public void GetByEmail()
+        public void FindByEmailTest()
         {
             var user = usersAccess.FindByEmail("ciprian@gmail.com");
 
@@ -135,7 +126,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void AddUser()
+        public void AddUserTest()
         {
             var user = new User();
             user.Email = "Test Email";

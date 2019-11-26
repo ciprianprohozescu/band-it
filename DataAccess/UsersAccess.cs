@@ -51,20 +51,8 @@ namespace DataAccess
 
         public void Add(User user)
         {
-            using(var dbTransaction = db.Database.BeginTransaction())
-            {
-                
-                try
-                {
                     db.Users.Add(user);
                     db.SaveChanges();
-                    dbTransaction.Commit();
-                }
-                catch(Exception)
-                {
-                    dbTransaction.Rollback();
-                }
-            }
         }
         public void Delete(int id)
         {
