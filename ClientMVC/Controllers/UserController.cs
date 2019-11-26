@@ -66,6 +66,60 @@ namespace ClientMVC.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(UserForm user)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+                var request = new RestRequest("/user/register", Method.POST);
+                request.AddJsonBody(MVCToLogic(user));
+                var response = client.Execute(request);
+                Console.WriteLine(request.ToString());
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult DoesUserNameExist(string Username)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest("user/username", Method.GET);
+            request.AddParameter("username", Username);
+
+
+            var content = client.Execute(request).Content;
+            var user = JsonConvert.DeserializeObject<User>(content);
+            return Json(user == null);
+
+        }
+
+        [HttpPost]
+        public JsonResult doesEmailExist(string Email)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest("user/email", Method.GET);
+            request.AddParameter("email", Email);
+
+            var content = client.Execute(request);
+            var user = JsonConvert.DeserializeObject<User>(content.Content);
+            return Json(user == null);
+        }
+
+        private User MVCToLogic(UserForm userMVC)
+        {
+            var userLogic = new User();
+
+            userLogic.Email = userMVC.Email;
+            userLogic.Username = userMVC.Username;
+            userLogic.Password = userMVC.Password;
+
+            return userLogic;
+        }
+
         [HttpGet]
         public ActionResult Delete(int id)
         { 

@@ -48,9 +48,46 @@ namespace Controllers
             }
             return filteredUsers;
         }
+
+        public void Add(User userLogic)
+        {
+            var userAccess = new UsersAccess();
+            var userDB = userAccess.FindByUsername(userLogic.Username);
+            if(userDB == null)
+            {
+                userDB = userAccess.FindByEmail(userLogic.Email);
+                if(userDB == null)
+                {
+                    userLogic.Salt = StringCipher.RandomString();
+                    userLogic.Password = StringCipher.Encrypt(userLogic.Password, userLogic.Salt);
+                    userDB = LogicToDB(userLogic);
+                    userAccess.Add(userDB);
+                }
+            }
+        }
+        public List<User> Get()
+        {
+            var usersAccess = new UsersAccess();
+            var userDB = usersAccess.Get("");
+            var usersLogic = new List<User>();
+
+            for (int i = 0; i < userDB.Count; i++)
+            {
+                usersLogic.Add(DBToLogic(userDB[i]));
+            }
+
+            return usersLogic;
+        }
         public User GetByUsername(string username)
         {
-            var userDB = usersAccess.FindByUsername(username);
+            var userAccess = new UsersAccess();
+            var userDB = userAccess.FindByUsername(username);
+            return DBToLogic(userDB);
+        }
+        public User GetByEmail(string email)
+        {
+            var userAccess = new UsersAccess();
+            var userDB = userAccess.FindByEmail(email);
             return DBToLogic(userDB);
         }
 
@@ -58,7 +95,6 @@ namespace Controllers
         {
             usersAccess.Delete(id);
         }
-
 
         public User Get(int id)
         {
@@ -80,9 +116,7 @@ namespace Controllers
                 user.Description = userDB.Description;
                 user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
                 user.ProfilePicture = userDB.ProfilePicture;
-
                 user.Skills = new List<Skill>();
-
                 foreach (var skill in userDB.Skills)
                 {
                     user.Skills.Add(skillController.DBToLogic(skill));
@@ -90,6 +124,7 @@ namespace Controllers
 
                 return user;
             }
+
             return null;
         }
         private UserDB LogicToDB(User user)
@@ -112,6 +147,32 @@ namespace Controllers
                 return userDB;
             }
             return null;
+        }
+
+        private UserLogic DBToLogic(UserDB userDB)
+        {
+            var userLogic = new UserLogic();
+
+            userLogic.ID = userDB.ID;
+            userLogic.Email = userDB.Email;
+            userLogic.Username = userDB.Username;
+            userLogic.Password = userDB.Password;
+            userLogic.Salt = userDB.Salt;
+
+            return userLogic;
+        }
+
+        private UserDB LogicToDB(User userLogic)
+        {
+            var userDB = new UserDB();
+
+            userDB.ID = userLogic.ID;
+            userDB.Email = userLogic.Email;
+            userDB.Username = userLogic.Username;
+            userDB.Password = userLogic.Password;
+            userDB.Salt = userLogic.Salt;
+
+            return userDB;
         }
     }
 }

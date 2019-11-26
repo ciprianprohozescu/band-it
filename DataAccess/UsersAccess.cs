@@ -32,19 +32,39 @@ namespace DataAccess
 
             return user;
         }
-        public User FindByID(int id)
+        public User FindByEmail(string email)
         {
             var user = db.Users
                 .Where(x => x.ID == id)
                 .Where(x => x.Deleted == null)
                 .FirstOrDefault<User>();
-
             return user;
         }
-        public void AddUser(User user)
+
+        public User FindByID(int id)
         {
-            db.Users.Add(user);
-            db.SaveChanges();
+            var user = db.Users
+                .Where(u => u.ID == id)
+                .FirstOrDefault<User>();
+            return user;
+        }
+
+        public void Add(User user)
+        {
+            using(var dbTransaction = db.Database.BeginTransaction())
+            {
+                
+                try
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    dbTransaction.Commit();
+                }
+                catch(Exception)
+                {
+                    dbTransaction.Rollback();
+                }
+            }
         }
         public void Delete(int id)
         {

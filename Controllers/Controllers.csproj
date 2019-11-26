@@ -50,6 +50,7 @@
     <Compile Include="IUserController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkillController.cs" />
+    <Compile Include="StringCipher.cs" />
     <Compile Include="UserController.cs" />
   </ItemGroup>
   <ItemGroup>

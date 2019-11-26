@@ -63,8 +63,8 @@ namespace ControllersTest
         //
         #endregion
 
-        [ClassInitialize()]
-        public static void Initialize(TestContext testContext) 
+        [ClassInitialize]
+        public static void Initialize(TestContext context) 
         {
             testHelpers = new TestHelpers();
             userController = new UserController();
@@ -109,7 +109,16 @@ namespace ControllersTest
         public void GetByIDTest()
         {
             var userExpected = userController.Get("Ciprian")[0];
-            var userActual = userController.Get(userExpected.ID);
+            var userActual = userController.GetById(userExpected.ID);
+
+            Assert.AreEqual(userExpected.Username, userActual.Username);
+        }
+
+        [TestMethod]
+        public void GetByEmailTest()
+        {
+            var userExpected = userController.Get("Ciprian")[0];
+            var userActual = userController.GetByEmail(userExpected.Email);
 
             Assert.AreEqual(userExpected.Username, userActual.Username);
         }
