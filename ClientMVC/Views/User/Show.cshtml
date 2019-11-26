@@ -220,6 +220,16 @@
             width: 100%;
         }
     </style>
+@using (Html.BeginForm("Edit/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return editClicked();"}))
+{
+    <input type="submit" class=" btn btn-primary" value="Edit profile" />
+}
+
+<p></p>
+
+@using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
+{
+    <input type="submit" class="btn btn-danger" value="Delete your account" />
 }
 
 @section scripts{
@@ -256,6 +266,10 @@
                 return true;
             }
             return false;
+        }
+
+        function editClicked() {
+            location.href = '@Url.Action("Edit", new { id = Model.User.ID })';
         }
     </script>
 }

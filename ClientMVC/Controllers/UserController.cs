@@ -162,6 +162,12 @@ namespace ClientMVC.Controllers
         }
 
         [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             if (Session["ID"] == null || (int)Session["ID"] != id)

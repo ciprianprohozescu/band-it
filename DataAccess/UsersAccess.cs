@@ -71,6 +71,19 @@ namespace DataAccess
                     db.Users.Add(user);
                     db.SaveChanges();
         }
+        public User EditUser(string fname, string lname, string description, string profilePicture, List<Skill> skills)
+        {
+            var user = db.Users
+                .Where(u => u.FirstName == fname)
+                .Where(u => u.LastName == lname)
+                .Where(u => u.Description == description)
+                .Where(u => u.ProfilePicture == profilePicture)
+                .Where(u => u.Skills == skills)
+                .Where(x => x.Deleted == null)
+                .FirstOrDefault<User>();
+
+            return user;
+        }
         public void Delete(int id)
         {
             var user = db.Users.SingleOrDefault(u => u.ID == id);
