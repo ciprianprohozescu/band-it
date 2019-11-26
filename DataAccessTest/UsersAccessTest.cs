@@ -80,13 +80,13 @@ namespace DataAccessTest
             var users = usersAccess.Get("");
 
             #region Assert
-            Assert.AreEqual(2, users.Count);
+            Assert.AreEqual(3, users.Count);
 
-            Assert.AreEqual("Ciprian1337", users[0].Username);
-            Assert.AreEqual("Prohozescu", users[0].LastName);
+            Assert.AreEqual("Ciprian1337", users[1].Username);
+            Assert.AreEqual("Prohozescu", users[1].LastName);
 
-            Assert.AreEqual("Andrei1337", users[1].Username);
-            Assert.AreEqual("Mataoanu", users[1].LastName);
+            Assert.AreEqual("Andrei1337", users[2].Username);
+            Assert.AreEqual("Mataoanu", users[2].LastName);
             #endregion
 
             users = usersAccess.Get("Ciprian");
@@ -113,6 +113,32 @@ namespace DataAccessTest
             Assert.AreEqual("Andrei", user.FirstName);
             Assert.AreEqual("Mataoanu", user.LastName);
             #endregion
+        }
+
+        [TestMethod]
+        public void FindByEmailTest()
+        {
+            var user = usersAccess.FindByEmail("ciprian@gmail.com");
+
+            Console.WriteLine(user.Email);
+
+            Assert.AreEqual("Ciprian1337", user.Username);
+        }
+
+        [TestMethod]
+        public void AddUserTest()
+        {
+            var user = new User();
+            user.Email = "Test Email";
+            user.Username = "Test Username";
+            user.Password = "Test Password";
+            user.Salt = "Test Salt";
+
+            usersAccess.Add(user);
+
+            var user2 = db.Users.Where(u => u.Username == "Test Username").ToList().FirstOrDefault();
+
+            Assert.AreEqual(user2.Email, user.Email);
         }
 
         [TestMethod]
