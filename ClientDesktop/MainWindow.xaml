@@ -115,7 +115,7 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Margin="0,-24,299.8,33.6"  Foreground="white" Content="User " VerticalContentAlignment="Center" FontSize="26"
+                    <Label Grid.Row="0" Grid.Column="0" Margin="0,-24,299.8,33.6"  Foreground="white" Content="Username " VerticalContentAlignment="Center" FontSize="26"
                        HorizontalContentAlignment="Right" Grid.ColumnSpan="2">
                         <Label.Effect>
                             <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
