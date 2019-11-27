@@ -10,6 +10,7 @@ namespace DataAccess
     public class UsersAccess
     {
         BandItEntities db = new BandItEntities();
+
         public List<User> Get(string search)
         {
             var users = db.Users
@@ -40,15 +41,24 @@ namespace DataAccess
                 .FirstOrDefault<User>();
             return user;
         }
+        public User FindByEmailOrUsername(string search)
+        {
+            var user = db.Users
+                .Where(x => x.Username == search
+                || x.Email == search)
+                .Where(x => x.Deleted == null)
+                .FirstOrDefault<User>();
 
+            return user;
+        }
         public User FindByID(int id)
         {
             var user = db.Users
-                .Where(u => u.ID == id)
+                .Where(x => x.ID == id)
+                .Where(x => x.Deleted == null)
                 .FirstOrDefault<User>();
             return user;
         }
-
         public void Add(User user)
         {
                     db.Users.Add(user);

@@ -12,6 +12,11 @@ namespace ServicesWebAPI.Controllers
 {
     public class UserController : ApiController
     {
+        IUserController userController;
+        public UserController()
+        {
+            userController = new UserControllerLogic();
+        }
         [Route("api/user/register")]
         public void Post(User user)
         {
@@ -47,7 +52,6 @@ namespace ServicesWebAPI.Controllers
         [Route("api/delete/{id}")]
         public User Delete(int id)
         {
-            IUserController userController = new UserControllerLogic();
             userController.Delete(id);
 
             return userController.GetById(id);
@@ -58,6 +62,13 @@ namespace ServicesWebAPI.Controllers
         {
             IUserController userController = new UserControllerLogic();
             return userController.GetById(id);
+        }
+
+        [Route("api/user/login")]
+        [HttpGet]
+        public User LogIn(string username, string password)
+        {
+            return userController.LogIn(username, password);
         }
     }
 }
