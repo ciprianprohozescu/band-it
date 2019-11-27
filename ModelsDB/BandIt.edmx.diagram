@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2086ff333ae44b11bc255b01dd46f062" Name="Diagram1">
+        <EntityTypeShape EntityType="BandItModel.Application" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.Band" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.BandUser" Width="1.5" PointX="6" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.Block" Width="1.5" PointX="12.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.File" Width="1.5" PointX="8.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.Genre" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.Invite" Width="1.5" PointX="12.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.Message" Width="1.5" PointX="15.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.Notification" Width="1.5" PointX="15.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.NotificationType" Width="1.5" PointX="13.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.Permission" Width="1.5" PointX="12.75" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.Skill" Width="1.5" PointX="8.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BandItModel.User" Width="1.5" PointX="10.5" PointY="10" IsExpanded="true" />
+        <AssociationConnector Association="BandItModel.FK__Applicati__BandI__3AC1AA49" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Applicati__UserI__3BB5CE82" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__BandUsers__BandI__1E256B9B" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Invites__BandID__3E923B2D" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Notificat__BandI__444B1483" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__BandUsers__Permi__1C3D2329" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__BandUsers__UserI__1D314762" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Blocks__BlockerI__22EA20B8" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Blocks__Receiver__23DE44F1" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Invites__UserID__3F865F66" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Messages__Sender__26BAB19C" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Notificat__TypeI__46335CF5" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Notificat__UserI__453F38BC" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.FK__Permissio__UserI__1960B67E" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.BandGenres" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.BandMessages" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.BandUserSkills" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.UserFiles" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.UserMessages" ManuallyRouted="false" />
+        <AssociationConnector Association="BandItModel.UserSkills" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,40 @@
+﻿@model ClientMVC.Models.UserShow
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h1>@Model.User.Username</h1>
+
+<h2>Skills</h2>
+@if (Model.User.Skills.Count() == 0)
+{
+    <p>No skills found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var item in Model.User.Skills)
+        {
+            <li>@item.Name</li>
+        }
+    </ul>
+}
+
+@using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
+{
+    <input type="submit" class="btn btn-danger" value="Delete your account" />
+}
+
+@section scripts{
+    <script type="text/javascript">
+        var formDelete = document.getElementById('form-delete');
+
+        function deleteClicked() {
+            if (confirm('Are you sure you want to permanently delete your account?')) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+}
