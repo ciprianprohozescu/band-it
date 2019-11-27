@@ -46,8 +46,7 @@ namespace ClientDesktop
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            UserShow userShow = new UserShow((User)dataGridUsers.SelectedItem);
-            this.Content = userShow;
+            mainWindow.GoToUserShow((User)dataGridUsers.SelectedItem);
         }
 
         private void LogOut_Button_Click(object sender, RoutedEventArgs e)

@@ -54,6 +54,12 @@ namespace ClientDesktop
             Content = loginPage;
         }
 
+        public void GoToUserShow(User user)
+        {
+            UserShow userShow = new UserShow(this, user);
+            Content = userShow;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (Validation.GetHasError(txtUser) || Validation.GetHasError(txtEmail) || Validation.GetHasError(txtPassword))
