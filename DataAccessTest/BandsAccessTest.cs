@@ -90,7 +90,7 @@ namespace DataAccessTest
         [ClassCleanup]
         public static void Cleanup()
         {
-            testHelpers.ClearData();
+            //testHelpers.ClearData();
         }
     }
 }
