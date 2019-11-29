@@ -49,12 +49,19 @@ namespace ServicesWebAPI.Controllers
             return userController.Get(search);
         }
 
-        [Route("api/delete/{id}")]
+        [Route("api/user/delete/{id}")]
         public User Delete(int id)
         {
             userController.Delete(id);
 
             return userController.GetById(id);
+        }
+
+        [Route("api/user/update/profilepicture")]
+        [HttpGet]
+        public void UpdateProfilePicture(int ownerID, string fileName)
+        {
+            userController.UpdateProfilePicture(ownerID, fileName);
         }
 
         [Route("api/user/{id}")]

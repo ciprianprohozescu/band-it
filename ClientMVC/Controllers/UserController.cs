@@ -68,10 +68,12 @@ namespace ClientMVC.Controllers
             var model = new UserShow();
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"user/{id}", Method.GET);;
+            var request = new RestRequest($"user/{id}", Method.GET);
 
             var content = client.Execute(request);
             model.User = JsonConvert.DeserializeObject<User>(content.Content);
+
+            model.User.ProfilePicture = $"/Content/Uploads/Users/{id}/{model.User.ProfilePicture}";
 
             return View(model);
         }
@@ -133,16 +135,30 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            if ((int)Session["ID"] != id)
+            if (Session["ID"] == null || (int)Session["ID"] != id)
             {
                 return View("Error");
             }
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"delete/{id}", Method.DELETE);
+            var request = new RestRequest($"user/delete/{id}", Method.DELETE);
             client.Execute(request);
 
             return RedirectToAction("LogOut", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult SaveProfilePicture(int id, HttpPostedFileBase profilePicture)
+        {
+            if (Session["ID"] == null || (int)Session["ID"] != id)
+            {
+                return View("Error");
+            }
+
+            var fileController = new FileController();
+            fileController.SaveFile("user", id, "profilePicture", profilePicture);
+
+            return RedirectToAction($"Show/{id}");
         }
     }
 }

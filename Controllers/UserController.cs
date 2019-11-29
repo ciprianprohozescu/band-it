@@ -8,6 +8,7 @@ using DataAccess;
 using UserDB = ModelsDB.User;
 using Models;
 using System.Configuration;
+using System.Web;
 
 namespace Controllers
 {
@@ -129,6 +130,11 @@ namespace Controllers
             }
 
             return DBToLogic(user);
+        }
+
+        public void UpdateProfilePicture(int id, string fileName)
+        {
+            usersAccess.UpdateProfilePicture(id, fileName);
         }
 
         private User DBToLogic(UserDB userDB)

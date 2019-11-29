@@ -4,30 +4,29 @@
     ViewBag.Title = "Profile";
 }
 
-<h1>@Model.User.Username</h1>
-
-<h2>Skills</h2>
-
-@if (Model.User.Skills.Count() == 0)
-{
-    <p>No skills found.</p>
-}
-else
-{
-    <ul>
-        @foreach (var item in Model.User.Skills)
-        {
-            <li>@item.Name</li>
-        }
-    </ul>
-}
-
 <div class="row">
-    <div class="col-md-3">
-        <img src="~/Content/Images/profile-placeholder.png" style="margin-top: 3vh" />
+    <div class="col-md-4">
+        @if (Model.User.ProfilePicture != null)
+        {
+            <img src="@Model.User.ProfilePicture" 
+                 style="margin-top: 3vh; max-width: 20vw" />
+        }
+        else
+        {
+            <img src="~/Content/Images/profile_placeholder.png" style="margin-top: 3vh; max-width: 20vw" />
+        }
+
+        @if ((int)Session["ID"] == Model.User.ID)
+        {
+            <form class="form-inline" action="~/user/saveprofilepicture/@Model.User.ID" 
+                  method="post" enctype="multipart/form-data">
+                <input type="file" name="profilePicture" class="form-control-file" />
+                <button type="submit" class="btn-sm btn-success">Upload</button>
+            </form>
+        }
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-8">
         <h2>@Model.User.Username <span class="text-muted" id="full-name">(@Model.User.FirstName @Model.User.LastName)</span></h2>
         <div style="max-height: 30vh; overflow-y: scroll;">
             @Model.User.Description
@@ -41,57 +40,69 @@ else
             <div class="col-md-6">
                 <div>
                     <h4>Home location</h4>
-                    <img src="~/Content/Images/map-placeholder.png" />
+                    <img src="~/Content/Images/map_placeholder.png" style="max-width: 20vw" />
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div>
                     <h4>Skills</h4>
-                    <ul>
-                        <li>Guitarist</li>
-                        <li>Pianist</li>
-                        <li>Vocalist</li>
-                    </ul>
+
+                    @if (Model.User.Skills.Count() == 0)
+                    {
+                        <p>No skills found.</p>
+                    }
+                    else
+                    {
+                        <ul>
+                            @foreach (var item in Model.User.Skills)
+                            {
+                                <li>@item.Name</li>
+                            }
+                        </ul>
+                    }
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div>
-                    <h4>Invitations</h4>
-                    <table class="table-striped">
-                        <tr>
-                            <td>Hello</td>
-                        </tr>
-                        <tr>
-                            <td>Hej</td>
-                        </tr>
-                        <tr>
-                            <td>Hellojsa</td>
-                        </tr>
-                    </table>
+        @if ((int)Session["ID"] == Model.User.ID)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <h4>Invitations</h4>
+                        <table class="table-striped">
+                            <tr>
+                                <td>Hello</td>
+                            </tr>
+                            <tr>
+                                <td>Hej</td>
+                            </tr>
+                            <tr>
+                                <td>Hellojsa</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div>
-                    <h4>Applications</h4>
-                    <table class="table-striped">
-                        <tr>
-                            <td>Hello</td>
-                        </tr>
-                        <tr>
-                            <td>Hej</td>
-                        </tr>
-                        <tr>
-                            <td>Hellojsa</td>
-                        </tr>
-                    </table>
+                <div class="col-md-6">
+                    <div>
+                        <h4>Applications</h4>
+                        <table class="table-striped">
+                            <tr>
+                                <td>Hello</td>
+                            </tr>
+                            <tr>
+                                <td>Hej</td>
+                            </tr>
+                            <tr>
+                                <td>Hellojsa</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 
     <div class="col-md-3">
@@ -119,9 +130,12 @@ else
 <div class="row">
     <div class="col-md-12">
         <div class="delete-form">
-            @using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
+            @if ((int)Session["ID"] == Model.User.ID)
             {
-                <input type="submit" class="btn btn-danger" value="Delete your account" />
+                using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
+                {
+                    <input type="submit" class="btn btn-danger" value="Delete your account" />
+                }
             }
         </div>
     </div>
@@ -129,9 +143,7 @@ else
 
 @section styles{
     <style>
-        img {
-            width: 100%;
-        }
+        
 
         .delete-form {
             margin-left: 37.5%; 

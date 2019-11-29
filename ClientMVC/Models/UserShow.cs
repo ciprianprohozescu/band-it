@@ -10,5 +10,6 @@ namespace ClientMVC.Models
     public class UserShow
     {
         public User User { get; set; }
+        public string StorageLocation { get; set; }
     }
 }

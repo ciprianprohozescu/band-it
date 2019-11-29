@@ -174,6 +174,14 @@ namespace ControllersTest
             Assert.IsNull(user);
         }
 
+        [TestMethod]
+        public void UpdateProfilePictureTest()
+        {
+            userController.UpdateProfilePicture(userController.GetByUsername("Andrei1337").ID, "newpic.jpg");
+
+            Assert.AreEqual("newpic.jpg", userController.GetByUsername("Andrei1337").ProfilePicture);
+        }
+
         [ClassCleanup()]
         public static void Cleanup()
         {

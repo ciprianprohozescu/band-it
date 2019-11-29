@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DataAccess
 {
@@ -68,6 +69,12 @@ namespace DataAccess
         {
             var user = db.Users.SingleOrDefault(u => u.ID == id);
             user.Deleted = DateTime.Now;
+            db.SaveChanges();
+        }
+        public void UpdateProfilePicture(int id, string fileName)
+        {
+            var user = FindByID(id);
+            user.ProfilePicture = fileName;
             db.SaveChanges();
         }
     }

@@ -192,6 +192,14 @@ namespace DataAccessTest
             Assert.IsNull(userActual);
         }
 
+        [TestMethod]
+        public void UpdateProfilePictureTest()
+        {
+            usersAccess.UpdateProfilePicture(usersAccess.FindByUsername("Andrei1337").ID, "newpic.jpg");
+
+            Assert.AreEqual("newpic.jpg", usersAccess.FindByUsername("Andrei1337").ProfilePicture);
+        }
+
         [ClassCleanup]
         public static void Cleanup()
         {
