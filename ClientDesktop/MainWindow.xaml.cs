@@ -42,10 +42,16 @@ namespace ClientDesktop
             Content = content;
         }
 
-        public void GoToIndex()
+        public void GoToUserIndex()
         {
             UserIndex userIndex = new UserIndex(this);
             Content = userIndex;
+        }
+
+        public void GoToBandIndex()
+        {
+            BandIndex bandIndex = new BandIndex(this);
+            Content = bandIndex;
         }
 
         public void GoToLogin()

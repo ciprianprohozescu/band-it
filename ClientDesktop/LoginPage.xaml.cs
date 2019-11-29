@@ -58,7 +58,7 @@ namespace ClientDesktop
             {
                 msgError.Visibility = Visibility.Hidden;
 
-                mainWindow.GoToIndex();
+                mainWindow.GoToBandIndex();
             }
         }
     }

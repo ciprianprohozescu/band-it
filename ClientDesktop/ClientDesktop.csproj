@@ -175,6 +175,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BandIndex.xaml.cs">
+      <DependentUpon>BandIndex.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\LoggedInUser.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
@@ -205,6 +208,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="BandIndex.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserIndex.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
