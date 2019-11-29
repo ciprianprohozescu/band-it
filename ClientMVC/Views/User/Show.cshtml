@@ -22,11 +22,6 @@ else
     </ul>
 }
 
-@using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
-{
-    <input type="submit" class="btn btn-danger" value="Delete your account" />
-}
-
 <div class="row">
     <div class="col-md-3">
         <img src="~/Content/Images/profile-placeholder.png" style="margin-top: 3vh" />
