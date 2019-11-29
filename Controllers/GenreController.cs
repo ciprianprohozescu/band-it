@@ -27,7 +27,7 @@ namespace Controllers
             var genre = new Genre();
 
             genre.ID = genreDB.ID;
-            genre.Name = genre.Name;
+            genre.Name = genreDB.Name;
 
             return genre;
         }

@@ -19,8 +19,8 @@ namespace DataAccess
         {
             db.Users.RemoveRange(db.Users.ToList());
             db.Skills.RemoveRange(db.Skills.ToList());
-            db.Bands.RemoveRange(db.Bands.ToList());
             db.Genres.RemoveRange(db.Genres.ToList());
+            db.Bands.RemoveRange(db.Bands.ToList());
             db.SaveChanges();
         }
         public void InsertTestData()
@@ -112,6 +112,7 @@ namespace DataAccess
             genre.Name = "Jazz";
 
             db.Genres.Add(genre);
+
 
             db.SaveChanges();
         }

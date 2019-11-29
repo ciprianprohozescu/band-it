@@ -45,6 +45,7 @@ namespace DataAccessTest
             bandsAccess = new BandsAccess();
             db = new BandItEntities();
 
+
             testHelpers.ClearData();
             testHelpers.InsertTestData();
         }
@@ -82,6 +83,7 @@ namespace DataAccessTest
             Assert.AreEqual("LaLaLa", bands[0].Name);
             Assert.AreEqual("Poleyn", bands[2].Name);
             #endregion
+
 
             bands = bandsAccess.Get("Nothing");
             Assert.AreEqual(0, bands.Count);
