@@ -133,11 +133,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BandController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BandIndex.cs" />
     <Compile Include="Models\HomeIndex.cs" />
     <Compile Include="Models\UserForm.cs" />
     <Compile Include="Models\UserIndex.cs" />
@@ -275,6 +277,7 @@
     <Content Include="Views\Shared\components\navbar.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Show.cshtml" />
+    <Content Include="Views\Band\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

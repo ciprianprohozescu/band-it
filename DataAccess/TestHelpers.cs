@@ -19,6 +19,8 @@ namespace DataAccess
         {
             db.Users.RemoveRange(db.Users.ToList());
             db.Skills.RemoveRange(db.Skills.ToList());
+            db.Genres.RemoveRange(db.Genres.ToList());
+            db.Bands.RemoveRange(db.Bands.ToList());
             db.SaveChanges();
         }
         public void InsertTestData()
@@ -71,6 +73,46 @@ namespace DataAccess
             skill.Name = "Triangle";
 
             db.Skills.Add(skill);
+
+            var band = new Band();
+            band.Name = "Poleyn";
+            band.Description = "This is the description of Poleyn";
+            band.Latitude = (decimal)56.976405;
+            band.Longitude = (decimal)9.910906;
+
+            db.Bands.Add(band);
+
+            band = new Band();
+            band.Name = "Dansk Rap";
+            band.Description = "This is the description of Dansk Rap";
+            band.Latitude = (decimal)57.050832;
+            band.Longitude = (decimal)9.910391;
+
+            db.Bands.Add(band);
+
+            band = new Band();
+            band.Name = "LaLaLa";
+            band.Description = "This is the description of LaLaLa";
+            band.Latitude = (decimal)55.708916;
+            band.Longitude = (decimal)12.483776;
+
+            db.Bands.Add(band);
+
+            var genre = new Genre();
+            genre.Name = "Metal";
+
+            db.Genres.Add(genre);
+
+            genre = new Genre();
+            genre.Name = "Rap";
+
+            db.Genres.Add(genre);
+
+            genre = new Genre();
+            genre.Name = "Jazz";
+
+            db.Genres.Add(genre);
+
 
             db.SaveChanges();
         }
