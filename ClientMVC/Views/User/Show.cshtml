@@ -34,9 +34,9 @@
     </div>
 </div>
 
-<div class="row" style="margin-top: 3vh">
+<div class="row">
     <div class="col-md-9">
-        <div class="row">
+        <div class="row" style="margin-top: 3vh">
             <div class="col-md-6">
                 <div>
                     <h4>Home location</h4>
@@ -67,7 +67,7 @@
 
         @if ((int)Session["ID"] == Model.User.ID)
         {
-            <div class="row">
+            <div class="row" style="margin-top: 3vh">
                 <div class="col-md-6">
                     <div>
                         <h4>Invitations</h4>
@@ -116,12 +116,12 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 3vh">
     <div class="col-md-12">
         <h4>Gallery</h4>
         <div>
             @{
-                Html.RenderPartial("_Gallery");
+                Html.RenderPartial("_Gallery", Model.Images);
             }
         </div>
     </div>
@@ -143,16 +143,12 @@
 
 @section styles{
     <style>
-        
-
         .delete-form {
             margin-left: 37.5%; 
             width: 50%; 
             margin-top: 10vh
         }
     </style>
-
-    @Styles.Render("~/Content/gallery.css")
 }
 
 @section scripts{
@@ -172,5 +168,3 @@
         }
     </script>
 }
-
-@Scripts.Render("~/Scripts/gallery.js")

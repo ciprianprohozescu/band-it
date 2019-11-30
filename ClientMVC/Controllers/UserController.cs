@@ -73,9 +73,19 @@ namespace ClientMVC.Controllers
             var content = client.Execute(request);
             model.User = JsonConvert.DeserializeObject<User>(content.Content);
 
+            var storageLocation = $"/Content/Uploads/Users/{id}/";
+
             if (model.User.ProfilePicture != null)
             {
-                model.User.ProfilePicture = $"/Content/Uploads/Users/{id}/{model.User.ProfilePicture}";
+                model.User.ProfilePicture = storageLocation + model.User.ProfilePicture;
+            }
+
+            var fileController = new FileController();
+
+            model.Images = fileController.GetImages(model.User.Files);
+            for (var i = 0; i < model.Images.Count; ++i)
+            {
+                model.Images[i] = storageLocation + model.Images[i];
             }
             
             return View(model);

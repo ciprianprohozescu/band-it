@@ -71,5 +71,20 @@ namespace ClientMVC.Controllers
                 }
             }
         }
+
+        public List<string> GetImages(List<string> files)
+        {
+            var images = new List<string>();
+
+            foreach (var file in files)
+            {
+                if (acceptedImageExtensions.Contains(Path.GetExtension(file)))
+                {
+                    images.Add(file);
+                }
+            }
+
+            return images;
+        }
     }
 }

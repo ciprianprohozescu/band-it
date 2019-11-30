@@ -150,15 +150,24 @@ namespace Controllers
                 user.FirstName = userDB.FirstName;
                 user.LastName = userDB.LastName;
                 user.Description = userDB.Description;
+
                 if (userDB.Latitude != null && userDB.Longitude != null)
                 {
                     user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
                 }
+
                 user.ProfilePicture = userDB.ProfilePicture;
+
                 user.Skills = new List<Skill>();
                 foreach (var skill in userDB.Skills)
                 {
                     user.Skills.Add(skillController.DBToLogic(skill));
+                }
+
+                user.Files = new List<string>();
+                foreach (var file in userDB.Files)
+                {
+                    user.Files.Add(file.Name);
                 }
 
                 return user;
