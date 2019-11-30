@@ -77,5 +77,17 @@ namespace DataAccess
             user.ProfilePicture = fileName;
             db.SaveChanges();
         }
+        public void SaveFile(int id, string fileName)
+        {
+            var user = FindByID(id);
+
+            var file = new File();
+            file.Name = fileName;
+            file.Users.Add(user);
+
+            db.Files.Add(file);
+
+            db.SaveChanges();
+        }
     }
 }

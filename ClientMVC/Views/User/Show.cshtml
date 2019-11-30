@@ -8,21 +8,12 @@
     <div class="col-md-4">
         @if (Model.User.ProfilePicture != null)
         {
-            <img src="@Model.User.ProfilePicture" 
+            <img src="@Model.User.ProfilePicture"
                  style="margin-top: 3vh; max-width: 20vw" />
         }
         else
         {
             <img src="~/Content/Images/profile_placeholder.png" style="margin-top: 3vh; max-width: 20vw" />
-        }
-
-        @if ((int)Session["ID"] == Model.User.ID)
-        {
-            <form class="form-inline" action="~/user/saveprofilepicture/@Model.User.ID" 
-                  method="post" enctype="multipart/form-data">
-                <input type="file" name="profilePicture" class="form-control-file" />
-                <button type="submit" class="btn-sm btn-success">Upload</button>
-            </form>
         }
     </div>
 
@@ -34,8 +25,18 @@
     </div>
 </div>
 
+@if ((int)Session["ID"] == Model.User.ID)
+{
+    <form class="form-inline" action="~/user/saveprofilepicture/@Model.User.ID"
+          method="post" enctype="multipart/form-data">
+        <button type="submit" class="btn-sm btn-success mr-2">Upload</button>
+        <input type="file" name="profilePicture" />
+    </form>
+}
+
 <div class="row">
     <div class="col-md-9">
+
         <div class="row" style="margin-top: 3vh">
             <div class="col-md-6">
                 <div>
@@ -118,10 +119,20 @@
 
 <div class="row" style="margin-top: 3vh">
     <div class="col-md-12">
-        <h4>Gallery</h4>
+        <div class="row">
+            <h4 class="mr-2">Gallery</h4>
+            @if ((int)Session["ID"] == Model.User.ID)
+            {
+                <form action="~/user/saveimage/@Model.User.ID"
+                      method="post" enctype="multipart/form-data">
+                    <button type="submit" class="btn-sm btn-success mr-2"><i class="fas fa-plus"></i> Add photo</button>
+                    <input type="file" name="image" />
+                </form>
+            }
+        </div>
         <div>
             @{
-                Html.RenderPartial("_Gallery", Model.Images);
+                Html.RenderPartial("_Gallery", Model);
             }
         </div>
     </div>
@@ -144,8 +155,8 @@
 @section styles{
     <style>
         .delete-form {
-            margin-left: 37.5%; 
-            width: 50%; 
+            margin-left: 37.5%;
+            width: 50%;
             margin-top: 10vh
         }
     </style>

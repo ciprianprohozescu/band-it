@@ -13,6 +13,7 @@ namespace ServicesWebAPI.Controllers
     public class UserController : ApiController
     {
         IUserController userController;
+
         public UserController()
         {
             userController = new UserControllerLogic();
@@ -57,13 +58,6 @@ namespace ServicesWebAPI.Controllers
             return userController.GetById(id);
         }
 
-        [Route("api/user/update/profilepicture")]
-        [HttpGet]
-        public void UpdateProfilePicture(int ownerID, string fileName)
-        {
-            userController.UpdateProfilePicture(ownerID, fileName);
-        }
-
         [Route("api/user/{id}")]
         public User Get(int id)
         {
@@ -76,6 +70,20 @@ namespace ServicesWebAPI.Controllers
         public User LogIn(string username, string password)
         {
             return userController.LogIn(username, password);
+        }
+
+        [Route("api/user/update/profilepicture")]
+        [HttpPut]
+        public void UpdateProfilePicture(User user)
+        {
+            userController.UpdateProfilePicture(user.ID, user.ProfilePicture);
+        }
+
+        [Route("api/user/add/file")]
+        [HttpPost]
+        public void AddFile(User user)
+        {
+            userController.SaveFile(user.ID, user.Files[0]);
         }
     }
 }

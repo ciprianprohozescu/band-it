@@ -200,6 +200,14 @@ namespace DataAccessTest
             Assert.AreEqual("newpic.jpg", usersAccess.FindByUsername("Andrei1337").ProfilePicture);
         }
 
+        [TestMethod]
+        public void SaveFile()
+        {
+            usersAccess.SaveFile(usersAccess.FindByUsername("Andrei1337").ID, "newfile.txt");
+
+            Assert.AreEqual("newfile.txt", usersAccess.FindByUsername("Andrei1337").Files.FirstOrDefault().Name);
+        }
+
         [ClassCleanup]
         public static void Cleanup()
         {

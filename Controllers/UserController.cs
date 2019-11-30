@@ -137,6 +137,11 @@ namespace Controllers
             usersAccess.UpdateProfilePicture(id, fileName);
         }
 
+        public void SaveFile(int id, File file)
+        {
+            usersAccess.SaveFile(id, file.Name);
+        }
+
         private User DBToLogic(UserDB userDB)
         {
             var user = new User();
@@ -164,10 +169,13 @@ namespace Controllers
                     user.Skills.Add(skillController.DBToLogic(skill));
                 }
 
-                user.Files = new List<string>();
+                user.Files = new List<File>();
                 foreach (var file in userDB.Files)
                 {
-                    user.Files.Add(file.Name);
+                    var fileLogic = new File();
+                    fileLogic.Name = file.Name;
+
+                    user.Files.Add(fileLogic);
                 }
 
                 return user;

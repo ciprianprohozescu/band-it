@@ -11,6 +11,6 @@ namespace ClientMVC.Models
     {
         public User User { get; set; }
         public string StorageLocation { get; set; }
-        public List<string> Images { get; set; }
+        public List<File> Images { get; set; }
     }
 }

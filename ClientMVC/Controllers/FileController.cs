@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Models;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+using FileLogic = Models.File;
 
 namespace ClientMVC.Controllers
 {
@@ -62,23 +65,39 @@ namespace ClientMVC.Controllers
 
                 if (fileType == "profilePicture")
                 {
-                    var request = new RestRequest("user/update/profilepicture", Method.GET);
-                    request.AddParameter("ownerID", ownerID);
-                    request.AddParameter("fileName", fileName);
+                    var user = new User();
+                    user.ID = ownerID;
+                    user.ProfilePicture = fileName;
+
+                    var request = new RestRequest("user/update/profilepicture", Method.PUT);
+                    request.AddJsonBody(user);
 
                     client.Execute(request);
-                    Console.WriteLine();
+                } else if (fileType == "image")
+                {
+                    var fileLogic = new FileLogic();
+                    fileLogic.Name = fileName;
+
+                    var user = new User();
+                    user.ID = ownerID;
+                    user.Files = new List<FileLogic>();
+                    user.Files.Add(fileLogic);
+
+                    var request = new RestRequest("user/add/file", Method.POST);
+                    request.AddJsonBody(user);
+
+                    client.Execute(request);
                 }
             }
         }
 
-        public List<string> GetImages(List<string> files)
+        public List<FileLogic> GetImages(List<FileLogic> files)
         {
-            var images = new List<string>();
+            var images = new List<FileLogic>();
 
             foreach (var file in files)
             {
-                if (acceptedImageExtensions.Contains(Path.GetExtension(file)))
+                if (acceptedImageExtensions.Contains(Path.GetExtension(file.Name)))
                 {
                     images.Add(file);
                 }

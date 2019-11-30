@@ -85,7 +85,7 @@ namespace ClientMVC.Controllers
             model.Images = fileController.GetImages(model.User.Files);
             for (var i = 0; i < model.Images.Count; ++i)
             {
-                model.Images[i] = storageLocation + model.Images[i];
+                model.Images[i].Name = storageLocation + model.Images[i].Name;
             }
             
             return View(model);
@@ -170,6 +170,20 @@ namespace ClientMVC.Controllers
 
             var fileController = new FileController();
             fileController.SaveFile("user", id, "profilePicture", profilePicture);
+
+            return RedirectToAction($"Show/{id}");
+        }
+
+        [HttpPost]
+        public ActionResult SaveImage(int id, HttpPostedFileBase image)
+        {
+            if (Session["ID"] == null || (int)Session["ID"] != id)
+            {
+                return View("Error");
+            }
+
+            var fileController = new FileController();
+            fileController.SaveFile("user", id, "image", image);
 
             return RedirectToAction($"Show/{id}");
         }

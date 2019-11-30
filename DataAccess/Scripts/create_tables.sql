@@ -102,8 +102,8 @@ create table BandMessages (
 );
 
 create table UserFiles (
-	UserID int foreign key references Users(ID),
-	FileID int foreign key references Files(ID),
+	UserID int foreign key references Users(ID) on delete cascade,
+	FileID int foreign key references Files(ID) on delete cascade,
 	primary key (UserID, FileID)
 );
 

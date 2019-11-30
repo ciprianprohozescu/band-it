@@ -21,6 +21,6 @@ namespace Models
         public string ProfilePicture { get; set; }
         public DateTime Deleted { get; set; }
         public List<Skill> Skills { get; set; }
-        public List<string> Files { get; set; }
+        public List<File> Files { get; set; }
     }
 }
