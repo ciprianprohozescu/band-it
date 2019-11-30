@@ -73,8 +73,11 @@ namespace ClientMVC.Controllers
             var content = client.Execute(request);
             model.User = JsonConvert.DeserializeObject<User>(content.Content);
 
-            model.User.ProfilePicture = $"/Content/Uploads/Users/{id}/{model.User.ProfilePicture}";
-
+            if (model.User.ProfilePicture != null)
+            {
+                model.User.ProfilePicture = $"/Content/Uploads/Users/{id}/{model.User.ProfilePicture}";
+            }
+            
             return View(model);
         }
 
