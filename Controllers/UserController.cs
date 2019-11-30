@@ -106,7 +106,7 @@ namespace Controllers
             var userDB = usersAccess.FindByID(id);
             return DBToLogic(userDB);
         }
-        public void Update(string firstName, string lastName, string description, string profilePicture, List<Skill> skills)
+        public void Update(int id, string username, string firstName, string lastName, string description, string email, string password)
         {
            usersAccess.Update(id, username, firstName, lastName, description, email, password);
         }
