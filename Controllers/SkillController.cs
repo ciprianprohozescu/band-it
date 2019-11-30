@@ -32,5 +32,15 @@ namespace Controllers
 
             return skill;
         }
+
+        public SkillDB LogicToDB (Skill skill)
+        {
+            var skillDB = new SkillDB();
+
+            skillDB.ID = skill.ID;
+            skillDB.Name = skill.Name;
+
+            return skillDB;
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using ClientMVC.Models;
 using User = Models.User;
+using Skill = Models.Skill;
 
 using RestSharp;
 using Newtonsoft.Json;
@@ -79,6 +80,8 @@ namespace ClientMVC.Controllers
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"user/{id}", Method.GET);
+
+
 
             var content = client.Execute(request);
             model.User = JsonConvert.DeserializeObject<User>(content.Content);
@@ -164,8 +167,21 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View();
+            var model = new UserEdit();
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest($"user/{id}", Method.GET);
+            var content = client.Execute(request);
+            model.User = JsonConvert.DeserializeObject<User>(content.Content);
+
+            return View(model);
         }
+
+        //[HttpPost]
+        //public ActionResult Update(int id, string username, string firstName, string lastName, string description, string email, string password)
+        //{
+
+        //}
 
         [HttpGet]
         public ActionResult Delete(int id)

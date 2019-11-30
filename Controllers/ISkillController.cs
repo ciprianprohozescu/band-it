@@ -11,5 +11,6 @@ namespace Controllers
     {
         List<Skill> Get();
         Skill DBToLogic(SkillDB skillDB);
+        SkillDB LogicToDB(Skill skill);
     }
 }

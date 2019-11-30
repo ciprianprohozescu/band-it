@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using DataAccess;
 using UserDB = ModelsDB.User;
+using SkillDB = ModelsDB.Skill;
 using Models;
 using System.Configuration;
 using System.Web;
@@ -107,7 +108,7 @@ namespace Controllers
         }
         public void Update(string firstName, string lastName, string description, string profilePicture, List<Skill> skills)
         {
-            //usersAccess.UpdateUser(firstName, lastName, description, profilePicture, skills);
+           usersAccess.Update(id, username, firstName, lastName, description, email, password);
         }
 
         public User LogIn(string username, string password)
@@ -217,6 +218,13 @@ namespace Controllers
                     userDB.Longitude = (decimal)user.Location.Longitude;
                 }
                 userDB.ProfilePicture = user.ProfilePicture;
+
+                userDB.Skills = new List<SkillDB>();
+
+                foreach(var skillDB in user.Skills)
+                {
+                    userDB.Skills.Add(skillController.LogicToDB(skillDB));
+                }
 
                 return userDB;
             }

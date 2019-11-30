@@ -71,16 +71,18 @@ namespace DataAccess
                     db.Users.Add(user);
                     db.SaveChanges();
         }
-        public void UpdateUser(string firstName, string lastName, string description, string profilePicture, List<Skill> skills)
+        public void Update(int id, string username, string firstName, string lastName, string description,string email,string password)
         {
-            var user = db.Users
-                .Where(u => u.FirstName == firstName)
-                .Where(u => u.LastName == lastName)
-                .Where(u => u.Description == description)
-                .Where(u => u.ProfilePicture == profilePicture)
-                .Where(u => u.Skills == skills)
-                .Where(x => x.Deleted == null)
-                .FirstOrDefault<User>();
+            var user = FindByID(id);
+            user.Username = username;
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.Description = description;
+            user.Email = email;
+            user.Password = password;
+
+            db.SaveChanges();
+
         }
         public void Delete(int id)
         {
