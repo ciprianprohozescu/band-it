@@ -15,7 +15,7 @@ namespace ClientMVC.Controllers
     public class FileController
     {
         string[] acceptedImageExtensions = { ".jpg", ".png", ".bmp", ".gif" };
-        string[] acceptedMusicExtensions = { ".mp3", ".wav" };
+        string[] acceptedMusicExtensions = { ".mp3", ".wav", ".ogg" };
         int maxFileSize = 5000000;
 
         public void SaveFile(string ownerType, int ownerID, string fileType, HttpPostedFileBase file)
@@ -73,7 +73,7 @@ namespace ClientMVC.Controllers
                     request.AddJsonBody(user);
 
                     client.Execute(request);
-                } else if (fileType == "image")
+                } else
                 {
                     var fileLogic = new FileLogic();
                     fileLogic.Name = fileName;
@@ -104,6 +104,21 @@ namespace ClientMVC.Controllers
             }
 
             return images;
+        }
+
+        public List<FileLogic> GetMusic(List<FileLogic> files)
+        {
+            var music = new List<FileLogic>();
+
+            foreach (var file in files)
+            {
+                if (acceptedMusicExtensions.Contains(Path.GetExtension(file.Name)))
+                {
+                    music.Add(file);
+                }
+            }
+
+            return music;
         }
     }
 }

@@ -174,6 +174,7 @@ namespace Controllers
                 {
                     var fileLogic = new File();
                     fileLogic.Name = file.Name;
+                    fileLogic.ID = file.ID;
 
                     user.Files.Add(fileLogic);
                 }

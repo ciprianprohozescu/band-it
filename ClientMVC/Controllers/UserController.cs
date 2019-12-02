@@ -87,7 +87,13 @@ namespace ClientMVC.Controllers
             {
                 model.Images[i].Name = storageLocation + model.Images[i].Name;
             }
-            
+
+            model.Music = fileController.GetMusic(model.User.Files);
+            for (var i = 0; i < model.Music.Count; ++i)
+            {
+                model.Music[i].Name = storageLocation + model.Music[i].Name;
+            }
+
             return View(model);
         }
 
@@ -161,7 +167,7 @@ namespace ClientMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveProfilePicture(int id, HttpPostedFileBase profilePicture)
+        public ActionResult SaveFile(int id, string type, HttpPostedFileBase file)
         {
             if (Session["ID"] == null || (int)Session["ID"] != id)
             {
@@ -169,21 +175,7 @@ namespace ClientMVC.Controllers
             }
 
             var fileController = new FileController();
-            fileController.SaveFile("user", id, "profilePicture", profilePicture);
-
-            return RedirectToAction($"Show/{id}");
-        }
-
-        [HttpPost]
-        public ActionResult SaveImage(int id, HttpPostedFileBase image)
-        {
-            if (Session["ID"] == null || (int)Session["ID"] != id)
-            {
-                return View("Error");
-            }
-
-            var fileController = new FileController();
-            fileController.SaveFile("user", id, "image", image);
+            fileController.SaveFile("user", id, type, file);
 
             return RedirectToAction($"Show/{id}");
         }
