@@ -7,14 +7,54 @@
         mc:Ignorable="d"
         Title="UserShow" Height="450" Width="800">
     <Grid>
-        <ListView Name="listSkills" HorizontalAlignment="Left" Height="196" Margin="37,124,0,0" VerticalAlignment="Top" Width="283">
+        <ListView Name="listSkills" HorizontalAlignment="Left" Height="183" Margin="507,48,0,0" VerticalAlignment="Top" Width="283">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="Skills" HorizontalAlignment="Left" Margin="37,93,0,0" VerticalAlignment="Top" Width="91"/>
+        <Label x:Name="username" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF0F0F0" Height="48" Width="127" FontSize="22">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Label Content="Skills" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF0F0F0" Height="48" Width="127" FontSize="22" Margin="507,0,0,0">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <ListView x:Name="listApplications" HorizontalAlignment="Left" Height="156" Margin="10,284,0,0" VerticalAlignment="Top" Width="374">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Invitations" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF0F0F0" Height="48" Width="140" FontSize="22" Margin="0,236,0,0">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Label Content="Applications" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF0F0F0" Height="48" Width="140" FontSize="22" Margin="389,236,0,0">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <ListView x:Name="listInvitations" HorizontalAlignment="Left" Height="156" Margin="399,284,0,0" VerticalAlignment="Top" Width="391">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Back to people search" HorizontalAlignment="Left" Margin="666,0,0,0" VerticalAlignment="Top" Width="124" Click="Back_Button_Click"/>
+        <ScrollViewer HorizontalAlignment="Left" Height="183" Margin="10,48,0,0" VerticalAlignment="Top" Width="492">
+            <TextBlock x:Name="description" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="183" Width="472" Foreground="White" FontSize="16">
+                <TextBlock.Effect>
+                    <DropShadowEffect/>
+                </TextBlock.Effect><Run Text="Description"/></TextBlock>
+        </ScrollViewer>
 
     </Grid>
 </Page>

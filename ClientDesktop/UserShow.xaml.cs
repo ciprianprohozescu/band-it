@@ -30,7 +30,21 @@ namespace ClientDesktop
 
             this.mainWindow = mainWindow;
             this.user = user;
+
             listSkills.ItemsSource = user.Skills;
+
+            username.Content = user.Username;
+            if ((user.FirstName != "" && user.FirstName != null) || (user.LastName != "" && user.LastName != null))
+            {
+                username.Content += $" ({user.FirstName} {user.LastName})";
+            }
+
+            description.Text = user.Description;
+        }
+
+        private void Back_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.GoToIndex();
         }
     }
 }
