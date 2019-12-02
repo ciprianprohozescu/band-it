@@ -212,7 +212,7 @@ namespace Controllers
                 userDB.FirstName = user.FirstName;
                 userDB.LastName = user.LastName;
                 userDB.Description = user.Description;
-                if(user.Location != null)
+                if (user.Location != null)
                 {
                     userDB.Latitude = (decimal)user.Location.Latitude;
                     userDB.Longitude = (decimal)user.Location.Longitude;
@@ -221,13 +221,14 @@ namespace Controllers
 
                 userDB.Skills = new List<SkillDB>();
 
-                foreach(var skillDB in user.Skills)
+                foreach (var skillDB in user.Skills)
                 {
                     userDB.Skills.Add(skillController.LogicToDB(skillDB));
                 }
 
                 return userDB;
             }
+
             return null;
         }
 

@@ -19,8 +19,6 @@ namespace Controllers
         List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0);
         void Delete(int id);
         User LogIn(string username, string password);
-        User Get(int id);
-        User GetByUsername(string username);
         void Update(int id, string username, string firstName, string lastName, string description, string email, string password);
         void UpdateProfilePicture(int id, string fileName);
         void SaveLocation(User user);

@@ -11,27 +11,27 @@
         <form action="~/user/update/@Model.User.ID" method="post">
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" class="form-control" name="username" />
+                <input type="text" class="form-control" name="username" value="@Model.User.Username"/>
             </div>
             <div class="form-group">
                 <label>First Name</label>
-                <input type="text" class="form-control" name="firstName" />
+                <input type="text" class="form-control" name="firstName" value="@Model.User.FirstName"/>
             </div>
             <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control" name="lastName" />
+                <input type="text" class="form-control" name="lastName" value="@Model.User.LastName"/>
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea class="form-control" name="description" ></textarea>
+                <textarea class="form-control" name="description" value="@Model.User.Description"></textarea>
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="text" class="form-control" name="email" />
+                <input type="text" class="form-control" name="email" value="@Model.User.Email"/>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" name="password" />
+                <input type="password" class="form-control" name="password"/>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>

@@ -81,8 +81,6 @@ namespace ClientMVC.Controllers
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"user/{id}", Method.GET);
 
-
-
             var content = client.Execute(request);
             model.User = JsonConvert.DeserializeObject<User>(content.Content);
 
@@ -177,11 +175,25 @@ namespace ClientMVC.Controllers
             return View(model);
         }
 
-        //[HttpPost]
-        //public ActionResult Update(int id, string username, string firstName, string lastName, string description, string email, string password)
-        //{
+        [HttpPost]
+        public ActionResult Update(int id, string username, string firstName, string lastName, string description, string email, string password)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest($"user/{id}", Method.POST);
 
-        //}
+            var model = new UserEdit();
+            //model.User.Username = username;
+            //model.User.FirstName = firstName;
+            //model.User.LastName = lastName;
+            //model.User.Description = description;
+            //model.User.Email = email;
+            //model.User.Password = password;
+
+            var content = client.Execute(request);
+            model.User = JsonConvert.DeserializeObject<User>(content.Content);
+
+            return RedirectToAction("Show", model.User.ID );
+        }
 
         [HttpGet]
         public ActionResult Delete(int id)

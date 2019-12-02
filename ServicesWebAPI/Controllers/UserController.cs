@@ -31,7 +31,7 @@ namespace ServicesWebAPI.Controllers
         [Route("api/user/username")]
         public User GetUsername(string username)
         {
-            IUserController userController = new UserControllerLogic();
+           IUserController userController = new UserControllerLogic();
             return userController.GetByUsername(username);
         }
 
