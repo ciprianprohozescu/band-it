@@ -114,7 +114,14 @@ namespace Controllers
                 return null;
             }
 
-            var saltedPassword = StringCipher.Decrypt(user.Password, "hello");
+            string saltedPassword;
+            try
+            {
+                saltedPassword = StringCipher.Decrypt(user.Password, "hello");
+            } catch (Exception)
+            {
+                return null;
+            }
 
             if (saltedPassword != password + user.Salt)
             {
