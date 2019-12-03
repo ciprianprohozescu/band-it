@@ -10,7 +10,12 @@ namespace DataAccess
 {
     public class UsersAccess
     {
-        BandItEntities db = new BandItEntities();
+        BandItEntities db;
+
+        public UsersAccess()
+        {
+            db = ContextProvider.Instance.DB;
+        }
 
         public List<User> Get(string search)
         {
@@ -75,18 +80,6 @@ namespace DataAccess
         {
             var user = FindByID(id);
             user.ProfilePicture = fileName;
-            db.SaveChanges();
-        }
-        public void SaveFile(int id, string fileName)
-        {
-            var user = FindByID(id);
-
-            var file = new File();
-            file.Name = fileName;
-            file.Users.Add(user);
-
-            db.Files.Add(file);
-
             db.SaveChanges();
         }
     }

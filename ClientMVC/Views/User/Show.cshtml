@@ -119,19 +119,28 @@
                     <button type="submit" class="btn-sm btn-primary mt-1"><i class="fas fa-plus"></i> Add music</button>
                 </form>
             }
-            <div style="overflow-y: scroll">
-                @if (Model.Music.Count == 0)
-                {
-                    <p>No music found.</p>
-                }
-                @foreach (var file in Model.Music)
-                {
-                    <audio controls class="mt-2">
+        <div style="overflow-y: scroll; overflow-x: hidden">
+            @if (Model.Music.Count == 0)
+            {
+                <p>No music found.</p>
+            }
+            @foreach (var file in Model.Music)
+            {
+                <div class="row">
+                    <audio controls class="mt-2 w-75">
                         <source src="@file.Name" class="mt-2" />
                         Your browser does not support this audio format.
                     </audio>
-                }
-            </div>
+
+                    <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
+                        <input type="hidden" name="userID" value="@Model.User.ID" />
+                        <input type="hidden" name="fileID" value="@file.ID" />
+                        <input type="hidden" name="fileName" value="@file.Name" />
+                        <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                    </form>
+                </div>
+            }
+        </div>
         </div>
     </div>
 </div>
@@ -198,6 +207,13 @@
 
         function deleteClicked() {
             if (confirm('Are you sure you want to permanently delete your account?')) {
+                return true;
+            }
+            return false;
+        }
+
+        function deleteFileClicked() {
+            if (confirm('Are you sure you want to remove this file?')) {
                 return true;
             }
             return false;

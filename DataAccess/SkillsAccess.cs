@@ -9,7 +9,12 @@ namespace DataAccess
 {
     public class SkillsAccess
     {
-        BandItEntities db = new BandItEntities();
+        BandItEntities db;
+
+        public SkillsAccess()
+        {
+            db = ContextProvider.Instance.DB;
+        }
 
         public List<Skill> Get()
         {

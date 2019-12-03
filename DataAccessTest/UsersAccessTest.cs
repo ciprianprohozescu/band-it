@@ -46,7 +46,7 @@ namespace DataAccessTest
         {
             testHelpers = new TestHelpers();
             usersAccess = new UsersAccess();
-            db = new BandItEntities();
+            db = ContextProvider.Instance.DB;
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -198,14 +198,6 @@ namespace DataAccessTest
             usersAccess.UpdateProfilePicture(usersAccess.FindByUsername("Andrei1337").ID, "newpic.jpg");
 
             Assert.AreEqual("newpic.jpg", usersAccess.FindByUsername("Andrei1337").ProfilePicture);
-        }
-
-        [TestMethod]
-        public void SaveFile()
-        {
-            usersAccess.SaveFile(usersAccess.FindByUsername("Andrei1337").ID, "newfile.txt");
-
-            Assert.AreEqual("newfile.txt", usersAccess.FindByUsername("Andrei1337").Files.FirstOrDefault().Name);
         }
 
         [ClassCleanup]

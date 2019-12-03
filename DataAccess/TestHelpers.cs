@@ -21,6 +21,7 @@ namespace DataAccess
             db.Skills.RemoveRange(db.Skills.ToList());
             db.Genres.RemoveRange(db.Genres.ToList());
             db.Bands.RemoveRange(db.Bands.ToList());
+            db.Files.RemoveRange(db.Files.ToList());
             db.SaveChanges();
         }
         public void InsertTestData()

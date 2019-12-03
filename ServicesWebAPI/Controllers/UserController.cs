@@ -13,10 +13,12 @@ namespace ServicesWebAPI.Controllers
     public class UserController : ApiController
     {
         IUserController userController;
+        IFileController fileController;
 
         public UserController()
         {
             userController = new UserControllerLogic();
+            fileController = new FileController();
         }
         [Route("api/user/register")]
         public void Post(User user)
@@ -83,7 +85,14 @@ namespace ServicesWebAPI.Controllers
         [HttpPost]
         public void AddFile(User user)
         {
-            userController.SaveFile(user.ID, user.Files[0]);
+            fileController.SaveFile("user", user.ID, user.Files[0]);
+        }
+
+        [Route("api/user/delete/file/{id}")]
+        [HttpDelete]
+        public void DeleteFile(int id)
+        {
+            fileController.DeleteFile("user", id);
         }
     }
 }

@@ -91,6 +91,24 @@ namespace ClientMVC.Controllers
             }
         }
 
+        public void DeleteFile(string ownerType, int ownerID, int fileID, string fileName)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
+            fileName = Path.GetFileName(fileName);
+
+            if (ownerType == "user")
+            {
+                var folder = HttpContext.Current.Server.MapPath($"~/Content/Uploads/Users/{ownerID}/");
+                var path = Path.Combine(folder, fileName);
+                System.IO.File.Delete(path);
+
+                var request = new RestRequest($"user/delete/file/{fileID}", Method.DELETE);
+
+                client.Execute(request);
+            }
+        }
+
         public List<FileLogic> GetImages(List<FileLogic> files)
         {
             var images = new List<FileLogic>();

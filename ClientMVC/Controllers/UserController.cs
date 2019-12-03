@@ -179,5 +179,14 @@ namespace ClientMVC.Controllers
 
             return RedirectToAction($"Show/{id}");
         }
+
+        [HttpPost]
+        public ActionResult DeleteFile(int userID, int fileID, string fileName)
+        {
+            var fileController = new FileController();
+            fileController.DeleteFile("user", userID, fileID, fileName);
+
+            return RedirectToAction($"Show/{userID}");
+        }
     }
 }

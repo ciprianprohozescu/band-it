@@ -182,17 +182,6 @@ namespace ControllersTest
             Assert.AreEqual("newpic.jpg", userController.GetByUsername("Andrei1337").ProfilePicture);
         }
 
-        [TestMethod]
-        public void SaveFileTest()
-        {
-            var file = new Models.File();
-            file.Name = "newfile.txt";
-
-            userController.SaveFile(userController.GetByUsername("Andrei1337").ID, file);
-
-            Assert.AreEqual("newfile.txt", userController.GetByUsername("Andrei1337").Files[0].Name);
-        }
-
         [ClassCleanup()]
         public static void Cleanup()
         {

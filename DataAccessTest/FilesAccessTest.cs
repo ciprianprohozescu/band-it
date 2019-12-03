@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using DataAccess;
 using ModelsDB;
-
+using System.Linq;
 
 namespace DataAccessTest
 {
+    /// <summary>
+    /// Summary description for FileAccessTest
+    /// </summary>
     [TestClass]
-    public class SkillsAccessTest
+    public class FilesAccessTest
     {
         static TestHelpers testHelpers;
-        static SkillsAccess skillsAccess;
+        static FilesAccess filesAccess;
         static BandItEntities db;
 
-        public SkillsAccessTest()
-        {
-        }
-
         private TestContext testContextInstance;
-        
+
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
         public TestContext TestContext
         {
             get
@@ -34,17 +34,6 @@ namespace DataAccessTest
             {
                 testContextInstance = value;
             }
-        }
-
-        [ClassInitialize]
-        public static void Initialize(TestContext context)
-        {
-            testHelpers = new TestHelpers();
-            skillsAccess = new SkillsAccess();
-            db = ContextProvider.Instance.DB;
-
-            testHelpers.ClearData();
-            testHelpers.InsertTestData();
         }
 
         #region Additional test attributes
@@ -69,37 +58,42 @@ namespace DataAccessTest
         //
         #endregion
 
-        [TestMethod]
-        public void GetAllSkillsTest()
+        [ClassInitialize()]
+        public static void Initialize(TestContext context) 
         {
-            var skills = skillsAccess.Get();
+            testHelpers = new TestHelpers();
+            filesAccess = new FilesAccess();
+            db = ContextProvider.Instance.DB;
 
-            Assert.AreEqual(2, skills.Count);
-
-            Assert.AreEqual("Triangle", skills[0].Name);
-            Assert.AreEqual("Vocalist", skills[1].Name);
+            testHelpers.ClearData();
+            testHelpers.InsertTestData();
         }
 
         [TestMethod]
-        public void GetByIDTest()
+        public void SaveFileTest()
         {
-            var skillExpected = skillsAccess.GetByName("Vocalist");
-            var skillActual = skillsAccess.GetByID(skillExpected.ID);
+            var user = db.Users.FirstOrDefault();
 
-            Assert.AreEqual(skillExpected.Name, skillActual.Name);
+            filesAccess.SaveFile("user", user.ID, "newfile.txt");
 
-            skillActual = skillsAccess.GetByID(-5);
+            Assert.AreEqual("newfile.txt", user.Files.LastOrDefault().Name);
+        }
 
-            Assert.IsNull(skillActual);
+        [TestMethod]
+        public void DeleteFileTest()
+        {
+            var user = db.Users.FirstOrDefault();
+
+            filesAccess.SaveFile("user", user.ID, "newfile.txt");
+
+            filesAccess.DeleteFile("user", user.Files.LastOrDefault().ID);
+
+            Assert.IsNotNull(user.Files.LastOrDefault().Deleted);
         }
 
         [ClassCleanup]
         public static void Cleanup()
         {
-            //db = new BandItEntities();
-            //db.Skills.RemoveRange(db.Skills.ToList());
-            //db.SaveChanges();
-
             testHelpers.ClearData();
         }
     }
