@@ -28,9 +28,10 @@ namespace ClientMVC.Controllers
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest("band", Method.GET);
 
+            request.AddParameter("search", search);
+
             if (distance > -1)
             {
-                request.AddParameter("search",  search);
                 request.AddParameter("distance", distance);
                 request.AddParameter("markerLat", markerLat);
                 request.AddParameter("markerLng", markerLng);
