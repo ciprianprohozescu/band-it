@@ -17,12 +17,6 @@ namespace ControllersTest
         static TestHelpers testHelpers;
         static IBandController bandController;
         static BandItEntities db;
-        public BandControllerTest()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
 
         private TestContext testContextInstance;
 

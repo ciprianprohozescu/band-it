@@ -44,7 +44,7 @@ namespace ClientDesktop
 
         private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.GoToIndex();
+            mainWindow.GoToUserIndex();
         }
     }
 }

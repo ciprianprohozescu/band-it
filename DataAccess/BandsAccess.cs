@@ -10,7 +10,12 @@ namespace DataAccess
 
     public class BandsAccess
     {
-        BandItEntities db = new BandItEntities();
+        BandItEntities db;
+
+        public BandsAccess()
+        {
+            db = ContextProvider.Instance.DB;
+        }
 
         public List<Band> Get(string search)
         {
