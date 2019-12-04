@@ -132,12 +132,15 @@
                         Your browser does not support this audio format.
                     </audio>
 
-                    <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
-                        <input type="hidden" name="userID" value="@Model.User.ID" />
-                        <input type="hidden" name="fileID" value="@file.ID" />
-                        <input type="hidden" name="fileName" value="@file.Name" />
-                        <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
-                    </form>
+                    @if ((int)Session["ID"] == Model.User.ID)
+                    {
+                        <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
+                            <input type="hidden" name="userID" value="@Model.User.ID" />
+                            <input type="hidden" name="fileID" value="@file.ID" />
+                            <input type="hidden" name="fileName" value="@file.Name" />
+                            <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                        </form>
+                    }
                 </div>
             }
         </div>

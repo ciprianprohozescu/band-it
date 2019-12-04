@@ -17,24 +17,30 @@ else
 
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
-                    <input type="hidden" name="userID" value="@Model.User.ID" />
-                    <input type="hidden" name="fileID" value="@Model.Images[0].ID" />
-                    <input type="hidden" name="fileName" value="@Model.Images[0].Name" />
-                    <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
-                </form>
-                
+                @if ((int)Session["ID"] == Model.User.ID)
+                {
+                    <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
+                        <input type="hidden" name="userID" value="@Model.User.ID" />
+                        <input type="hidden" name="fileID" value="@Model.Images[0].ID" />
+                        <input type="hidden" name="fileName" value="@Model.Images[0].Name" />
+                        <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                    </form>
+                }
+
                 <img src="@Model.Images[0].Name" class="d-block mx-auto" style="max-height: 50vh">
             </div>
             @for (var i = 1; i < Model.Images.Count; ++i)
             {
                 <div class="carousel-item">
-                    <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
-                        <input type="hidden" name="userID" value="@Model.User.ID" />
-                        <input type="hidden" name="fileID" value="@Model.Images[i].ID" />
-                        <input type="hidden" name="fileName" value="@Model.Images[i].Name" />
-                        <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
-                    </form>
+                    @if ((int)Session["ID"] == Model.User.ID)
+                    {
+                        <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
+                            <input type="hidden" name="userID" value="@Model.User.ID" />
+                            <input type="hidden" name="fileID" value="@Model.Images[i].ID" />
+                            <input type="hidden" name="fileName" value="@Model.Images[i].Name" />
+                            <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                        </form>
+                    }
 
                     <img src="@Model.Images[i].Name" class="d-block mx-auto" style="max-height: 50vh">
                 </div>
