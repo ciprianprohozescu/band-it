@@ -45,5 +45,10 @@ namespace ClientDesktop
         {
             mainWindow.GoToUserIndex();
         }
+
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.GoToUserEdit(user);
+        }
     }
 }

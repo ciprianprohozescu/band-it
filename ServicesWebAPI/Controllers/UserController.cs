@@ -81,9 +81,12 @@ namespace ServicesWebAPI.Controllers
         public User Edit(int id)
         [Route("api/user/edit/{id}")]
         public void Update(int id, string username, string firstName, string lastName, string description, string email, string password)
+        [Route("api/user/update")]
+        public void Update(User user)
         {
             userController.UpdateProfilePicture(user.ID, user.ProfilePicture);
             userController.Update(id, username, firstName, lastName, description, email, password);
+            userController.Update(user.ID, user.Username, user.FirstName, user.LastName, user.Description, user.Email, user.Password);
         }
 
         [Route("api/user/add/file")]

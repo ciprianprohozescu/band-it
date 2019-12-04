@@ -73,6 +73,10 @@ namespace Controllers
                 }
             }
         }
+        public void UpdatePassword(User userLogic)
+        {
+            userLogic.Password = StringCipher.Decrypt(userLogic.Password + userLogic.Salt, "hello");
+        }
         public List<User> Get()
         {
             var userDB = usersAccess.Get("");
@@ -219,13 +223,14 @@ namespace Controllers
                 }
                 userDB.ProfilePicture = user.ProfilePicture;
 
-                userDB.Skills = new List<SkillDB>();
-
-                foreach (var skillDB in user.Skills)
+                if (user.Skills != null)
                 {
-                    userDB.Skills.Add(skillController.LogicToDB(skillDB));
+                    foreach (var skillDB in user.Skills)
+                    {
+                        userDB.Skills.Add(skillController.LogicToDB(skillDB));
+                    }
                 }
-
+                
                 return userDB;
             }
 
