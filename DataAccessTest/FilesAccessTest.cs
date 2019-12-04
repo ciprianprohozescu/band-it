@@ -3,19 +3,19 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
-using Controllers;
 using ModelsDB;
+using System.Linq;
 
-namespace ControllersTest
+namespace DataAccessTest
 {
     /// <summary>
-    /// Summary description for UnitTest1
+    /// Summary description for FileAccessTest
     /// </summary>
     [TestClass]
-    public class BandControllerTest
+    public class FilesAccessTest
     {
         static TestHelpers testHelpers;
-        static IBandController bandController;
+        static FilesAccess filesAccess;
         static BandItEntities db;
 
         private TestContext testContextInstance;
@@ -34,17 +34,6 @@ namespace ControllersTest
             {
                 testContextInstance = value;
             }
-        }
-
-        [ClassInitialize]
-        public static void Initialize(TestContext context)
-        {
-            testHelpers = new TestHelpers();
-            bandController = new BandController();
-            db = new BandItEntities();
-
-            testHelpers.ClearData();
-            testHelpers.InsertTestData();
         }
 
         #region Additional test attributes
@@ -69,28 +58,37 @@ namespace ControllersTest
         //
         #endregion
 
-        [TestMethod]
-        public void GetTest()
+        [ClassInitialize()]
+        public static void Initialize(TestContext context) 
         {
-            var bands = bandController.Get("");
+            testHelpers = new TestHelpers();
+            filesAccess = new FilesAccess();
+            db = ContextProvider.Instance.DB;
 
-            #region Assert
-            Assert.AreEqual(3, bands.Count);
+            testHelpers.ClearData();
+            testHelpers.InsertTestData();
+        }
 
-            Assert.AreEqual("LaLaLa", bands[0].Name);
-            Assert.AreEqual("Poleyn", bands[2].Name);
-            #endregion
+        [TestMethod]
+        public void SaveFileTest()
+        {
+            var user = db.Users.FirstOrDefault();
 
-            bands = bandController.Get("Nothing");
-            Assert.AreEqual(0, bands.Count);
+            filesAccess.SaveFile("user", user.ID, "newfile.txt");
 
-            bands = bandController.Get("Pol");
+            Assert.AreEqual("newfile.txt", user.Files.LastOrDefault().Name);
+        }
 
-            #region Assert
-            Assert.AreEqual(1, bands.Count);
+        [TestMethod]
+        public void DeleteFileTest()
+        {
+            var user = db.Users.FirstOrDefault();
 
-            Assert.AreEqual("Poleyn", bands[0].Name);
-            #endregion
+            filesAccess.SaveFile("user", user.ID, "newfile.txt");
+
+            filesAccess.DeleteFile("user", user.Files.LastOrDefault().ID);
+
+            Assert.IsNotNull(user.Files.LastOrDefault().Deleted);
         }
 
         [ClassCleanup]

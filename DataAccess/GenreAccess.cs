@@ -9,7 +9,13 @@ namespace DataAccess
 {
     public class GenreAccess
     {
-        BandItEntities db = new BandItEntities();
+        BandItEntities db;
+
+        public GenreAccess()
+        {
+            db = ContextProvider.Instance.DB;
+        }
+
         public List<Genre> Get()
         {
             var genres = from genre in db.Genres

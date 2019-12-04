@@ -68,10 +68,31 @@ namespace ClientMVC.Controllers
             var model = new UserShow();
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"user/{id}", Method.GET);;
+            var request = new RestRequest($"user/{id}", Method.GET);
 
             var content = client.Execute(request);
             model.User = JsonConvert.DeserializeObject<User>(content.Content);
+
+            var storageLocation = $"/Content/Uploads/Users/{id}/";
+
+            if (model.User.ProfilePicture != null)
+            {
+                model.User.ProfilePicture = storageLocation + model.User.ProfilePicture;
+            }
+
+            var fileController = new FileController();
+
+            model.Images = fileController.GetImages(model.User.Files);
+            for (var i = 0; i < model.Images.Count; ++i)
+            {
+                model.Images[i].Name = storageLocation + model.Images[i].Name;
+            }
+
+            model.Music = fileController.GetMusic(model.User.Files);
+            for (var i = 0; i < model.Music.Count; ++i)
+            {
+                model.Music[i].Name = storageLocation + model.Music[i].Name;
+            }
 
             return View(model);
         }
@@ -133,16 +154,39 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            if ((int)Session["ID"] != id)
+            if (Session["ID"] == null || (int)Session["ID"] != id)
             {
                 return View("Error");
             }
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"delete/{id}", Method.DELETE);
+            var request = new RestRequest($"user/delete/{id}", Method.DELETE);
             client.Execute(request);
 
             return RedirectToAction("LogOut", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult SaveFile(int id, string type, HttpPostedFileBase file)
+        {
+            if (Session["ID"] == null || (int)Session["ID"] != id)
+            {
+                return View("Error");
+            }
+
+            var fileController = new FileController();
+            fileController.SaveFile("user", id, type, file);
+
+            return RedirectToAction($"Show/{id}");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteFile(int userID, int fileID, string fileName)
+        {
+            var fileController = new FileController();
+            fileController.DeleteFile("user", userID, fileID, fileName);
+
+            return RedirectToAction($"Show/{userID}");
         }
     }
 }

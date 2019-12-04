@@ -13,9 +13,12 @@ namespace ServicesWebAPI.Controllers
     public class UserController : ApiController
     {
         IUserController userController;
+        IFileController fileController;
+
         public UserController()
         {
             userController = new UserControllerLogic();
+            fileController = new FileController();
         }
         [Route("api/user/register")]
         public void Post(User user)
@@ -49,7 +52,7 @@ namespace ServicesWebAPI.Controllers
             return userController.Get(search);
         }
 
-        [Route("api/delete/{id}")]
+        [Route("api/user/delete/{id}")]
         public User Delete(int id)
         {
             userController.Delete(id);
@@ -69,6 +72,27 @@ namespace ServicesWebAPI.Controllers
         public User LogIn(string username, string password)
         {
             return userController.LogIn(username, password);
+        }
+
+        [Route("api/user/update/profilepicture")]
+        [HttpPut]
+        public void UpdateProfilePicture(User user)
+        {
+            userController.UpdateProfilePicture(user.ID, user.ProfilePicture);
+        }
+
+        [Route("api/user/add/file")]
+        [HttpPost]
+        public void AddFile(User user)
+        {
+            fileController.SaveFile("user", user.ID, user.Files[0]);
+        }
+
+        [Route("api/user/delete/file/{id}")]
+        [HttpDelete]
+        public void DeleteFile(int id)
+        {
+            fileController.DeleteFile("user", id);
         }
     }
 }

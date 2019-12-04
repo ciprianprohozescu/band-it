@@ -41,19 +41,7 @@ namespace DataAccessTest
         {
             testHelpers = new TestHelpers();
             skillsAccess = new SkillsAccess();
-            db = new BandItEntities();
-
-            //db.Skills.RemoveRange(db.Skills.ToList());
-
-            //var skill = new Skill();
-            //skill.Name = "Vocalist";
-            //db.Skills.Add(skill);
-
-            //skill = new Skill();
-            //skill.Name = "Triangle";
-            //db.Skills.Add(skill);
-
-            //db.SaveChanges();
+            db = ContextProvider.Instance.DB;
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();

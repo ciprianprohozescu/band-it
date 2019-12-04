@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
 using Controllers;
-using ModelsDB;
+using System.Linq;
 
 namespace ControllersTest
 {
     /// <summary>
-    /// Summary description for UnitTest1
+    /// Summary description for FileControllerTest
     /// </summary>
     [TestClass]
-    public class BandControllerTest
+    public class FileControllerTest
     {
         static TestHelpers testHelpers;
-        static IBandController bandController;
-        static BandItEntities db;
+        static IFileController fileController;
+        static IUserController userController;
 
         private TestContext testContextInstance;
 
@@ -34,17 +34,6 @@ namespace ControllersTest
             {
                 testContextInstance = value;
             }
-        }
-
-        [ClassInitialize]
-        public static void Initialize(TestContext context)
-        {
-            testHelpers = new TestHelpers();
-            bandController = new BandController();
-            db = new BandItEntities();
-
-            testHelpers.ClearData();
-            testHelpers.InsertTestData();
         }
 
         #region Additional test attributes
@@ -69,31 +58,48 @@ namespace ControllersTest
         //
         #endregion
 
-        [TestMethod]
-        public void GetTest()
+        [ClassInitialize()]
+        public static void Initialize(TestContext context)
         {
-            var bands = bandController.Get("");
+            testHelpers = new TestHelpers();
+            fileController = new FileController();
+            userController = new UserController();
 
-            #region Assert
-            Assert.AreEqual(3, bands.Count);
-
-            Assert.AreEqual("LaLaLa", bands[0].Name);
-            Assert.AreEqual("Poleyn", bands[2].Name);
-            #endregion
-
-            bands = bandController.Get("Nothing");
-            Assert.AreEqual(0, bands.Count);
-
-            bands = bandController.Get("Pol");
-
-            #region Assert
-            Assert.AreEqual(1, bands.Count);
-
-            Assert.AreEqual("Poleyn", bands[0].Name);
-            #endregion
+            testHelpers.ClearData();
+            testHelpers.InsertTestData();
         }
 
-        [ClassCleanup]
+        [TestMethod]
+        public void SaveFileTest()
+        {
+            var file = new Models.File();
+            file.Name = "newfile.txt";
+
+            fileController.SaveFile("user", userController.GetByUsername("Andrei1337").ID, file);
+
+            Assert.AreEqual("newfile.txt", userController.GetByUsername("Andrei1337").Files.LastOrDefault().Name);
+        }
+
+        [TestMethod]
+        public void DeleteFileTest()
+        {
+            var file = new Models.File();
+            file.Name = "newfile.txt";
+
+            var user = userController.GetByUsername("Andrei1337");
+
+            fileController.SaveFile("user", user.ID, file);
+
+            user = userController.GetByUsername("Andrei1337");
+
+            fileController.DeleteFile("user", user.Files[0].ID);
+
+            user = userController.GetByUsername("Andrei1337");
+
+            Assert.AreEqual(0, user.Files.Count);
+        }
+
+        [ClassCleanup()]
         public static void Cleanup()
         {
             testHelpers.ClearData();
