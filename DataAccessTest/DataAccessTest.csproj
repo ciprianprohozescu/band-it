@@ -61,8 +61,11 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenreAccessTest.cs" />
+    <Compile Include="FilesAccessTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkillsAccessTest.cs" />
+    <Compile Include="BandsAccessTest.cs" />
     <Compile Include="UsersAccessTest.cs" />
   </ItemGroup>
   <ItemGroup>

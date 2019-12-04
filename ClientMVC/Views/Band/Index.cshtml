@@ -1,8 +1,8 @@
-﻿@model ClientMVC.Models.UserIndex
+﻿@model ClientMVC.Models.BandIndex
 
 
 
-<h1> Find musicians </h1>
+<h1> Find bands </h1>
 
 @{
     ViewBag.Title = "Search";
@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<h3>Users</h3>
+<h3>Bands</h3>
 <style>
     table, tr, td, th {
         border: 2px solid black;
@@ -48,25 +48,23 @@
 </style>
 <table class="table table-striped">
     <tbody>
-        @if (Model.Users.Count() == 0)
+        @if (Model.Bands.Count == 0)
         {
             <tr>
-                <td colspan="1">No users found.</td>
+                <td colspan="1">No bands found.</td>
             </tr>
         }
         else
         {
-            foreach (var item in Model.Users)
+            foreach (var item in Model.Bands)
             {
                
                 <tr onclick="location.href = '@Url.Action("Show", new {id = item.ID})'">
                     <td>
-                        <b><Span style="color:red">@item.FirstName @item.LastName </Span></b>
+                        <b><Span style="color:red">@item.Name </Span></b>
                         <p></p>
-                        <p> <span style="color:orangered ">Username: </span> @item.Username</p>
-                        <p> <span style="color:orangered"> Email ID: </span> @item.Email</p>
                         <span style="color:orangered"> Description: </span> <p>  @item.Description</p>
-                        <p><span style="color:orangered"> Skills:</span>@foreach (var skill in item.Skills) {<ul><li>@skill.Name</li></ul> } </p>
+                        <p><span style="color:orangered"> Genre:</span>@foreach (var genre in item.Genres) {<ul><li>@genre.Name</li></ul> } </p>
                        
                     </td>
                     <td align="center">
@@ -80,16 +78,14 @@
     </tbody>
 </table>
 
-@section styles{
+@section scripts{
     <style>
         #map {
             height: 500px;
             width: 100%;
         }
     </style>
-}
 
-@section scripts{
     <script src="~/Scripts/map.js"></script>
 
     <script type="text/javascript">

@@ -8,6 +8,7 @@ using DataAccess;
 using UserDB = ModelsDB.User;
 using Models;
 using System.Configuration;
+using System.Web;
 
 namespace Controllers
 {
@@ -114,7 +115,14 @@ namespace Controllers
                 return null;
             }
 
-            var saltedPassword = StringCipher.Decrypt(user.Password, "hello");
+            string saltedPassword;
+            try
+            {
+                saltedPassword = StringCipher.Decrypt(user.Password, "hello");
+            } catch (Exception)
+            {
+                return null;
+            }
 
             if (saltedPassword != password + user.Salt)
             {
@@ -122,6 +130,11 @@ namespace Controllers
             }
 
             return DBToLogic(user);
+        }
+
+        public void UpdateProfilePicture(int id, string fileName)
+        {
+            usersAccess.UpdateProfilePicture(id, fileName);
         }
 
         private User DBToLogic(UserDB userDB)
@@ -137,15 +150,33 @@ namespace Controllers
                 user.FirstName = userDB.FirstName;
                 user.LastName = userDB.LastName;
                 user.Description = userDB.Description;
+
                 if (userDB.Latitude != null && userDB.Longitude != null)
                 {
                     user.Location = new LatLng((double)userDB.Latitude, (double)userDB.Longitude);
                 }
+
                 user.ProfilePicture = userDB.ProfilePicture;
+
                 user.Skills = new List<Skill>();
                 foreach (var skill in userDB.Skills)
                 {
                     user.Skills.Add(skillController.DBToLogic(skill));
+                }
+
+                user.Files = new List<File>();
+                foreach (var file in userDB.Files)
+                {
+                    if (file.Deleted != null)
+                    {
+                        continue;
+                    }
+
+                    var fileLogic = new File();
+                    fileLogic.Name = file.Name;
+                    fileLogic.ID = file.ID;
+
+                    user.Files.Add(fileLogic);
                 }
 
                 return user;

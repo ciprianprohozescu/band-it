@@ -1,29 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using DataAccess;
 using ModelsDB;
 
-
 namespace DataAccessTest
 {
+
     [TestClass]
-    public class SkillsAccessTest
+    public class GenreAccessTest
     {
         static TestHelpers testHelpers;
-        static SkillsAccess skillsAccess;
+        static GenreAccess genreAccess;
         static BandItEntities db;
 
-        public SkillsAccessTest()
+        public GenreAccessTest()
         {
         }
 
         private TestContext testContextInstance;
-        
+
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
         public TestContext TestContext
         {
             get
@@ -40,11 +41,8 @@ namespace DataAccessTest
         public static void Initialize(TestContext context)
         {
             testHelpers = new TestHelpers();
-            skillsAccess = new SkillsAccess();
-            db = ContextProvider.Instance.DB;
-
-            testHelpers.ClearData();
-            testHelpers.InsertTestData();
+            genreAccess = new GenreAccess();
+            db = new BandItEntities();
         }
 
         #region Additional test attributes
@@ -70,36 +68,19 @@ namespace DataAccessTest
         #endregion
 
         [TestMethod]
-        public void GetAllSkillsTest()
+        public void GetAllGenreTest()
         {
-            var skills = skillsAccess.Get();
+            var genre = genreAccess.Get();
 
-            Assert.AreEqual(2, skills.Count);
+            Assert.AreEqual(3, genre.Count);
 
-            Assert.AreEqual("Triangle", skills[0].Name);
-            Assert.AreEqual("Vocalist", skills[1].Name);
-        }
-
-        [TestMethod]
-        public void GetByIDTest()
-        {
-            var skillExpected = skillsAccess.GetByName("Vocalist");
-            var skillActual = skillsAccess.GetByID(skillExpected.ID);
-
-            Assert.AreEqual(skillExpected.Name, skillActual.Name);
-
-            skillActual = skillsAccess.GetByID(-5);
-
-            Assert.IsNull(skillActual);
+            Assert.AreEqual("Jazz", genre[0].Name);
+            Assert.AreEqual("Metal", genre[2].Name);
         }
 
         [ClassCleanup]
         public static void Cleanup()
         {
-            //db = new BandItEntities();
-            //db.Skills.RemoveRange(db.Skills.ToList());
-            //db.SaveChanges();
-
             testHelpers.ClearData();
         }
     }

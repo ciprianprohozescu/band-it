@@ -46,7 +46,7 @@ namespace DataAccessTest
         {
             testHelpers = new TestHelpers();
             usersAccess = new UsersAccess();
-            db = new BandItEntities();
+            db = ContextProvider.Instance.DB;
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -190,6 +190,14 @@ namespace DataAccessTest
             userActual = usersAccess.FindByID(-5);
 
             Assert.IsNull(userActual);
+        }
+
+        [TestMethod]
+        public void UpdateProfilePictureTest()
+        {
+            usersAccess.UpdateProfilePicture(usersAccess.FindByUsername("Andrei1337").ID, "newpic.jpg");
+
+            Assert.AreEqual("newpic.jpg", usersAccess.FindByUsername("Andrei1337").ProfilePicture);
         }
 
         [ClassCleanup]

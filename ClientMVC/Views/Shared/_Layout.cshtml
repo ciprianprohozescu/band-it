@@ -14,6 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -23,26 +24,56 @@
     <!-- Custom styles for this template -->
     <link href="~/Content/css/landing-page.css" rel="stylesheet">
 
+    @RenderSection("styles", required: false)
+
+    <style>
+        .night-mode {
+            background: rgba(50, 50, 50, 0.9);
+        }
+    </style>
+
 </head>
 
 <body>
     <!-- Navigation -->
     @RenderPage("components/navbar.cshtml")
 
-    <div class="container-fluid px-0" >
-        <div class="body-content mx-auto col-xl-9 ">
-                
-                     @RenderBody()
-
+    <div class="container-fluid px-0">
+        <div class="body-content mx-auto col-xl-9" id="content">
+            @RenderBody()
         </div>
     </div>
 
+    <div class="custom-control custom-switch float-right text-white bg-dark rounded mb-2 mr-2">
+        <input type="checkbox" class="custom-control-input" id="night-mode" onclick="toggleNightMode()">
+        <label class="custom-control-label" for="night-mode">Night mode</label>
+    </div>
 
     @RenderSection("scripts", required: false)
+
+    <script>
+        var nightMode = document.getElementById("night-mode");
+        var content = document.getElementById("content");
+        if (localStorage.nightMode == "true") {
+            nightMode.checked = true;
+            content.classList.add("text-white", "night-mode");
+        }
+
+        function toggleNightMode() {
+            localStorage.nightMode = nightMode.checked;
+
+            if (nightMode.checked) {
+                content.classList.add("text-white", "night-mode");
+            } else {
+                content.classList.remove("text-white", "night-mode");
+            }
+        }
+    </script>
 
     <!-- Bootstrap core JavaScript -->
     <script src="~/Content/vendor/jquery/jquery.min.js"></script>
     <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </body>
 
 </html>

@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using DataAccess;
+using Controllers;
 using ModelsDB;
 
-
-namespace DataAccessTest
+namespace ControllersTest
 {
+    /// <summary>
+    /// Summary description for UnitTest1
+    /// </summary>
     [TestClass]
-    public class SkillsAccessTest
+    public class BandControllerTest
     {
         static TestHelpers testHelpers;
-        static SkillsAccess skillsAccess;
+        static IBandController bandController;
         static BandItEntities db;
 
-        public SkillsAccessTest()
-        {
-        }
-
         private TestContext testContextInstance;
-        
+
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
         public TestContext TestContext
         {
             get
@@ -40,8 +40,8 @@ namespace DataAccessTest
         public static void Initialize(TestContext context)
         {
             testHelpers = new TestHelpers();
-            skillsAccess = new SkillsAccess();
-            db = ContextProvider.Instance.DB;
+            bandController = new BandController();
+            db = new BandItEntities();
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -70,36 +70,32 @@ namespace DataAccessTest
         #endregion
 
         [TestMethod]
-        public void GetAllSkillsTest()
+        public void GetTest()
         {
-            var skills = skillsAccess.Get();
+            var bands = bandController.Get("");
 
-            Assert.AreEqual(2, skills.Count);
+            #region Assert
+            Assert.AreEqual(3, bands.Count);
 
-            Assert.AreEqual("Triangle", skills[0].Name);
-            Assert.AreEqual("Vocalist", skills[1].Name);
-        }
+            Assert.AreEqual("LaLaLa", bands[0].Name);
+            Assert.AreEqual("Poleyn", bands[2].Name);
+            #endregion
 
-        [TestMethod]
-        public void GetByIDTest()
-        {
-            var skillExpected = skillsAccess.GetByName("Vocalist");
-            var skillActual = skillsAccess.GetByID(skillExpected.ID);
+            bands = bandController.Get("Nothing");
+            Assert.AreEqual(0, bands.Count);
 
-            Assert.AreEqual(skillExpected.Name, skillActual.Name);
+            bands = bandController.Get("Pol");
 
-            skillActual = skillsAccess.GetByID(-5);
+            #region Assert
+            Assert.AreEqual(1, bands.Count);
 
-            Assert.IsNull(skillActual);
+            Assert.AreEqual("Poleyn", bands[0].Name);
+            #endregion
         }
 
         [ClassCleanup]
         public static void Cleanup()
         {
-            //db = new BandItEntities();
-            //db.Skills.RemoveRange(db.Skills.ToList());
-            //db.SaveChanges();
-
             testHelpers.ClearData();
         }
     }

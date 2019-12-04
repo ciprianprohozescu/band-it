@@ -4,34 +4,219 @@
     ViewBag.Title = "Profile";
 }
 
-<h1>@Model.User.Username</h1>
-
-<h2>Skills</h2>
-@if (Model.User.Skills.Count() == 0)
-{
-    <p>No skills found.</p>
-}
-else
-{
-    <ul>
-        @foreach (var item in Model.User.Skills)
+<div class="row">
+    <div class="col-md-4">
+        @if (Model.User.ProfilePicture != null)
         {
-            <li>@item.Name</li>
+            <img src="@Model.User.ProfilePicture"
+                 style="margin-top: 3vh; max-width: 20vw" />
         }
-    </ul>
+        else
+        {
+            <img src="~/Content/Images/profile_placeholder.png" style="margin-top: 3vh; max-width: 20vw" />
+        }
+    </div>
+
+    <div class="col-md-8">
+        <h2>@Model.User.Username <span class="text-muted" id="full-name">(@Model.User.FirstName @Model.User.LastName)</span></h2>
+        <div style="max-height: 30vh; overflow-y: scroll;">
+            @Model.User.Description
+        </div>
+    </div>
+</div>
+
+@if ((int)Session["ID"] == Model.User.ID)
+{
+    <form class="form-inline mt-1" action="~/user/savefile/@Model.User.ID"
+          method="post" enctype="multipart/form-data">
+        <button type="submit" class="btn-sm btn-primary mr-2">Upload</button>
+        <input type="file" name="file" />
+        <input type="hidden" name="type" value="profilePicture" />
+    </form>
 }
 
-@using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
-{
-    <input type="submit" class="btn btn-danger" value="Delete your account" />
+<div class="row">
+    <div class="col-md-9">
+
+        <div class="row" style="margin-top: 3vh">
+            <div class="col-md-6">
+                <div>
+                    <h4>Home location</h4>
+                    <img src="~/Content/Images/map_placeholder.png" style="max-width: 20vw" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div>
+                    <h4>Skills</h4>
+
+                    @if (Model.User.Skills.Count() == 0)
+                    {
+                        <p>No skills found.</p>
+                    }
+                    else
+                    {
+                        <ul>
+                            @foreach (var item in Model.User.Skills)
+                            {
+                                <li>@item.Name</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if ((int)Session["ID"] == Model.User.ID)
+        {
+            <div class="row" style="margin-top: 3vh">
+                <div class="col-md-6">
+                    <div>
+                        <h4>Invitations</h4>
+                        <table class="table-striped">
+                            <tr>
+                                <td>Hello</td>
+                            </tr>
+                            <tr>
+                                <td>Hej</td>
+                            </tr>
+                            <tr>
+                                <td>Hellojsa</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div>
+                        <h4>Applications</h4>
+                        <table class="table-striped">
+                            <tr>
+                                <td>Hello</td>
+                            </tr>
+                            <tr>
+                                <td>Hej</td>
+                            </tr>
+                            <tr>
+                                <td>Hellojsa</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-3">
+        <div>
+            <h4 class="mr-2">Music</h4>
+            @if ((int)Session["ID"] == Model.User.ID)
+            {
+                <form action="~/user/savefile/@Model.User.ID"
+                      method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" />
+                    <input type="hidden" name="type" value="music" />
+                    <button type="submit" class="btn-sm btn-primary mt-1"><i class="fas fa-plus"></i> Add music</button>
+                </form>
+            }
+        <div style="overflow-y: scroll; overflow-x: hidden">
+            @if (Model.Music.Count == 0)
+            {
+                <p>No music found.</p>
+            }
+            @foreach (var file in Model.Music)
+            {
+                <div class="row">
+                    <audio controls class="mt-2 w-75">
+                        <source src="@file.Name" class="mt-2" />
+                        Your browser does not support this audio format.
+                    </audio>
+
+                    @if ((int)Session["ID"] == Model.User.ID)
+                    {
+                        <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
+                            <input type="hidden" name="userID" value="@Model.User.ID" />
+                            <input type="hidden" name="fileID" value="@file.ID" />
+                            <input type="hidden" name="fileName" value="@file.Name" />
+                            <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 3vh">
+    <div class="col-md-12">
+        <div class="row">
+            <h4 class="mr-2">Gallery</h4>
+            @if ((int)Session["ID"] == Model.User.ID)
+            {
+            <form action="~/user/savefile/@Model.User.ID"
+                  method="post" enctype="multipart/form-data">
+                <button type="submit" class="btn-sm btn-primary mr-2"><i class="fas fa-plus"></i> Add photo</button>
+                <input type="file" name="file" />
+                <input type="hidden" name="type" value="image" />
+            </form>
+            }
+        </div>
+        <div>
+            @{
+                Html.RenderPartial("_Gallery", Model);
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="delete-form">
+            @if ((int)Session["ID"] == Model.User.ID)
+            {
+                using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
+                {
+                    <input type="submit" class="btn btn-danger" value="Delete your account" />
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .delete-form {
+            margin-left: 37.5%;
+            width: 50%;
+            margin-top: 10vh
+        }
+
+        audio {
+            width: 100%;
+            height: 20px;
+        }
+    </style>
 }
 
 @section scripts{
     <script type="text/javascript">
+        var fullName = document.getElementById('full-name');
         var formDelete = document.getElementById('form-delete');
+
+        if ("@Model.User.FirstName" == "" && "@Model.User.LastName" == "") {
+            fullName.style.display = 'none';
+        }
 
         function deleteClicked() {
             if (confirm('Are you sure you want to permanently delete your account?')) {
+                return true;
+            }
+            return false;
+        }
+
+        function deleteFileClicked() {
+            if (confirm('Are you sure you want to remove this file?')) {
                 return true;
             }
             return false;
