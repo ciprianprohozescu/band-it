@@ -58,3 +58,15 @@ function markerLocation() {
         document.getElementById('marker-lng').value = currentLocation.lng();
     }
 }
+
+function getCoordinates() {
+    var lng;
+    var lat;
+
+    var lngInput = document.getElementById('lng');
+    var latInput = document.getElementById('lat');
+    lng = marker.position.lng();
+    lat = marker.position.lat();
+    lngInput.value = lng;
+    latInput.value = lat;
+    }

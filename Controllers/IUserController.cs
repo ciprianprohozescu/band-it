@@ -21,5 +21,6 @@ namespace Controllers
         void Delete(int id);
         User LogIn(string username, string password);
         void UpdateProfilePicture(int id, string fileName);
+        void SaveLocation(User user);
     }
 }

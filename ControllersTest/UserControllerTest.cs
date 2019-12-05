@@ -173,6 +173,19 @@ namespace ControllersTest
             user = userController.LogIn("NewUser", "1234");
             Assert.IsNull(user);
         }
+        [TestMethod]
+        public void SaveLocationTest()
+        {
+            userController = new UserController();
+            var sampleUser = userController.GetByUsername("Radu1337");
+            userController.SaveLocation(sampleUser);
+            var lat = userController.GetByUsername("Radu1337").Location.Latitude;
+            var lng = userController.GetByUsername("Radu1337").Location.Longitude;
+            //Checks user's latitude
+            Assert.AreEqual((decimal)53.003310, (decimal)lat);
+            //Checks user's longitude
+            Assert.AreEqual((decimal)9.879727, (decimal)lng);
+        }
 
         [TestMethod]
         public void UpdateProfilePictureTest()

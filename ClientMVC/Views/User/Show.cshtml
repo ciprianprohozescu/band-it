@@ -105,7 +105,32 @@
                 </div>
             </div>
         }
+<<<<<<< Updated upstream
     </div>
+=======
+    </ul>
+}
+<style>
+    #map {
+        height: 70vh;
+        width: 100%;
+    }
+</style>
+
+<div id="map"></div>
+<script src="~/Scripts/map.js"></script>
+
+
+
+<form style="display: inline-block">
+   <input type="hidden" name="lng" id="lng" > <br />
+   <input type="hidden" name="lat" id="lat" /> <br />
+   <input type="submit" value="Submit" />
+</form>
+
+
+
+>>>>>>> Stashed changes
 
     <div class="col-md-3">
         <div>
@@ -222,4 +247,7 @@
             return false;
         }
     </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
+
 }

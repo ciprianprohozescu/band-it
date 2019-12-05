@@ -134,9 +134,15 @@ namespace Controllers
             return DBToLogic(user);
         }
 
+
         public void UpdateProfilePicture(int id, string fileName)
         {
             usersAccess.UpdateProfilePicture(id, fileName);
+        }
+
+        public void SaveLocation(User user)
+        {
+            usersAccess.SaveLocation(LogicToDB(user));
         }
 
         private User DBToLogic(UserDB userDB)
@@ -215,5 +221,7 @@ namespace Controllers
             }
             return null;
         }
+
+
     }
 }

@@ -74,6 +74,7 @@ namespace ServicesWebAPI.Controllers
             return userController.LogIn(username, password);
         }
 
+<<<<<<< Updated upstream
         [Route("api/user/update/profilepicture")]
         [HttpPut]
         public void UpdateProfilePicture(User user)
@@ -93,6 +94,13 @@ namespace ServicesWebAPI.Controllers
         public void DeleteFile(int id)
         {
             fileController.DeleteFile("user", id);
+=======
+        [Route("api/user/savelocation")]
+        [HttpPut]
+        public void SaveLocation(User user)
+        {
+            userController.SaveLocation(user);
+>>>>>>> Stashed changes
         }
     }
 }

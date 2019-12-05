@@ -80,6 +80,12 @@ namespace DataAccess
         {
             var user = FindByID(id);
             user.ProfilePicture = fileName;
+        }
+        public void SaveLocation(User user)
+        {
+            var validuser = db.Users.SingleOrDefault(u => u.ID == user.ID);
+            validuser.Latitude = user.Latitude;
+            validuser.Longitude = user.Longitude;
             db.SaveChanges();
         }
     }

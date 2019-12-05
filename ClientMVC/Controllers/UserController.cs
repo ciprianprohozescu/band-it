@@ -10,6 +10,7 @@ using User = Models.User;
 
 using RestSharp;
 using Newtonsoft.Json;
+using Models;
 
 namespace ClientMVC.Controllers
 {
@@ -168,13 +169,20 @@ namespace ClientMVC.Controllers
         }
 
         [HttpPost]
+<<<<<<< Updated upstream
         public ActionResult SaveFile(int id, string type, HttpPostedFileBase file)
         {
             if (Session["ID"] == null || (int)Session["ID"] != id)
+=======
+        public ActionResult SaveLocation(int id, double lng, double lat)
+        {
+            if ((int)Session["ID"] != id)
+>>>>>>> Stashed changes
             {
                 return View("Error");
             }
 
+<<<<<<< Updated upstream
             var fileController = new FileController();
             fileController.SaveFile("user", id, type, file);
 
@@ -188,6 +196,18 @@ namespace ClientMVC.Controllers
             fileController.DeleteFile("user", userID, fileID, fileName);
 
             return RedirectToAction($"Show/{userID}");
+=======
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest($"savelocation", Method.PUT);
+            User user = new User();
+            user.ID = id;
+            user.Location = new LatLng(lat, lng);
+            request.AddJsonBody(user);
+            client.Execute(request);
+
+            return RedirectToAction("SaveLocation", "Show");
+>>>>>>> Stashed changes
         }
     }
+
 }

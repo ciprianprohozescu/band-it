@@ -41,54 +41,52 @@
         border: 2px solid black;
     }
 
-    tr{
-        cursor:pointer;
-        
+    tr {
+        cursor: pointer;
     }
 </style>
 <table class="table table-striped">
-    <tbody>
-        @if (Model.Users.Count() == 0)
-        {
-            <tr>
-                <td colspan="1">No users found.</td>
-            </tr>
-        }
-        else
-        {
-            foreach (var item in Model.Users)
-            {
-               
-                <div class="card">  
-                    <div class="card-body">
-                        <h3 style="color:darkblue">@item.FirstName @item.LastName </h3>
-                        <p></p>
-                        <p> <span style="color:dodgerblue ">Username: </span> @item.Username</p>
-                        <p> <span style="color:dodgerblue"> Email ID: </span> @item.Email</p>
-                        <span style="color:dodgerblue"> Description: </span> <p>  @item.Description</p>
-                        <p><span style="color:dodgerblue"> Skills:</span>@foreach (var skill in item.Skills) {<ul><li>@skill.Name</li></ul> } </p>
-                        <p>
-                            <button onclick="location.href = '@Url.Action("Show", new {id = item.ID})'" type="button" class="btn btn-primary">Show </button>
-                        </p>
-                    </div>
-                </div>
-
-            }
-        }
-
+    <tbody>
+        @if (Model.Users.Count() == 0)
+        {
+            <tr>
+                <td colspan="1">No users found.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model.Users)
+            {
+               
+                <div class="card">  
+                    <div class="card-body">
+                        <h3 style="color:darkblue">@item.FirstName @item.LastName </h3>
+                        <p></p>
+                        <p> <span style="color:dodgerblue ">Username: </span> @item.Username</p>
+                        <p> <span style="color:dodgerblue"> Email ID: </span> @item.Email</p>
+                        <span style="color:dodgerblue"> Description: </span> <p>  @item.Description</p>
+                        <p><span style="color:dodgerblue"> Skills:</span>@foreach (var skill in item.Skills) {<ul><li>@skill.Name</li></ul> } </p>
+                        <p>
+                            <button onclick="location.href = '@Url.Action("Show", new {id = item.ID})'" type="button" class="btn btn-primary">Show </button>
+                        </p>
+                    </div>
+                </div>
+
+            }
+        }
+
     </tbody>
 </table>
 
-@section styles{
+@section scripts{
     <style>
+
         #map {
             height: 500px;
             width: 100%;
         }
     </style>
-}
 
-@section scripts{
     <script src="~/Scripts/map.js"></script>
 
     <script type="text/javascript">
@@ -122,7 +120,8 @@
         }
     </script>
 
-   
+
 
     <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
+>>>>>>> Stashed changes
 }
