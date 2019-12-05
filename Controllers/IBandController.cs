@@ -13,5 +13,6 @@ namespace Controllers
         Band GetById(int id);
         Band GetByName(string name);
         Band Update(Band band);
+        void Add(Band bandLogic);
     }
 }

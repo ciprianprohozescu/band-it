@@ -59,6 +59,17 @@ namespace Controllers
             return DBToLogic(bandsAccess.FindByID(id));
         }
 
+        public void Add(Band bandLogic)
+        {
+            var bandAccess = new BandsAccess();
+            var bandDB = bandAccess.FindByName(bandLogic.Name);
+            if (bandDB == null)
+            {
+                bandDB = LogicToDB(bandLogic);
+                bandAccess.Add(bandDB);
+            }
+        }
+
         public Band GetByName(string name)
         {
             return DBToLogic(bandsAccess.FindByName(name));

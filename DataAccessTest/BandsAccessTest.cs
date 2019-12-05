@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
 using ModelsDB;
+using System.Linq;
 
 namespace DataAccessTest
 {
@@ -87,6 +88,38 @@ namespace DataAccessTest
 
             bands = bandsAccess.Get("Nothing");
             Assert.AreEqual(0, bands.Count);
+        }
+
+        [TestMethod]
+        public void FindByNameTest()
+        {
+            var band = bandsAccess.FindByName("LaLaLa");
+
+        }
+
+        [TestMethod]
+        public void AddTest()
+        {
+            var band = new Band();
+            band.Name = "Test Name";
+
+            bandsAccess.Add(band);
+
+            var band2 = db.Bands.Where(b => b.Name == "Test Name").ToList().FirstOrDefault();
+
+            Assert.AreEqual(band2.Name, band.Name);
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var band = bandsAccess.FindByName("Test Name");
+            bandsAccess.Delete(band.ID);
+            var band2 = bandsAccess.FindByName("Test Name");
+
+            #region Assert
+            Assert.IsNull(band2);
+            #endregion
         }
 
         [TestMethod]

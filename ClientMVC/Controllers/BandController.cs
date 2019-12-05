@@ -80,6 +80,70 @@ namespace ClientMVC.Controllers
             return View(model);
         }
 
+        public ActionResult Create()
+        {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
+            var model = new BandForm();
+
+            return View(model);
+        }
+
+        public ActionResult Show()
+        {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
+            var model = new BandShow();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(BandForm band)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+                var request = new RestRequest("/band/register", Method.POST);
+                request.AddJsonBody(MVCToLogic(band));
+                var response = client.Execute(request);
+                Console.WriteLine(request.ToString());
+                return RedirectToAction("Index", "Band");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult DoesBandNameExist(string Name)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest("band/band name", Method.GET);
+            request.AddParameter("band name", Name);
+
+
+            var content = client.Execute(request).Content;
+            var band = JsonConvert.DeserializeObject<Band>(content);
+            return Json(band == null);
+
+        }
+
+        private Band MVCToLogic(BandForm bandMVC)
+        {
+            var bandLogic = new Band();
+
+            bandLogic.Name = bandMVC.Name;
+           
+            return bandLogic;
+        }
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
