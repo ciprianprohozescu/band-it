@@ -79,7 +79,7 @@ namespace Controllers
                 {
                     band.Genres.Add(genreController.DBToLogic(genre));
                 }
-                band.RowVersion = bandDB.RowVersion;
+                band.RowVersion = BitConverter.ToInt64(bandDB.RowVersion, 0);
 
                 return band;
             }
@@ -101,7 +101,7 @@ namespace Controllers
                 bandDB.Longitude = (decimal)band.Location.Longitude;
             }
             bandDB.ProfilePicture = band.ProfilePicture;
-            bandDB.RowVersion = band.RowVersion;
+            bandDB.RowVersion = BitConverter.GetBytes(band.RowVersion);
 
             return bandDB;
         }

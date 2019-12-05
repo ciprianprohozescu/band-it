@@ -81,7 +81,7 @@ namespace ClientMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(int id, byte[] rowVersion, string name, string description, string inviteMessage)
+        public ActionResult Update(int id, long rowVersion, string name, string description, string inviteMessage)
         {
             var band = new Band();
             band.ID = id;
@@ -92,8 +92,8 @@ namespace ClientMVC.Controllers
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
 
-            var request = new RestRequest($"band/{id}", Method.GET);
-
+            var request = new RestRequest($"band/update", Method.POST);
+            request.AddJsonBody(band);
 
             client.Execute(request);
 

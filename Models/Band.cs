@@ -15,7 +15,7 @@ namespace Models
         public string ProfilePicture { get; set; }
         public string InviteMessage { get; set; }
         public List<Genre> Genres { get; set; }
-        public byte[] RowVersion { get; set; }
+        public long RowVersion { get; set; }
         public DateTime Deleted { get; set; }
     }
 }

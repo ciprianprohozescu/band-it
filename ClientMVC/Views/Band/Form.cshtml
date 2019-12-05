@@ -3,10 +3,10 @@
 <h1>@ViewBag.Title</h1>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-6">
         <form action="~/band/@Model.Action" method="post">
             <input type="hidden" name="id" value="@Model.Band.ID" />
-            <input type="hidden" name="rowVersion" value="@Model.Band.RowVersion" />
+            <input type="hidden" name="rowVersion" value="@Model.Band.RowVersion" id="rowversion" />
 
             <div class="form-group">
                 <label>Name</label>
@@ -15,15 +15,21 @@
 
             <div class="form-group">
                 <label>Description</label>
-                <input type="text" name="name" value="@Model.Band.Description" class="form-control" />
+                <textarea name="description" class="form-control">@Model.Band.Description</textarea>
             </div>
 
             <div class="form-group">
                 <label>Invite message</label>
-                <input type="text" name="name" value="@Model.Band.InviteMessage" class="form-control" />
+                <textarea name="inviteMessage" class="form-control">@Model.Band.InviteMessage</textarea>
             </div>
 
             <button type="submit" class="btn btn-success">Save</button>
         </form>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        document.getElementById("rowversion").serialize();
+    </script>
+}

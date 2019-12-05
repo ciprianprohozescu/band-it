@@ -41,7 +41,7 @@ namespace DataAccess
         {
             var bandDB = FindByID(band.ID);
 
-            if (bandDB.RowVersion != band.RowVersion)
+            if (!bandDB.RowVersion.SequenceEqual(band.RowVersion))
             {
                 return;
             }
