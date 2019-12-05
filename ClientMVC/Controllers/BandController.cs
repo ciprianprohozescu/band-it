@@ -186,5 +186,14 @@ namespace ClientMVC.Controllers
 
             return View("Form", model);
         }
+
+        private Band MVCToLogic(BandForm bandMVC)
+        {
+            var bandLogic = new Band();
+
+            bandLogic.Name = bandMVC.Name;
+           
+            return bandLogic;
+        }
     }
 }

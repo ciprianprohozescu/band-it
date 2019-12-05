@@ -91,6 +91,13 @@ namespace DataAccessTest
         }
 
         [TestMethod]
+        public void FindByNameTest()
+        {
+            var band = bandsAccess.FindByName("LaLaLa");
+
+        }
+
+        [TestMethod]
         public void AddTest()
         {
             var band = new Band();

@@ -94,6 +94,46 @@ namespace ControllersTest
         }
 
         [TestMethod]
+        public void GetByIDTest()
+        {
+            var bandExpected = bandController.Get("Poleyn")[0];
+            var bandActual = bandController.GetByID(bandExpected.ID);
+
+            Assert.AreEqual(bandExpected.Name, bandActual.Name);
+        }
+
+        [TestMethod]
+        public void GetByName()
+        {
+            var band = bandController.GetByName("Poylen");
+        }
+
+        [TestMethod]
+        public void GetByDistanceTest()
+        {
+            var distance = 75.0;
+            var marker = new Models.LatLng(55.708916, 12.483776);
+
+            List<BandLogic> bands = bandController.Get("", distance, marker.Latitude, marker.Longitude);
+
+            #region Assert
+            Assert.AreEqual(1, bands.Count);
+            Assert.AreEqual("LaLaLa", bands[0].Name);
+            #endregion
+        }
+
+        [TestMethod]
+        public void Delete()
+        {
+            var band = bandController.GetByName("Dansk Rap");
+            bandController.Delete(band.ID);
+            var band2 = bandController.GetByName("Dansk Rap");
+            #region Assert
+            Assert.IsNull(band2);
+            #endregion
+        }
+
+        [TestMethod]
         public void GetByName()
         {
             var band = bandController.GetByName("Poylen");

@@ -156,6 +156,26 @@ namespace Controllers
         private BandDB LogicToDB(Band band)
         {
             var bandDB = new BandDB();
+            if (band != null)
+            {
+                bandDB.ID = band.ID;
+                bandDB.Name = band.Name;
+                bandDB.Description = band.Description;
+                if (band.Location != null)
+                {
+                    bandDB.Latitude = (decimal)band.Location.Latitude;
+                    bandDB.Longitude = (decimal)band.Location.Longitude;
+                }
+                bandDB.ProfilePicture = band.ProfilePicture;
+
+                return bandDB;
+            }
+            return null;
+        }
+
+        private BandDB LogicToDB(Band band)
+        {
+            var bandDB = new BandDB();
 
             bandDB.ID = band.ID;
             bandDB.Name = band.Name;

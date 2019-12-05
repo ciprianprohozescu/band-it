@@ -11,8 +11,8 @@ using Controllers;
 namespace ServicesWebAPI.Controllers
 {
     public class BandController : ApiController
-    {
-        IBandController bandController;
+    {
+        IBandController bandController;
         public BandController()
         {
             bandController = new BandControllerLogic();

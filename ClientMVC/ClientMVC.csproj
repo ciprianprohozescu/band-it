@@ -146,6 +146,7 @@
     <Compile Include="Models\ApplicationForm.cs" />
     <Compile Include="Models\BandShow.cs" />
     <Compile Include="Models\HomeIndex.cs" />
+    <Compile Include="Models\BandShow.cs" />
     <Compile Include="Models\UserForm.cs" />
     <Compile Include="Models\UserIndex.cs" />
     <Compile Include="Models\UserShow.cs" />
