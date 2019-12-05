@@ -184,7 +184,7 @@ namespace ControllersTest
             //Checks user's latitude
             Assert.AreEqual((decimal)53.003310, (decimal)lat);
             //Checks user's longitude
-            Assert.AreEqual((decimal)9.879727, (decimal)lng);
+            Assert.AreEqual((decimal)13.982130, (decimal)lng);
         }
 
         [TestMethod]

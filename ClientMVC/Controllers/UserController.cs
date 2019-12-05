@@ -169,34 +169,22 @@ namespace ClientMVC.Controllers
         }
 
         [HttpPost]
-<<<<<<< Updated upstream
         public ActionResult SaveFile(int id, string type, HttpPostedFileBase file)
         {
             if (Session["ID"] == null || (int)Session["ID"] != id)
-=======
-        public ActionResult SaveLocation(int id, double lng, double lat)
-        {
-            if ((int)Session["ID"] != id)
->>>>>>> Stashed changes
-            {
-                return View("Error");
-            }
+                {
+                    return View("Error");
+                }
 
-<<<<<<< Updated upstream
-            var fileController = new FileController();
-            fileController.SaveFile("user", id, type, file);
+                var fileController = new FileController();
+                fileController.SaveFile("user", id, type, file);
 
-            return RedirectToAction($"Show/{id}");
+                return RedirectToAction($"Show/{id}");
+            
         }
 
-        [HttpPost]
-        public ActionResult DeleteFile(int userID, int fileID, string fileName)
-        {
-            var fileController = new FileController();
-            fileController.DeleteFile("user", userID, fileID, fileName);
-
-            return RedirectToAction($"Show/{userID}");
-=======
+        public ActionResult SaveLocation(int id, double lng, double lat)
+          {
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"savelocation", Method.PUT);
             User user = new User();
@@ -206,7 +194,17 @@ namespace ClientMVC.Controllers
             client.Execute(request);
 
             return RedirectToAction("SaveLocation", "Show");
->>>>>>> Stashed changes
+        }
+        
+
+        [HttpPost]
+        public ActionResult DeleteFile(int userID, int fileID, string fileName)
+        {
+            var fileController = new FileController();
+            fileController.DeleteFile("user", userID, fileID, fileName);
+
+            return RedirectToAction($"Show/{userID}");
+            
         }
     }
 
