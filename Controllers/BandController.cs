@@ -50,6 +50,16 @@ namespace Controllers
 
         }
 
+        public Band GetById(int id)
+        {
+            return DBToLogic(bandsAccess.FindByID(id));
+        }
+
+        public void Update(Band band)
+        {
+            bandsAccess.Update(LogicToDB(band));
+        }
+
         private Band DBToLogic(BandDB bandDB)
         {
             var band = new Band();
@@ -58,6 +68,7 @@ namespace Controllers
                 band.ID = bandDB.ID;
                 band.Name = bandDB.Name;
                 band.Description = bandDB.Description;
+                band.InviteMessage = bandDB.InviteMessage;
                 if(bandDB.Latitude != null && bandDB.Longitude != null)
                 {
                     band.Location = new LatLng((double)bandDB.Latitude, (double)bandDB.Longitude);
@@ -68,11 +79,31 @@ namespace Controllers
                 {
                     band.Genres.Add(genreController.DBToLogic(genre));
                 }
+                band.RowVersion = bandDB.RowVersion;
 
                 return band;
             }
 
             return null;
+        }
+
+        private BandDB LogicToDB(Band band)
+        {
+            var bandDB = new BandDB();
+
+            bandDB.ID = band.ID;
+            bandDB.Name = band.Name;
+            bandDB.Description = band.Description;
+            bandDB.InviteMessage = band.InviteMessage;
+            if (band.Location != null)
+            {
+                bandDB.Latitude = (decimal)band.Location.Latitude;
+                bandDB.Longitude = (decimal)band.Location.Longitude;
+            }
+            bandDB.ProfilePicture = band.ProfilePicture;
+            bandDB.RowVersion = band.RowVersion;
+
+            return bandDB;
         }
     }
 }

@@ -16,10 +16,10 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Index(string search, double distance = -1, double markerLat = 0.0, double markerLng = 0.0)
         {
-            //if(Session["ID"] == null)
-            //{
-            //    return View("Error");
-            //}
+            if(Session["ID"] == null)
+            {
+                return View("Error");
+            }
 
             var model = new BandIndex();
 
@@ -55,6 +55,49 @@ namespace ClientMVC.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest($"band/{id}", Method.GET);
+            var content = client.Execute(request).Content;
+
+            var band = JsonConvert.DeserializeObject<Band>(content);
+
+            if (band == null) //TODO: add check that user is member of band
+            {
+                return View("Error");
+            }
+
+            ViewBag.Title = $"Edit {band.Name}";
+
+            var model = new BandForm();
+            model.Action = $"update/{id}";
+            model.Band = band;
+
+            return View("Form", model);
+        }
+
+        [HttpPost]
+        public ActionResult Update(int id, byte[] rowVersion, string name, string description, string inviteMessage)
+        {
+            var band = new Band();
+            band.ID = id;
+            band.RowVersion = rowVersion;
+            band.Name = name;
+            band.Description = description;
+            band.InviteMessage = inviteMessage;
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
+            var request = new RestRequest($"band/{id}", Method.GET);
+
+
+            client.Execute(request);
+
+            return RedirectToAction("Edit", new { id });
         }
     }
 }
