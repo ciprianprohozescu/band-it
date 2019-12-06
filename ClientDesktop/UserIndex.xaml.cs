@@ -54,5 +54,10 @@ namespace ClientDesktop
             LoggedInUser.User = null;
             mainWindow.GoToLogin();
         }
+
+        private void BandIndex_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.GoToBandIndex();
+        }
     }
 }

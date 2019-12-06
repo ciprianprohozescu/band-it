@@ -72,7 +72,7 @@ namespace Controllers
             }
 
             var otherBand = GetByName(band.Name);
-            if (otherBand != null)
+            if (otherBand != null && otherBand.ID != band.ID)
             {
                 band.NameError = Errors.BandErrors.DuplicateName;
                 return band;

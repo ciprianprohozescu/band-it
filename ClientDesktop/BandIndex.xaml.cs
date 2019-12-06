@@ -25,6 +25,7 @@ namespace ClientDesktop
     public partial class BandIndex : Page
     {
         MainWindow mainWindow;
+
         public BandIndex(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -46,12 +47,18 @@ namespace ClientDesktop
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
+            mainWindow.GoToBandEdit((Band)dataGridBands.SelectedItem);
         }
 
         private void LogOut_Button_Click(object sender, RoutedEventArgs e)
         {
             LoggedInUser.User = null;
             mainWindow.GoToLogin();
+        }
+
+        private void UserIndex_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.GoToUserIndex();
         }
     }
 }
