@@ -11,6 +11,7 @@
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" name="name" value="@Model.Band.Name" class="form-control" />
+                <p class="help-block text-danger">@Model.Band.NameError</p>
             </div>
 
             <div class="form-group">
@@ -23,13 +24,9 @@
                 <textarea name="inviteMessage" class="form-control">@Model.Band.InviteMessage</textarea>
             </div>
 
+            <p class="help-block text-danger">@Model.Band.RowVersionError</p>
+
             <button type="submit" class="btn btn-success">Save</button>
         </form>
     </div>
 </div>
-
-@section scripts {
-    <script>
-        document.getElementById("rowversion").serialize();
-    </script>
-}

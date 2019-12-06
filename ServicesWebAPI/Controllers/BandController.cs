@@ -32,10 +32,12 @@ namespace ServicesWebAPI.Controllers
 
         [Route("api/band/update")]
         [HttpPost]
-        public void Update(Band band)
+        public Band Update(Band band)
         {
             IBandController bandController = new BandControllerLogic();
-            bandController.Update(band);
+            var newBand = bandController.Update(band);
+
+            return newBand;
         }
     }
 }

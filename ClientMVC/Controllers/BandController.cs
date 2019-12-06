@@ -95,9 +95,14 @@ namespace ClientMVC.Controllers
             var request = new RestRequest($"band/update", Method.POST);
             request.AddJsonBody(band);
 
-            client.Execute(request);
+            var content = client.Execute(request).Content;
+            var responseBand = JsonConvert.DeserializeObject<Band>(content);
 
-            return RedirectToAction("Edit", new { id });
+            var model = new BandForm();
+            model.Action = $"update/{id}";
+            model.Band = responseBand;
+
+            return View("Form", model);
         }
     }
 }

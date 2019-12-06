@@ -102,6 +102,14 @@ namespace DataAccessTest
         }
 
         [TestMethod]
+        public void FindByNameTest()
+        {
+            var band = bandsAccess.FindByName("Poleyn");
+
+            Assert.AreEqual("This is the description of Poleyn", band.Description);
+        }
+
+        [TestMethod]
         public void UpdateTest()
         {
             var band = bandsAccess.Get("")[0];

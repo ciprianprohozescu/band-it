@@ -37,13 +37,22 @@ namespace DataAccess
             return band;
         }
 
-        public void Update(Band band)
+        public Band FindByName(string name)
+        {
+            var band = db.Bands
+                .Where(x => x.Name == name)
+                .Where(x => x.Deleted == null)
+                .FirstOrDefault();
+            return band;
+        }
+
+        public bool Update(Band band)
         {
             var bandDB = FindByID(band.ID);
 
             if (!bandDB.RowVersion.SequenceEqual(band.RowVersion))
             {
-                return;
+                return false;
             }
 
             bandDB.Name = band.Name;
@@ -51,6 +60,7 @@ namespace DataAccess
             bandDB.InviteMessage = band.InviteMessage;
 
             db.SaveChanges();
+            return true;
         }
     }
 }

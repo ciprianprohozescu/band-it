@@ -104,6 +104,14 @@ namespace ControllersTest
         }
 
         [TestMethod]
+        public void FindByNameTest()
+        {
+            var band = bandController.GetByName("Poleyn");
+
+            Assert.AreEqual("This is the description of Poleyn", band.Description);
+        }
+
+        [TestMethod]
         public void UpdateTest()
         {
             var band = bandController.Get("")[0];

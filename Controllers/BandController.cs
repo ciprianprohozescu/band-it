@@ -55,9 +55,39 @@ namespace Controllers
             return DBToLogic(bandsAccess.FindByID(id));
         }
 
-        public void Update(Band band)
+        public Band GetByName(string name)
         {
-            bandsAccess.Update(LogicToDB(band));
+            return DBToLogic(bandsAccess.FindByName(name));
+        }
+
+        public Band Update(Band band)
+        {
+            band.NameError = "";
+            band.RowVersionError = "";
+
+            if (band.Name == "")
+            {
+                band.NameError = Errors.BandErrors.EmptyName;
+                return band;
+            }
+
+            var otherBand = GetByName(band.Name);
+            if (otherBand != null)
+            {
+                band.NameError = Errors.BandErrors.DuplicateName;
+                return band;
+            }
+
+            var success = bandsAccess.Update(LogicToDB(band));
+
+            band = GetById(band.ID);
+
+            if (!success)
+            {
+                band.RowVersionError = Errors.BandErrors.ConcurrencyError;
+            }
+
+            return band;
         }
 
         private Band DBToLogic(BandDB bandDB)
