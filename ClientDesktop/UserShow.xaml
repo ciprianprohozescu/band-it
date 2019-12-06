@@ -48,7 +48,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Back to people search" HorizontalAlignment="Left" Margin="666,0,0,0" VerticalAlignment="Top" Width="124" Click="Back_Button_Click"/>
+        <Button Content="Back to Index" HorizontalAlignment="Left" Margin="703,0,0,0" VerticalAlignment="Top" Width="87" Click="Back_Button_Click"/>
         <ScrollViewer HorizontalAlignment="Left" Height="183" Margin="10,48,0,0" VerticalAlignment="Top" Width="492">
             <TextBlock x:Name="description" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="183" Width="472" Foreground="White" FontSize="16">
                 <TextBlock.Effect>

@@ -27,5 +27,40 @@ namespace DataAccess
 
             return bands.ToList();
         }
+
+        public Band FindByID(int id)
+        {
+            var band = db.Bands
+                .Where(x => x.ID == id)
+                .Where(x => x.Deleted == null)
+                .FirstOrDefault<Band>();
+            return band;
+        }
+
+        public Band FindByName(string name)
+        {
+            var band = db.Bands
+                .Where(x => x.Name == name)
+                .Where(x => x.Deleted == null)
+                .FirstOrDefault();
+            return band;
+        }
+
+        public bool Update(Band band)
+        {
+            var bandDB = FindByID(band.ID);
+
+            if (!bandDB.RowVersion.SequenceEqual(band.RowVersion))
+            {
+                return false;
+            }
+
+            bandDB.Name = band.Name;
+            bandDB.Description = band.Description;
+            bandDB.InviteMessage = band.InviteMessage;
+
+            db.SaveChanges();
+            return true;
+        }
     }
 }

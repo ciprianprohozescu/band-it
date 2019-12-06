@@ -22,5 +22,22 @@ namespace ServicesWebAPI.Controllers
             }
             return bandController.Get(search);
         }
+
+        [Route("api/band/{id}")]
+        public Band Get(int id)
+        {
+            IBandController bandController = new BandControllerLogic();
+            return bandController.GetById(id);
+        }
+
+        [Route("api/band/update")]
+        [HttpPost]
+        public Band Update(Band band)
+        {
+            IBandController bandController = new BandControllerLogic();
+            var newBand = bandController.Update(band);
+
+            return newBand;
+        }
     }
 }

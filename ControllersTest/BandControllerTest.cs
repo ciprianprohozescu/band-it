@@ -16,7 +16,6 @@ namespace ControllersTest
     {
         static TestHelpers testHelpers;
         static IBandController bandController;
-        static BandItEntities db;
 
         private TestContext testContextInstance;
 
@@ -41,7 +40,6 @@ namespace ControllersTest
         {
             testHelpers = new TestHelpers();
             bandController = new BandController();
-            db = new BandItEntities();
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -90,6 +88,45 @@ namespace ControllersTest
             Assert.AreEqual(1, bands.Count);
 
             Assert.AreEqual("Poleyn", bands[0].Name);
+            #endregion
+        }
+
+        [TestMethod]
+        public void GetByIDTest()
+        {
+            var id = bandController.Get("Pol")[0].ID;
+            var band = bandController.GetById(id);
+
+            #region Assert
+            Assert.AreEqual("Poleyn", band.Name);
+            Assert.AreEqual("This is the description of Poleyn", band.Description);
+            #endregion
+        }
+
+        [TestMethod]
+        public void FindByNameTest()
+        {
+            var band = bandController.GetByName("Poleyn");
+
+            Assert.AreEqual("This is the description of Poleyn", band.Description);
+        }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var band = bandController.Get("")[0];
+            band.Name = "Music Band";
+            band.Description = "We play music.";
+            band.InviteMessage = "Join us.";
+
+            bandController.Update(band);
+
+            band = bandController.Get("")[0];
+
+            #region Assert
+            Assert.AreEqual("Music Band", band.Name);
+            Assert.AreEqual("We play music.", band.Description);
+            Assert.AreEqual("Join us.", band.InviteMessage);
             #endregion
         }
 

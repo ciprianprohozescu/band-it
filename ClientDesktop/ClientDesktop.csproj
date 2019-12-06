@@ -175,6 +175,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BandForm.xaml.cs">
+      <DependentUpon>BandForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BandIndex.xaml.cs">
       <DependentUpon>BandIndex.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\PasswordHelper.cs" />
+    <Page Include="BandForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

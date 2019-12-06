@@ -89,6 +89,45 @@ namespace DataAccessTest
             Assert.AreEqual(0, bands.Count);
         }
 
+        [TestMethod]
+        public void FindByIDTest()
+        {
+            var id = bandsAccess.Get("Pol")[0].ID;
+            var band = bandsAccess.FindByID(id);
+
+            #region Assert
+            Assert.AreEqual("Poleyn", band.Name);
+            Assert.AreEqual("This is the description of Poleyn", band.Description);
+            #endregion
+        }
+
+        [TestMethod]
+        public void FindByNameTest()
+        {
+            var band = bandsAccess.FindByName("Poleyn");
+
+            Assert.AreEqual("This is the description of Poleyn", band.Description);
+        }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var band = bandsAccess.Get("")[0];
+            band.Name = "Music Band";
+            band.Description = "We play music.";
+            band.InviteMessage = "Join us.";
+
+            bandsAccess.Update(band);
+
+            band = bandsAccess.Get("")[0];
+
+            #region Assert
+            Assert.AreEqual("Music Band", band.Name);
+            Assert.AreEqual("We play music.", band.Description);
+            Assert.AreEqual("Join us.", band.InviteMessage);
+            #endregion
+        }
+
         [ClassCleanup]
         public static void Cleanup()
         {

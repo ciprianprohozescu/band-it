@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Band.cs" />
+    <Compile Include="Errors.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="File.cs" />
     <Compile Include="LatLng.cs" />
