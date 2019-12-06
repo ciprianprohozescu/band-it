@@ -122,7 +122,18 @@
                 </div>
             </div>
         }
-    </div>
+    </ul>
+}
+<p>
+    <select>
+        @foreach (var item in Model.Skills)
+        {
+            <option value="name">@item.Name</option>
+        }
+    </select>
+    <input type="button" class="btn btn-success" value="Add skills" />
+    <input type="button" class="btn btn-danger" value="Remove skills" />
+</p>
 
     <div class="col-md-3">
         <div>
@@ -230,6 +241,16 @@
 @using (Html.BeginForm("Delete/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return deleteClicked();" }))
 {
     <input type="submit" class="btn btn-danger" value="Delete your account" />
+}
+
+@section styles{
+    <style>
+        .skill-list {
+            display: inline-block;
+            border: 1px solid #000;
+            padding: 20px;
+        }
+    </style>
 }
 
 @section scripts{

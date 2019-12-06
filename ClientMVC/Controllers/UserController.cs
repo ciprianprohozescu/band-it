@@ -71,18 +71,23 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Show(int id)
         {
-            if (Session["ID"] == null)
-            {
-                return View("Error");
-            }
+            //if (Session["ID"] == null)
+            //{
+            //    return View("Error");
+            //}
 
             var model = new UserShow();
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
             var request = new RestRequest($"user/{id}", Method.GET);
+            var request2 = new RestRequest($"skill", Method.GET);
 
             var content = client.Execute(request);
+            var content2 = client.Execute(request2);
+
             model.User = JsonConvert.DeserializeObject<User>(content.Content);
+            model.Skills = JsonConvert.DeserializeObject<List<Skill>>(content2.Content);
 
             var storageLocation = $"/Content/Uploads/Users/{id}/";
 
@@ -119,6 +124,7 @@ namespace ClientMVC.Controllers
                 request.AddJsonBody(MVCToLogic(user));
                 var response = client.Execute(request);
                 Console.WriteLine(request.ToString());
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -134,8 +140,8 @@ namespace ClientMVC.Controllers
 
             var content = client.Execute(request).Content;
             var user = JsonConvert.DeserializeObject<User>(content);
-            return Json(user == null);
 
+            return Json(user == null);
         }
 
         [HttpPost]
@@ -147,6 +153,7 @@ namespace ClientMVC.Controllers
 
             var content = client.Execute(request);
             var user = JsonConvert.DeserializeObject<User>(content.Content);
+
             return Json(user == null);
         }
 
@@ -164,11 +171,6 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            if ((int)Session["ID"] != id)
-            {
-                return View("Error");
-            }
-
             var model = new UserEdit();
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
@@ -192,28 +194,12 @@ namespace ClientMVC.Controllers
 
             var user = new User();
 
-            if(user.Username != username)
-            {
-                DoesUserNameExist(username);
-            }
-            else
-            {
-                user.Username = username;
-            }
-
-            if(user.Email != email)
-            {
-                doesEmailExist(email);
-            }
-            else
-            {
-                user.Email = email;
-            }
-
             user.ID = id;
+            user.Username = username;
             user.FirstName = firstName;
             user.LastName = lastName;
             user.Description = description;
+            user.Email = email;
             user.Password = password;
             
             doesEmailExist(email);

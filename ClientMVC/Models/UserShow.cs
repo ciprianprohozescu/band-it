@@ -13,5 +13,6 @@ namespace ClientMVC.Models
         public string StorageLocation { get; set; }
         public List<File> Images { get; set; }
         public List<File> Music { get; set; }
+        public List<Skill> Skills { get; set; }
     }
 }

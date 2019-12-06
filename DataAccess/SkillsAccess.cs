@@ -37,5 +37,16 @@ namespace DataAccess
                 .FirstOrDefault<Skill>();
             return skill;
         }
+        public void Add(Skill skill)
+        {
+            db.Skills.Add(skill);
+            db.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            var skill = db.Skills.SingleOrDefault(s => s.ID == id);
+            skill.Deleted = DateTime.Now;
+            db.SaveChanges();
+        }
     }
 }

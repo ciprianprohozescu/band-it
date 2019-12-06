@@ -73,10 +73,6 @@ namespace Controllers
                 }
             }
         }
-        public void UpdatePassword(User userLogic)
-        {
-            userLogic.Password = StringCipher.Decrypt(userLogic.Password + userLogic.Salt, "hello");
-        }
         public List<User> Get()
         {
             var userDB = usersAccess.Get("");
@@ -112,7 +108,9 @@ namespace Controllers
         }
         public void Update(int id, string username, string firstName, string lastName, string description, string email, string password)
         {
-           usersAccess.Update(id, username, firstName, lastName, description, email, password);
+            var user = GetById(id);
+            password = StringCipher.Encrypt(password + user.Salt, "hello");
+            usersAccess.Update(id, username, firstName, lastName, description, email, password);
         }
 
         public User LogIn(string username, string password)

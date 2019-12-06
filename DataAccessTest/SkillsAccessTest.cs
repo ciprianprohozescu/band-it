@@ -70,7 +70,7 @@ namespace DataAccessTest
         #endregion
 
         [TestMethod]
-        public void GetAllSkillsTest()
+        public void GetTest()
         {
             var skills = skillsAccess.Get();
 
@@ -91,6 +91,16 @@ namespace DataAccessTest
             skillActual = skillsAccess.GetByID(-5);
 
             Assert.IsNull(skillActual);
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var skill = skillsAccess.GetByName("Vocalist");
+            skillsAccess.Delete(skill.ID);
+            var skill2 = skillsAccess.GetByName("Vocalist");
+
+            Assert.IsNull(skill2);
         }
 
         [ClassCleanup]
