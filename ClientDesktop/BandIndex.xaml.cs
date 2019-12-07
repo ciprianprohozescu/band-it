@@ -30,8 +30,13 @@ namespace ClientDesktop
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-        }
-
+        }
+
+        public BandIndex(CreateBand createBand)
+        {
+            this.createBand = createBand;
+        }
+
         private void Search_Button_Click(object sender, RoutedEventArgs e)
         {
             string search = SearchText.Text;
@@ -132,6 +137,12 @@ namespace ClientDesktop
         private void UserIndex_Button_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.GoToUserIndex();
+        }
+
+        private void CreateBand_Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+            mainWindow.GoToCreate();
         }
     }
 }

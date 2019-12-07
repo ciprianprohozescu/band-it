@@ -65,6 +65,11 @@ namespace ClientDesktop
             UserShow userShow = new UserShow(this, user);
             Content = userShow;
         }
+        public void GoToCreate()
+        {
+            CreateBand createBand = new CreateBand(this);
+            Content = createBand;
+        }
 
         public void GoToBandEdit(Band band)
         {
@@ -97,6 +102,7 @@ namespace ClientDesktop
 
             GoToLogin();    
         }
+
 
         private void txtUser_SelectionChanged(object sender, RoutedEventArgs e)
         {
