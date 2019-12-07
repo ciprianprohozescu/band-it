@@ -16,6 +16,8 @@ namespace Models
         public string ProfilePicture { get; set; }
         public string InviteMessage { get; set; }
         public List<Genre> Genres { get; set; }
+        public List<Application> Applications { get; set; }
+        public List<BandUser> BandUsers { get; set; }
         public long RowVersion { get; set; }
         public string RowVersionError { get; set; }
         public DateTime Deleted { get; set; }

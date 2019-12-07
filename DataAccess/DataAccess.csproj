@@ -52,7 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationAccess.cs" />
     <Compile Include="BandsAccess.cs" />
+    <Compile Include="BandUserAccess.cs" />
     <Compile Include="GenreAccess.cs" />
     <Compile Include="ContextProvider.cs" />
     <Compile Include="FilesAccess.cs" />

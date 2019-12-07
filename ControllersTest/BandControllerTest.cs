@@ -41,8 +41,8 @@ namespace ControllersTest
             testHelpers = new TestHelpers();
             bandController = new BandController();
 
-            testHelpers.ClearData();
-            testHelpers.InsertTestData();
+            //testHelpers.ClearData();
+            //testHelpers.InsertTestData();
         }
 
         #region Additional test attributes
@@ -75,8 +75,8 @@ namespace ControllersTest
             #region Assert
             Assert.AreEqual(3, bands.Count);
 
-            Assert.AreEqual("LaLaLa", bands[0].Name);
-            Assert.AreEqual("Poleyn", bands[2].Name);
+            Assert.AreEqual("Dansk Rap", bands[0].Name);
+            Assert.AreEqual("LaLaLa", bands[2].Name);
             #endregion
 
             bands = bandController.Get("Nothing");

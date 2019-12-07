@@ -66,6 +66,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkillsAccessTest.cs" />
     <Compile Include="BandsAccessTest.cs" />
+    <Compile Include="ApplicationAccessTest.cs" />
+    <Compile Include="BandUserAccessTest.cs" />
     <Compile Include="UsersAccessTest.cs" />
   </ItemGroup>
   <ItemGroup>

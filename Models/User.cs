@@ -22,5 +22,7 @@ namespace Models
         public DateTime Deleted { get; set; }
         public List<Skill> Skills { get; set; }
         public List<File> Files { get; set; }
+        public List<Application> Applications { get; set; }
+        public List<BandUser> BandUsers { get; set; }
     }
 }

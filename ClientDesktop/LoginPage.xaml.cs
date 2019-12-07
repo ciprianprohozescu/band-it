@@ -51,13 +51,14 @@ namespace ClientDesktop
 
             var user = JsonConvert.DeserializeObject<User>(content.Content);
 
+
             if (user == null)
             {
                 msgError.Visibility = Visibility.Visible;
             } else
             {
+                LoggedInUser.User = user;
                 msgError.Visibility = Visibility.Hidden;
-
                 mainWindow.GoToBandIndex();
             }
         }

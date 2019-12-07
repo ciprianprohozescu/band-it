@@ -133,6 +133,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\BandController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -142,6 +143,8 @@
     </Compile>
     <Compile Include="Models\BandForm.cs" />
     <Compile Include="Models\BandIndex.cs" />
+    <Compile Include="Models\ApplicationForm.cs" />
+    <Compile Include="Models\BandShow.cs" />
     <Compile Include="Models\HomeIndex.cs" />
     <Compile Include="Models\UserForm.cs" />
     <Compile Include="Models\UserIndex.cs" />
@@ -281,11 +284,13 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Show.cshtml" />
     <Content Include="Views\Band\Index.cshtml" />
+    <Content Include="Views\Band\Show.cshtml" />
     <Content Include="Views\Shared\_Gallery.cshtml" />
     <Content Include="Views\Band\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Application\" />
     <Folder Include="Content\Uploads\Bands\" />
     <Folder Include="Content\Uploads\Users\" />
   </ItemGroup>

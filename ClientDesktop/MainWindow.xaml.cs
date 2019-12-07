@@ -72,6 +72,12 @@ namespace ClientDesktop
             Content = bandForm;
         }
 
+        public void GoToBandShow(Band band)
+        {
+            BandShow bandShow = new BandShow(this, band);
+            Content = bandShow;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (Validation.GetHasError(txtUser) || Validation.GetHasError(txtEmail) || Validation.GetHasError(txtPassword))

@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
 using ModelsDB;
+using System.Linq;
 
 namespace DataAccessTest
 {
-    /// <summary>
-    /// Summary description for UnitTest1
-    /// </summary>
+
     [TestClass]
-    public class BandsAccessTest
+    public class BandUserAccessTest
     {
         static TestHelpers testHelpers;
-        static BandsAccess bandsAccess;
+        static BandUserAccess bandUserAccess;
         static BandItEntities db;
-        public BandsAccessTest()
+
+        public BandUserAccessTest()
         {
         }
 
@@ -42,13 +42,13 @@ namespace DataAccessTest
         public static void Initialize(TestContext context)
         {
             testHelpers = new TestHelpers();
-            bandsAccess = new BandsAccess();
+            bandUserAccess = new BandUserAccess();
             db = new BandItEntities();
-
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
         }
+    
 
         #region Additional test attributes
         //
@@ -73,59 +73,21 @@ namespace DataAccessTest
         #endregion
 
         [TestMethod]
-        public void GetAllBandsTest()
+        public void AddBandUserTest()
         {
-            var bands = bandsAccess.Get("");
+            var bandUser = new BandUser();
 
-            #region Assert
-            Assert.AreEqual(3, bands.Count);
+            var band = new Band();
+            band.Name = "Test Name";
+            band.Description = "Test Description";
 
-            Assert.AreEqual("Dansk Rap", bands[0].Name);
-            Assert.AreEqual("LaLaLa", bands[2].Name);
-            #endregion
+            bandUser.Band = band;
 
+            bandUserAccess.Add(bandUser);
 
-            bands = bandsAccess.Get("Nothing");
-            Assert.AreEqual(0, bands.Count);
-        }
+            var bandUser2 = db.BandUsers.Where(b => b.Band.Name == "Test Name").ToList().FirstOrDefault();
 
-        [TestMethod]
-        public void FindByIDTest()
-        {
-            var id = bandsAccess.Get("Pol")[0].ID;
-            var band = bandsAccess.FindByID(id);
-
-            #region Assert
-            Assert.AreEqual("Poleyn", band.Name);
-            Assert.AreEqual("This is the description of Poleyn", band.Description);
-            #endregion
-        }
-
-        [TestMethod]
-        public void FindByNameTest()
-        {
-            var band = bandsAccess.FindByName("Poleyn");
-
-            Assert.AreEqual("This is the description of Poleyn", band.Description);
-        }
-
-        [TestMethod]
-        public void UpdateTest()
-        {
-            var band = bandsAccess.Get("")[0];
-            band.Name = "Music Band";
-            band.Description = "We play music.";
-            band.InviteMessage = "Join us.";
-
-            bandsAccess.Update(band);
-
-            band = bandsAccess.Get("")[0];
-
-            #region Assert
-            Assert.AreEqual("Music Band", band.Name);
-            Assert.AreEqual("We play music.", band.Description);
-            Assert.AreEqual("Join us.", band.InviteMessage);
-            #endregion
+            Assert.AreEqual(bandUser.Band.Description, bandUser2.Band.Description);
         }
 
         [ClassCleanup]
