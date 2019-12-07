@@ -27,6 +27,7 @@ namespace DataAccess
         {
             var skill = db.Skills
                 .Where(s => s.Name == name)
+                .Where(s => s.Deleted == null)
                 .FirstOrDefault<Skill>();
             return skill;
         }
@@ -34,6 +35,7 @@ namespace DataAccess
         {
             var skill = db.Skills
                 .Where(s => s.ID == id)
+                .Where(s => s.Deleted == null)
                 .FirstOrDefault<Skill>();
             return skill;
         }

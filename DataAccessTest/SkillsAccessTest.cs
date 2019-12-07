@@ -83,7 +83,7 @@ namespace DataAccessTest
         [TestMethod]
         public void GetByIDTest()
         {
-            var skillExpected = skillsAccess.GetByName("Vocalist");
+            var skillExpected = skillsAccess.GetByName("Triangle");
             var skillActual = skillsAccess.GetByID(skillExpected.ID);
 
             Assert.AreEqual(skillExpected.Name, skillActual.Name);
