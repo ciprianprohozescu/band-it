@@ -43,9 +43,6 @@ function initMarkerMap() {
         }
 
         markerLocation();
-        if (previousLocation.lat) {
-            showDistanceToPrevious();
-        }
     });
 }
 
@@ -57,16 +54,27 @@ function markerLocation() {
         document.getElementById('marker-lat').value = currentLocation.lat();
         document.getElementById('marker-lng').value = currentLocation.lng();
     }
+
+    var saveButton = document.getElementById('save-location');
+
+    if (saveButton) {
+        saveButton.disabled = false;
+        saveButton.classList.remove('btn-secondary');
+        saveButton.classList.add('btn-primary');
+    }
 }
 
-function getCoordinates() {
-    var lng;
-    var lat;
+function createMarkerInCenter() {
+    marker = new google.maps.Marker({
+        position: mapCenter,
+        map: map,
+        draggable: true
+    });
 
-    var lngInput = document.getElementById('lng');
-    var latInput = document.getElementById('lat');
-    lng = marker.position.lng();
-    lat = marker.position.lat();
-    lngInput.value = lng;
-    latInput.value = lat;
-    }
+    map.setCenter(mapCenter);
+}
+
+function disableMap() {
+    google.maps.event.clearListeners(map);
+    marker.setDraggable(false);
+}

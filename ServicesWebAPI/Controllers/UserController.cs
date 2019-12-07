@@ -95,13 +95,12 @@ namespace ServicesWebAPI.Controllers
         {
             fileController.DeleteFile("user", id);
         }
+
         [Route("api/user/savelocation")]
         [HttpPut]
         public void SaveLocation(User user)
         {
             userController.SaveLocation(user);
-
         }
-
     }
 }

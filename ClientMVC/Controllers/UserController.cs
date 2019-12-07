@@ -172,42 +172,37 @@ namespace ClientMVC.Controllers
         public ActionResult SaveFile(int id, string type, HttpPostedFileBase file)
         {
             if (Session["ID"] == null || (int)Session["ID"] != id)
-                {
-                    return View("Error");
-                }
+            {
+                return View("Error");
+            }
 
-                var fileController = new FileController();
-                fileController.SaveFile("user", id, type, file);
+            var fileController = new FileController();
+            fileController.SaveFile("user", id, type, file);
 
-                return RedirectToAction($"Show/{id}");
-            
+            return RedirectToAction($"Show/{id}");
         }
 
-        [HttpPut]
+        [HttpPost]
         public ActionResult SaveLocation(int id, double lng, double lat)
-          {
-            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"savelocation", Method.PUT);
+        {
+            if (Session["ID"] == null || (int)Session["ID"] != id)
+            {
+                return View("Error");
+            }
+
             User user = new User();
             user.ID = id;
             user.Location = new LatLng(lat, lng);
-            request.AddJsonBody(user);
-            client.Execute(request);
 
-            return RedirectToAction("SaveLocation", "Show");
-        }
-
-        public bool CheckUserPosition (int id, double lng, double lat)
-        {
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"savelocation/{id},{lng},{lat}", Method.GET);
+
+            var request = new RestRequest("user/savelocation", Method.PUT);
+            request.AddJsonBody(user);
+
             client.Execute(request);
 
-
-
-            
+            return RedirectToAction($"Show/{id}");
         }
-        
 
         [HttpPost]
         public ActionResult DeleteFile(int userID, int fileID, string fileName)
@@ -216,8 +211,6 @@ namespace ClientMVC.Controllers
             fileController.DeleteFile("user", userID, fileID, fileName);
 
             return RedirectToAction($"Show/{userID}");
-            
         }
     }
-
 }

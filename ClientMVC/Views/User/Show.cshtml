@@ -40,10 +40,20 @@
 
         <div class="row" style="margin-top: 3vh">
             <div class="col-md-6">
-                <div>
-                    <h4>Home location</h4>
-                    <img src="~/Content/Images/map_placeholder.png" style="max-width: 20vw" />
+                <div class="row">
+                    <h4 class="mr-2">Home location</h4>
+                    <form action="~/user/savelocation" method="post">
+                        <input type="hidden" name="id" value="@Model.User.ID" />
+                        <input type="hidden" name="lng" id="marker-lng" value=@(Model.User.Location != null ? Model.User.Location.Longitude : 0) />
+                        <input type="hidden" name="lat" id="marker-lat" value=@(Model.User.Location != null ? Model.User.Location.Latitude : 0) />
+                        @if ((int)Session["ID"] == Model.User.ID)
+                        {
+                            <button type="submit" id="save-location" class="btn-sm btn-secondary" disabled><i class="fas fa-map-marked-alt"></i> Update your location</button>
+                        }
+                    </form>
                 </div>
+
+                <div id="map"></div>
             </div>
 
             <div class="col-md-6">
@@ -106,27 +116,6 @@
             </div>
         }
     </div>
-    
-</div>
-}
-<style>
-    #map {
-        height: 70vh;
-        width: 100%;
-    }
-</style>
-
-<div id="map"></div>
-<script src="~/Scripts/map.js"></script>
-
-<form style="display: inline-block">
-   <input type="hidden" name="lng" id="lng" onblur="checkTextField"> <br />
-   <input type="hidden" name="lat" id="lat" /> <br />
-   <input type="submit" value="Submit" />
-</form>
-
-
-
 
     <div class="col-md-3">
         <div>
@@ -140,33 +129,34 @@
                     <button type="submit" class="btn-sm btn-primary mt-1"><i class="fas fa-plus"></i> Add music</button>
                 </form>
             }
-        <div style="overflow-y: scroll; overflow-x: hidden">
-            @if (Model.Music.Count == 0)
-            {
-                <p>No music found.</p>
-            }
-            @foreach (var file in Model.Music)
-            {
-                <div class="row">
-                    <audio controls class="mt-2 w-75">
-                        <source src="@file.Name" class="mt-2" />
-                        Your browser does not support this audio format.
-                    </audio>
+            <div style="overflow-y: scroll; overflow-x: hidden">
+                @if (Model.Music.Count == 0)
+                {
+                    <p>No music found.</p>
+                }
+                @foreach (var file in Model.Music)
+                {
+                    <div class="row">
+                        <audio controls class="mt-2 w-75">
+                            <source src="@file.Name" class="mt-2" />
+                            Your browser does not support this audio format.
+                        </audio>
 
-                    @if ((int)Session["ID"] == Model.User.ID)
-                    {
-                        <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
-                            <input type="hidden" name="userID" value="@Model.User.ID" />
-                            <input type="hidden" name="fileID" value="@file.ID" />
-                            <input type="hidden" name="fileName" value="@file.Name" />
-                            <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
-                        </form>
-                    }
-                </div>
-            }
-        </div>
+                        @if ((int)Session["ID"] == Model.User.ID)
+                        {
+                            <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
+                                <input type="hidden" name="userID" value="@Model.User.ID" />
+                                <input type="hidden" name="fileID" value="@file.ID" />
+                                <input type="hidden" name="fileName" value="@file.Name" />
+                                <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                            </form>
+                        }
+                    </div>
+                }
+            </div>
         </div>
     </div>
+</div>
 
 
 <div class="row" style="margin-top: 3vh">
@@ -175,12 +165,12 @@
             <h4 class="mr-2">Gallery</h4>
             @if ((int)Session["ID"] == Model.User.ID)
             {
-            <form action="~/user/savefile/@Model.User.ID"
-                  method="post" enctype="multipart/form-data">
-                <button type="submit" class="btn-sm btn-primary mr-2"><i class="fas fa-plus"></i> Add photo</button>
-                <input type="file" name="file" />
-                <input type="hidden" name="type" value="image" />
-            </form>
+                <form action="~/user/savefile/@Model.User.ID"
+                      method="post" enctype="multipart/form-data">
+                    <button type="submit" class="btn-sm btn-primary mr-2"><i class="fas fa-plus"></i> Add photo</button>
+                    <input type="file" name="file" />
+                    <input type="hidden" name="type" value="image" />
+                </form>
             }
         </div>
         <div>
@@ -217,13 +207,36 @@
             width: 100%;
             height: 20px;
         }
+
+        #map {
+            height: 40vh;
+            width: 100%;
+        }
     </style>
 }
 
 @section scripts{
+    <script src="~/Scripts/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap"></script>
+
     <script type="text/javascript">
         var fullName = document.getElementById('full-name');
         var formDelete = document.getElementById('form-delete');
+
+        var lat = parseFloat(document.getElementById('marker-lat').value);
+        var lng = parseFloat(document.getElementById('marker-lng').value);
+
+        if (lat) {
+            mapCenter.lat = lat;
+            mapCenter.lng = lng;
+
+            createMarkerInCenter();
+        }
+
+        if (@Session["ID"] != @Model.User.ID)
+        {
+            disableMap();
+        }
 
         if ("@Model.User.FirstName" == "" && "@Model.User.LastName" == "") {
             fullName.style.display = 'none';
@@ -243,7 +256,4 @@
             return false;
         }
     </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
-
 }
