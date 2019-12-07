@@ -16,7 +16,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-using User = Models.User;
+        public UserShow(MainWindow mainWindow, User user)
+        {
+            InitializeComponent();
+
+            this.mainWindow = mainWindow;
+            this.user = user;
+
+            listSkills.ItemsSource = user.Skills;
+
+            username.Content = user.Username;
+            if ((user.FirstName != "" && user.FirstName != null) || (user.LastName != "" && user.LastName != null))
+            {
+                username.Content += $" ({user.FirstName} {user.LastName})";
+            }
+
+            description.Text = user.Description;
+        }
 
 namespace ClientDesktop
 {

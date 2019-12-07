@@ -1,0 +1,130 @@
+﻿<Page x:Class="ClientDesktop.CreateBand"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ClientDesktop"
+       mc:Ignorable="d"
+        MinHeight="450"
+        MinWidth="800"
+      >
+
+    <Page.Resources>
+
+        <Style 
+                TargetType="Button" x:Key="NewButtonStyle">
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border BorderThickness="0" 
+                                    CornerRadius="8"
+                                    Padding="35 7.5"
+                                    x:Name="ButtonBorder"
+                                    Background="#007bff"
+                                >
+                                <Border.BorderBrush>
+                                    <SolidColorBrush x:Name="ButtonBorderBrush" Color="DarkGray"/>
+                                </Border.BorderBrush>
+                                <ContentPresenter VerticalAlignment="Center"
+                                      Margin="4,2" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#C0C0C0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type FrameworkElement}" x:Key="ValidatingControl">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding 
+                Path=(Validation.Errors)[0].ErrorContent, 
+                RelativeSource={x:Static RelativeSource.Self}}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Page.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="Images/guitar.jpg"/>
+    </Page.Background>
+
+    <Border>
+        <Border.Background>
+            <SolidColorBrush Color="#212529" Opacity="0.3"/>
+        </Border.Background>
+        <Border Padding="30" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Border.Background>
+                <SolidColorBrush Color="#fff" Opacity="0.27"/>
+
+            </Border.Background>
+            <StackPanel Orientation="Vertical" Width="Auto" Grid.IsSharedSizeScope="true">
+                <TextBlock FontSize="50" TextAlignment="Center" Foreground="#fff" Margin="0 0 0 20" Text="Register" Height="75">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <Grid Margin="2" HorizontalAlignment="Center" Height="259" Width="586" RenderTransformOrigin="0.506,0.37">
+
+                    <Label Grid.Row="0" Grid.Column="0" Margin="10,0,414,210"  Foreground="white" Content="Band Name " VerticalContentAlignment="Center" FontSize="26"
+                       HorizontalContentAlignment="Right">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </Label.Effect>
+                    </Label>
+                    <TextBox Padding="2 0" Grid.Row="0" x:Name="txtBand" Margin="192,0,93,210" FontSize="26" FontFamily="Resources/teen bd.ttf#Teen"
+                           VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Text="{Binding BandName, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
+                             Validation.ErrorTemplate="{StaticResource errorTemplate}" SelectionChanged="txtBand_SelectionChanged">
+                        <TextBox.Effect>
+                            <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>
+                        </TextBox.Effect>
+                    </TextBox>
+                    <TextBlock Text="" Foreground="Red" x:Name="txtErrorBandName"
+                               VerticalAlignment="Center" HorizontalAlignment="Right" 
+                               Margin="0,26,8.8,12.4" Grid.Column="1"/>
+
+                    <Button Grid.Column="0" Content="Create Band!" Style="{StaticResource NewButtonStyle}" Foreground="White" HorizontalAlignment="Center" Margin="215,88,155,86" Click="Button_Click" Width="216">
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.8" ShadowDepth="3" Opacity="0.7"/>
+                        </Button.BitmapEffect>
+                    </Button>
+
+
+
+
+                </Grid>
+            </StackPanel>
+
+        </Border>
+    </Border>
+</Page>
