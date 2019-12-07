@@ -10,6 +10,7 @@ using UserLogic = Models.User;
 using UserDB = ModelsDB.User;
 using Controllers;
 using System.Linq;
+using Moq;
 
 namespace ControllersTest
 {
@@ -67,7 +68,7 @@ namespace ControllersTest
         public static void Initialize(TestContext context) 
         {
             testHelpers = new TestHelpers();
-            userController = new UserController();
+            userController = new UserController(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
             db = new ModelsDB.BandItEntities();
 
             testHelpers.ClearData();
@@ -176,7 +177,7 @@ namespace ControllersTest
         [TestMethod]
         public void SaveLocationTest()
         {
-            userController = new UserController();
+            userController = new UserController(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
             var sampleUser = userController.GetByUsername("Radu1337");
             userController.SaveLocation(sampleUser);
             var lat = userController.GetByUsername("Radu1337").Location.Latitude;
@@ -186,6 +187,23 @@ namespace ControllersTest
             //Checks user's longitude
             Assert.AreEqual((decimal)13.982130, (decimal)lng);
         }
+
+       /* [TestMethod]
+        public void UserLocation_CompareLocations_AreEqual()
+        {
+
+            //Arrange
+            Mock<UsersAccess> userAccessMock = new Mock<UsersAccess>();
+            Mock<SkillController> skillControler = new Mock<SkillController>();
+            var user = new Models.User();
+            userAccessMock.Setup(x => x.SaveLocation(It.IsAny<ModelsDB.User>()));
+            userController = new UserController(userAccessMock.Object, skillControler.Object);
+            //Act
+            userController.SaveLocation((Models.User)user);
+            //Assert
+
+        }
+        */
 
         [TestMethod]
         public void UpdateProfilePictureTest()

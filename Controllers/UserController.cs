@@ -55,7 +55,7 @@ namespace Controllers
 
         public void Add(User userLogic)
         {
-            var userAccess = new UsersAccess();
+            var userAccess = new UsersAccess(ContextProvider.Instance.DB);
             var userDB = userAccess.FindByUsername(userLogic.Username);
             if(userDB == null)
             {
@@ -72,7 +72,7 @@ namespace Controllers
         }
         public List<User> Get()
         {
-            var usersAccess = new UsersAccess();
+            var usersAccess = new UsersAccess(ContextProvider.Instance.DB);
             var userDB = usersAccess.Get("");
             var usersLogic = new List<User>();
 
@@ -85,13 +85,13 @@ namespace Controllers
         }
         public User GetByUsername(string username)
         {
-            var userAccess = new UsersAccess();
+            var userAccess = new UsersAccess(ContextProvider.Instance.DB);
             var userDB = userAccess.FindByUsername(username);
             return DBToLogic(userDB);
         }
         public User GetByEmail(string email)
         {
-            var userAccess = new UsersAccess();
+            var userAccess = new UsersAccess(ContextProvider.Instance.DB);
             var userDB = userAccess.FindByEmail(email);
             return DBToLogic(userDB);
         }
@@ -103,7 +103,7 @@ namespace Controllers
 
         public User GetById(int id)
         {
-            var userAccess = new UsersAccess();
+            var userAccess = new UsersAccess(ContextProvider.Instance.DB);
             var userDB = userAccess.FindByID(id);
             return DBToLogic(userDB);
         }
@@ -194,7 +194,6 @@ namespace Controllers
 
                 return user;
             }
-
             return null;
         }
         private UserDB LogicToDB(User user)

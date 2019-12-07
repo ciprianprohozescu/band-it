@@ -183,6 +183,7 @@ namespace ClientMVC.Controllers
             
         }
 
+        [HttpPut]
         public ActionResult SaveLocation(int id, double lng, double lat)
           {
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
@@ -194,6 +195,17 @@ namespace ClientMVC.Controllers
             client.Execute(request);
 
             return RedirectToAction("SaveLocation", "Show");
+        }
+
+        public bool CheckUserPosition (int id, double lng, double lat)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest($"savelocation/{id},{lng},{lat}", Method.GET);
+            client.Execute(request);
+
+
+
+            
         }
         
 

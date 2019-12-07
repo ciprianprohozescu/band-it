@@ -7,6 +7,7 @@ using System.Web.Http;
 using Controllers;
 using UserControllerLogic = Controllers.UserController;
 using Models;
+using DataAccess;
 
 namespace ServicesWebAPI.Controllers
 {
@@ -17,34 +18,34 @@ namespace ServicesWebAPI.Controllers
 
         public UserController()
         {
-            userController = new UserControllerLogic();
+            userController = new UserControllerLogic(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
             fileController = new FileController();
         }
         [Route("api/user/register")]
         public void Post(User user)
         {
-            IUserController userController = new UserControllerLogic ();
+            IUserController userController = new UserControllerLogic (new UsersAccess(ContextProvider.Instance.DB), new SkillController());
             userController.Add(user);           
         }
 
         [Route("api/user/username")]
         public User GetUsername(string username)
         {
-            IUserController userController = new UserControllerLogic();
+            IUserController userController = new UserControllerLogic(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
             return userController.GetByUsername(username);
         }
 
         [Route("api/user/email")]
         public User GetEmail(string email)
         {
-            IUserController userController = new UserControllerLogic();
+            IUserController userController = new UserControllerLogic(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
             return userController.GetByEmail(email);
         }
 
         [Route("api/user")]
         public List<User> Get(string search = "", double distance = -1, double markerLat = 0, double markerLng = 0)
         {
-            IUserController userController = new UserControllerLogic();
+            IUserController userController = new UserControllerLogic(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
             if (distance > -1)
             {
                 return userController.Get(search, distance, markerLat, markerLng);
@@ -63,7 +64,7 @@ namespace ServicesWebAPI.Controllers
         [Route("api/user/{id}")]
         public User Get(int id)
         {
-            IUserController userController = new UserControllerLogic();
+            IUserController userController = new UserControllerLogic(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
             return userController.GetById(id);
         }
 
@@ -101,5 +102,6 @@ namespace ServicesWebAPI.Controllers
             userController.SaveLocation(user);
 
         }
+
     }
 }

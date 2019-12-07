@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
 using ModelsDB;
 using System.Linq;
+using Moq;
+using System.Linq.Expressions;
 
 namespace DataAccessTest
 {
@@ -45,7 +47,7 @@ namespace DataAccessTest
         public static void Initialize(TestContext context)
         {
             testHelpers = new TestHelpers();
-            usersAccess = new UsersAccess();
+            usersAccess = new UsersAccess(ContextProvider.Instance.DB);
             db = ContextProvider.Instance.DB;
 
             testHelpers.ClearData();
@@ -190,6 +192,26 @@ namespace DataAccessTest
             userActual = usersAccess.FindByID(-5);
 
             Assert.IsNull(userActual);
+        }
+
+        [TestMethod]
+        public void SaveLocation()
+        {
+            // https://stackoverflow.com/questions/5196669/moqing-methods-where-expressionfunct-bool-are-passed-in-as-parameters/5196875?fbclid=IwAR2wjUAccjn8zZnq7c9ESgqRrFVLuQi_0O_3cJOIP8JvT4rw9gGriU2ftI0
+
+            //Arrange
+            var dbMock = new Mock<BandItEntities>();
+            dbMock.Setup(x => x.Users.SingleOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(
+                    (Expression<Func<User, bool>> predicate) => new ModelsDB.User()
+                );
+            var userAccess = new UsersAccess(dbMock.Object);
+            //Act
+            userAccess.SaveLocation(It.IsAny<User>());
+            //Assert
+            dbMock.Verify(x => x.SaveChanges(), Times.Once);
+
+
         }
 
         [TestMethod]

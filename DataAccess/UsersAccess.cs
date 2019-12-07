@@ -1,6 +1,7 @@
 ﻿using ModelsDB;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,9 @@ namespace DataAccess
     {
         BandItEntities db;
 
-        public UsersAccess()
+        public UsersAccess(BandItEntities bandItEntities)
         {
-            db = ContextProvider.Instance.DB;
+            this.db = bandItEntities;
         }
 
         public List<User> Get(string search)
@@ -83,9 +84,9 @@ namespace DataAccess
         }
         public void SaveLocation(User user)
         {
-            var validuser = db.Users.SingleOrDefault(u => u.ID == user.ID);
-            validuser.Latitude = user.Latitude;
-            validuser.Longitude = user.Longitude;
+            var validUser = db.Users.SingleOrDefault(u => u.ID == user.ID);
+            validUser.Latitude = user.Latitude;
+            validUser.Longitude = user.Longitude;
             db.SaveChanges();
         }
     }
