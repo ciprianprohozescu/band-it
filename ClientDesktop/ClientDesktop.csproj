@@ -194,6 +194,9 @@
       <DependentUpon>BandShow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ApplicationForm.cs" />
+    <Compile Include="CreateBand.xaml.cs">
+      <DependentUpon>CreateBand.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\LoggedInUser.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
@@ -206,6 +209,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BandForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateBand.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
