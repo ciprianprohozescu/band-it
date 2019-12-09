@@ -16,7 +16,7 @@
                 <DataGridTemplateColumn Header="Accept">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="btnAccept" Content="Apply" Click="Accept_Button_Click" />
+                            <Button Name="btnAccept" Content="Accept" Click="Accept_Button_Click" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

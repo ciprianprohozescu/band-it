@@ -41,8 +41,8 @@ namespace ControllersTest
             testHelpers = new TestHelpers();
             bandController = new BandController();
 
-            //testHelpers.ClearData();
-            //testHelpers.InsertTestData();
+            testHelpers.ClearData();
+            testHelpers.InsertTestData();
         }
 
         #region Additional test attributes

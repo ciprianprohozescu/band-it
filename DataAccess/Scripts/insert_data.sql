@@ -5,10 +5,7 @@ delete from Users;
 delete from Skills;
 delete from UserSkills;
 delete from Bands;
-<<<<<<< 8856aadf66f3a183355f3fefd1cf847ded897364:DataAccess/Scripts/insert_data.sql
-=======
 
->>>>>>> Squash, T2S10:DataAccess/Scripts/insert_users_profiles.sql
 
 insert into Users (Username, Email, Password, Salt, FirstName, LastName, Latitude, Longitude) 
 values ('greg79', 'greglarrison@yahoo.com', 'greg', 'ihow5ihesto', 'Greg', 'Larrison', 56.982860, 9.638097);
@@ -67,7 +64,6 @@ values ((select ID from Users where Username = 'marthaaa'), (select ID from Skil
 insert into UserSkills (UserID, SkillID) 
 values ((select ID from Users where Username = 'nadeem'), (select ID from Skills where Name = 'Trumpeter'));
 
-<<<<<<< 8856aadf66f3a183355f3fefd1cf847ded897364:DataAccess/Scripts/insert_data.sql
 insert into Bands (Name, Description, Latitude, Longitude, InviteMessage)
 values ('The Mosquitos', 'Buzzing at night.', 56.890805, 9.813984, 'Come buzz with us.');
 
@@ -76,7 +72,7 @@ values ('Steak eaters', 'No vegans allowed.', 57.020911, 9.884767, 'Hope you''re
 
 insert into Bands (Name, Description, Latitude, Longitude, InviteMessage)
 values ('Peace on Earth', 'World peace, baby!', 57.020911, 9.884767, 'Peace in?');
-=======
+
 insert into Bands (Name, Description, Latitude, Longitude)
 values('Poleyn', 'This is the description of Poleyn', 56.976405, 9.910906);
 
@@ -86,8 +82,6 @@ values('Dansk Rap', 'This is the description of Dansk Rap', 57.050832, 9.910391)
 insert into Bands (Name, Description, Latitude, Longitude)
 values('LaLaLa', 'This is the description of LaLaLa', 55.708916, 12.483776);
 
-
->>>>>>> Squash, T2S10:DataAccess/Scripts/insert_users_profiles.sql
 
 select * from Users;
 select * from Skills;

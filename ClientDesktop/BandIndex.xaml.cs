@@ -80,13 +80,13 @@ namespace ClientDesktop
                     if (dialog.ShowDialog() == true)
                     {
                         application.Message = dialog.ResponseText;
-                        LoggedInUser.User.Applications.Add(ViewToLogic(application));
-                    }
+                        band.Applications.Add(ViewToLogic(application));
 
-                    var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-                    var request = new RestRequest("/application", Method.POST);
-                    request.AddJsonBody(ViewToLogic(application));
-                    var response = client.Execute(request);
+                        var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+                        var request = new RestRequest("/application", Method.POST);
+                        request.AddJsonBody(ViewToLogic(application));
+                        var response = client.Execute(request);
+                    }
                 }
                 catch (Exception ex)
                 {
