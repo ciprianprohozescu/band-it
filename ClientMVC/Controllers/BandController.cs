@@ -125,8 +125,8 @@ namespace ClientMVC.Controllers
         public JsonResult DoesBandNameExist(string Name)
         {
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest("band/band name", Method.GET);
-            request.AddParameter("band name", Name);
+            var request = new RestRequest("band/name", Method.GET);
+            request.AddParameter("name", Name);
 
 
             var content = client.Execute(request).Content;

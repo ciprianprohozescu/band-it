@@ -103,7 +103,7 @@
                         </Label.Effect>
                     </Label>
                     <TextBox Padding="2 0" Grid.Row="0" x:Name="txtBand" Margin="192,0,93,210" FontSize="26" FontFamily="Resources/teen bd.ttf#Teen"
-                           VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Text="{Binding BandName, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
+                           VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Text="{Binding Name, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                              Validation.ErrorTemplate="{StaticResource errorTemplate}" SelectionChanged="txtBand_SelectionChanged">
                         <TextBox.Effect>
                             <DropShadowEffect ShadowDepth="3" Direction="315" Color="Black" Opacity="0.7" BlurRadius="8"/>

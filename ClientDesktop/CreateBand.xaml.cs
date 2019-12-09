@@ -35,6 +35,10 @@ namespace ClientDesktop
        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (Validation.GetHasError(txtBand))
+            {
+                return;
+            }
             
             var band = new Band();
             band.Name = txtBand.Text;
@@ -52,13 +56,24 @@ namespace ClientDesktop
             string Name = txtBand.Text;
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest("band/bandname", Method.GET);
-            request.AddParameter("bandname", Name);
+            var request = new RestRequest("band/name", Method.GET);
+            request.AddParameter("name", Name);
 
 
             var content = client.Execute(request).Content;
             var band = JsonConvert.DeserializeObject<Band>(content);
 
+            if (band != null)
+            {
+                txtErrorBandName.Text = "This band name is taken.";
+                txtBand.BorderThickness = new Thickness(2, 2, 2, 2);
+                txtBand.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                txtErrorBandName.Text = "";
+                txtBand.BorderThickness = new Thickness(0, 0, 0, 0);
+            }
         }
     }
 }
