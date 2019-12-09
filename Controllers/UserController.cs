@@ -1,4 +1,4 @@
-﻿using System;
+    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +16,12 @@ namespace Controllers
     {
         UsersAccess usersAccess;
         ISkillController skillController;
+        IApplicationController applicationController;
         public UserController()
         {
             usersAccess = new UsersAccess();
             skillController = new SkillController();
+            applicationController = new ApplicationController();
         }
         public List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0)
         {
@@ -162,6 +164,11 @@ namespace Controllers
                 foreach (var skill in userDB.Skills)
                 {
                     user.Skills.Add(skillController.DBToLogic(skill));
+                }
+                user.Applications = new List<Application>();
+                foreach (var application in userDB.Applications)
+                {
+                    user.Applications.Add(applicationController.DBToLogic(application));
                 }
 
                 user.Files = new List<File>();

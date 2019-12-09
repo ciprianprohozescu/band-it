@@ -1,4 +1,4 @@
-﻿using ClientMVC.Models;
+using ClientMVC.Models;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Band = Models.Band;
+using User = Models.User;
+using Application = Models.Application;
 
 namespace ClientMVC.Controllers
 {
@@ -48,11 +50,32 @@ namespace ClientMVC.Controllers
             var content = client.Execute(request).Content;
             var bands = JsonConvert.DeserializeObject<List<Band>>(content);
 
-            model.Bands = new List<Band>();
-            foreach (var band in bands)
+            model.Bands = bands;
+
+            request = new RestRequest($"user/{Session["ID"]}", Method.GET);
+            content = client.Execute(request).Content;
+            var user = JsonConvert.DeserializeObject<User>(content);
+
+            model.User = user;
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Show(int id)
+        {
+            if (Session["ID"] == null)
             {
-                model.Bands.Add(band);
+                return View("Error");
             }
+
+            var model = new BandShow();
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest($"band/{id}", Method.GET); ;
+
+            var content = client.Execute(request);
+            model.Band = JsonConvert.DeserializeObject<Band>(content.Content);
 
             return View(model);
         }

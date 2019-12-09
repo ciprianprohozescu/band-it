@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
 using ModelsDB;
+using System.Linq;
 
 namespace DataAccessTest
 {
@@ -11,12 +12,13 @@ namespace DataAccessTest
     /// Summary description for UnitTest1
     /// </summary>
     [TestClass]
-    public class BandsAccessTest
+    public class ApplicationAccessTest
     {
         static TestHelpers testHelpers;
-        static BandsAccess bandsAccess;
+        static ApplicationAccess applicationAccess;
         static BandItEntities db;
-        public BandsAccessTest()
+
+        public ApplicationAccessTest()
         {
         }
 
@@ -42,9 +44,8 @@ namespace DataAccessTest
         public static void Initialize(TestContext context)
         {
             testHelpers = new TestHelpers();
-            bandsAccess = new BandsAccess();
+            applicationAccess = new ApplicationAccess();
             db = new BandItEntities();
-
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -73,65 +74,66 @@ namespace DataAccessTest
         #endregion
 
         [TestMethod]
-        public void GetAllBandsTest()
+        public void AddApplicationTest()
         {
-            var bands = bandsAccess.Get("");
+            var application = new Application();
+            application.Sent = DateTime.Now;
+            application.Message = "Test Message";
+            application.Result = true;
+            application.BandID = db.Bands.ToList().FirstOrDefault().ID;
+            application.UserID = db.Users.ToList().FirstOrDefault().ID;
 
-            #region Assert
-            Assert.AreEqual(3, bands.Count);
+            applicationAccess.Add(application);
 
-            Assert.AreEqual("LaLaLa", bands[0].Name);
-            Assert.AreEqual("Poleyn", bands[2].Name);
-            #endregion
+            var application2 = db.Applications.Where(a => a.Message.StartsWith("Test Message") && a.Message.EndsWith("Test Message")).ToList().FirstOrDefault();
 
-
-            bands = bandsAccess.Get("Nothing");
-            Assert.AreEqual(0, bands.Count);
+            Assert.AreEqual(application2.Message, application.Message);
         }
 
         [TestMethod]
-        public void FindByIDTest()
+        public void GetApplicationByIdTest()
         {
-            var id = bandsAccess.Get("Pol")[0].ID;
-            var band = bandsAccess.FindByID(id);
+            var applicationExpected = applicationAccess.Get("Test Message");
+            var applicationActual = applicationAccess.Get(applicationExpected.ID);
+
+            Assert.AreEqual(applicationExpected.BandID, applicationActual.BandID);
+        }
+
+        [TestMethod]
+        public void GetAllApplicationsTest()
+        {
+            var applications = applicationAccess.Get();
 
             #region Assert
-            Assert.AreEqual("Poleyn", band.Name);
-            Assert.AreEqual("This is the description of Poleyn", band.Description);
+            Assert.AreEqual(2, applications.Count);
+            Assert.AreEqual("Test Message", applications[0].Message);
             #endregion
         }
 
         [TestMethod]
-        public void FindByNameTest()
+        public void AcceptApplicationTest()
         {
-            var band = bandsAccess.FindByName("Poleyn");
+            var applications = applicationAccess.Get();
+            applicationAccess.Accept(applications[0].ID);
 
-            Assert.AreEqual("This is the description of Poleyn", band.Description);
+            applications = applicationAccess.Get();
+            Assert.AreEqual(applications[0].Result, true);
         }
 
         [TestMethod]
-        public void UpdateTest()
+        public void DeclineApplicationTest()
         {
-            var band = bandsAccess.Get("")[0];
-            band.Name = "Music Band";
-            band.Description = "We play music.";
-            band.InviteMessage = "Join us.";
+            var applications = applicationAccess.Get();
+            applicationAccess.Decline(applications[1].ID);
 
-            bandsAccess.Update(band);
-
-            band = bandsAccess.Get("")[0];
-
-            #region Assert
-            Assert.AreEqual("Music Band", band.Name);
-            Assert.AreEqual("We play music.", band.Description);
-            Assert.AreEqual("Join us.", band.InviteMessage);
-            #endregion
+            applications = applicationAccess.Get();
+            Assert.AreEqual(applications[1].Result, false);
         }
 
         [ClassCleanup]
         public static void Cleanup()
         {
-            testHelpers.ClearData();
+           testHelpers.ClearData();
         }
     }
 }

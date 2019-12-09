@@ -181,10 +181,21 @@
     <Compile Include="BandIndex.xaml.cs">
       <DependentUpon>BandIndex.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BandShow.xaml.cs">
+      <DependentUpon>BandShow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ApplicationForm.cs" />
     <Compile Include="ViewModels\LoggedInUser.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\PasswordHelper.cs" />
+    <Compile Include="DialogBox.xaml.cs">
+      <DependentUpon>DialogBox.xaml</DependentUpon>
+    </Compile>
+    <Page Include="BandShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BandForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -224,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

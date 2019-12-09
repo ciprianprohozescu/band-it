@@ -13,11 +13,15 @@ namespace Controllers
     {
         BandsAccess bandsAccess;
         IGenreController genreController;
+        IApplicationController applicationController;
+        IBandUserController bandUserController;
 
         public BandController()
         {
             bandsAccess = new BandsAccess();
             genreController = new GenreController();
+            applicationController = new ApplicationController();
+            bandUserController = new BandUserController();
         }
         public List<Band> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0)
         {
@@ -108,6 +112,16 @@ namespace Controllers
                 foreach (var genre in bandDB.Genres)
                 {
                     band.Genres.Add(genreController.DBToLogic(genre));
+                }
+                band.Applications = new List<Application>();
+                foreach (var application in bandDB.Applications)
+                {
+                    band.Applications.Add(applicationController.DBToLogic(application));
+                }
+                band.BandUsers = new List<BandUser>();
+                foreach (var bandUser in bandDB.BandUsers)
+                {
+                    band.BandUsers.Add(bandUserController.DBToLogic(bandUser));
                 }
                 band.RowVersion = BitConverter.ToInt64(bandDB.RowVersion, 0);
 

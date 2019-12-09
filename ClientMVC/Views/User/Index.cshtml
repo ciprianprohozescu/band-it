@@ -59,20 +59,19 @@
             foreach (var item in Model.Users)
             {
                
-                <tr onclick="location.href = '@Url.Action("Show", new {id = item.ID})'">
-                    <td>
-                        <b><Span style="color:red">@item.FirstName @item.LastName </Span></b>
+                <div class="card">  
+                    <div class="card-body">
+                        <h3 style="color:darkblue">@item.FirstName @item.LastName </h3>
                         <p></p>
-                        <p> <span style="color:orangered ">Username: </span> @item.Username</p>
-                        <p> <span style="color:orangered"> Email ID: </span> @item.Email</p>
-                        <span style="color:orangered"> Description: </span> <p>  @item.Description</p>
-                        <p><span style="color:orangered"> Skills:</span>@foreach (var skill in item.Skills) {<ul><li>@skill.Name</li></ul> } </p>
-                       
-                    </td>
-                    <td align="center">
-                        <p> @item.ProfilePicture</p>
-                    </td>
-                </tr>
+                        <p> <span style="color:dodgerblue ">Username: </span> @item.Username</p>
+                        <p> <span style="color:dodgerblue"> Email ID: </span> @item.Email</p>
+                        <span style="color:dodgerblue"> Description: </span> <p>  @item.Description</p>
+                        <p><span style="color:dodgerblue"> Skills:</span>@foreach (var skill in item.Skills) {<ul><li>@skill.Name</li></ul> } </p>
+                        <p>
+                            <button onclick="location.href = '@Url.Action("Show", new {id = item.ID})'" type="button" class="btn btn-primary">Show </button>
+                        </p>
+                    </div>
+                </div>
 
             }
         }

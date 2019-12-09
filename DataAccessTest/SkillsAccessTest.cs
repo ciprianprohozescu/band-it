@@ -96,10 +96,6 @@ namespace DataAccessTest
         [ClassCleanup]
         public static void Cleanup()
         {
-            //db = new BandItEntities();
-            //db.Skills.RemoveRange(db.Skills.ToList());
-            //db.SaveChanges();
-
             testHelpers.ClearData();
         }
     }

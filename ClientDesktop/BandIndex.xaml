@@ -19,7 +19,14 @@
             </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="150" />
-                <DataGridTextColumn Binding="{Binding Description}" Header="Description" Width="455" />
+                <DataGridTextColumn Binding="{Binding Description}" Header="Description" Width="400" />
+                <DataGridTemplateColumn Header="Apply">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnApply" Content="Apply" Click="Apply_Button_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

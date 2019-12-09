@@ -46,8 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationController.cs" />
     <Compile Include="BandController.cs" />
+    <Compile Include="BandUserController.cs" />
     <Compile Include="GenreController.cs" />
+    <Compile Include="IApplicationController.cs" />
+    <Compile Include="IBandUserController.cs" />
     <Compile Include="IGenreController.cs" />
     <Compile Include="FileController.cs" />
     <Compile Include="Helpers.cs" />

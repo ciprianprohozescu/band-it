@@ -12,5 +12,7 @@ namespace ClientMVC.Models
         public double Distance { get; set; }
         public bool DistanceEnabled { get; set; }
         public List<Band> Bands { get; set; }
+        public List<Application> Applications { get; set; }
+        public User User { get; set; }
     }
 }
