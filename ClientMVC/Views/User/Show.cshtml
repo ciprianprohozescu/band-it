@@ -51,6 +51,10 @@
                             <button type="submit" id="save-location" class="btn-sm btn-secondary" disabled><i class="fas fa-map-marked-alt"></i> Update your location</button>
                         }
                     </form>
+                    @if (Model.User.Location == null)
+                    {
+                        <p> You have to set your location to see other users.</p>
+                    }
                 </div>
 
                 <div id="map"></div>

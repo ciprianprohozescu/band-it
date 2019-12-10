@@ -37,6 +37,7 @@ namespace Controllers
 
             var marker = new LatLng(markerLat, markerLng);
             var filteredUsers = new List<User>();
+            
 
             foreach (var user in users)
             {

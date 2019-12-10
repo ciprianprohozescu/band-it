@@ -26,6 +26,15 @@ namespace ClientMVC.Controllers
             }
 
             var model = new UserIndex();
+            model.User = JsonConvert.DeserializeObject<User>(xcontent.Content);
+
+            }
+                markerLng = model.User.Location.Longitude;
+                markerLat = model.User.Location.Latitude;
+            {
+            if(model.User.Location != null)
+
+
             model.Search = search;
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
@@ -55,6 +64,8 @@ namespace ClientMVC.Controllers
             {
                 model.Users.Add(user);
             }
+
+
 
             return View(model);
         }

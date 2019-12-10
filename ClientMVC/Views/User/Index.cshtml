@@ -12,13 +12,19 @@
     <div class="col-12">
         <form method="get">
             <div class="form-group">
-                <input type="checkbox" id="dist-checkbox" class="checkbox-inline" onchange="toggleDistanceFilter()" />
+                @if (Model.User.Location != null)
+                {
+                    <input type="checkbox" id="dist-checkbox" class="checkbox-inline" onchange="toggleDistanceFilter()" />
                 <label for="distance" id="dist-label" class="text-muted">
                     Maximum distance:
                     <span id="dist-val"></span>
                 </label>
                 <input type="range" min="1" max="100" value="50" class="form-control-range" id="dist-slider"
                        name="distance" oninput="showDistance(event)" disabled>
+                } else
+                {
+                    <p>Set up your location so that you can look for other users!</p>
+                }
             </div>
             <div class="row form-group">
                 <div class="col-md-12">
@@ -80,15 +86,16 @@
 
 @section scripts{
     <style>
+
         #map {
-            height: 500px;
             width: 100%;
         }
     </style>
 }
 
-@section scripts{
-    <script type="text/javascript">
+
+
+<script type="text/javascript">
         var distanceCheckbox = document.getElementById('dist-checkbox');
         var distanceText = document.getElementById('dist-val');
         var distanceLabel = document.getElementById('dist-label');
@@ -117,8 +124,50 @@
                 distanceText.innerText = "";
             }
         }
+</script>
+    }
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
+
+
+
+
+
+    <script type="text/javascript">
+        var distanceCheckbox = document.getElementById('dist-checkbox');
+        var distanceText = document.getElementById('dist-val');
+        var distanceLabel = document.getElementById('dist-label');
+        var distanceSlider = document.getElementById('dist-slider');
+
+
+        if ("@Model.DistanceEnabled" == "True") {
+            distanceCheckbox.setAttribute("checked", "true");
+            distanceLabel.classList.remove("text-muted");
+            distanceText.innerText = @Model.Distance + " km";
+            distanceSlider.removeAttribute('disabled');
+            distanceSlider.value = @Model.Distance;
+        }
+
+        function showDistance(event) {
+            distanceText.innerText = event.target.value + " km";
+        }
+
+        function toggleDistanceFilter() {
+            if (distanceSlider.hasAttribute('disabled')) {
+                distanceSlider.removeAttribute('disabled');
+                distanceLabel.classList.remove("text-muted");
+                distanceText.innerText = distanceSlider.value + " km";
+            } else {
+                distanceSlider.setAttribute("disabled", "disabled");
+                distanceLabel.classList.add("text-muted");
+                distanceText.innerText = "";
+            }
+        }
     </script>
 
-    <script src="~/Scripts/map.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer>
+    </script>
 }
