@@ -108,35 +108,53 @@ namespace Controllers
         }
         public User Update(User user)
         {
+            var oldUser = GetById(user.ID);
+
             user.UsernameError = "";
             user.EmailError = "";
+            user.PasswordError = "";
 
             if (user.Username == "")
             {
                 user.UsernameError = Errors.UserErrors.EmptyUsername;
-                return user;
+            } else if (user.Username.Length < 5)
+            {
+                user.UsernameError = Errors.UserErrors.UsernameTooShort;
+            } else
+            {
+                var otherUser = GetByEmail(user.Email);
+                if (otherUser != null && otherUser.ID != user.ID)
+                {
+                    user.EmailError = Errors.UserErrors.DuplicateEmail;
+                }
             }
 
             if (user.Email == "")
             {
-                user.UsernameError = Errors.UserErrors.EmptyEmail;
+                user.EmailError = Errors.UserErrors.EmptyEmail;
+            } else
+            {
+                var otherUser = GetByUsername(user.Username);
+                if (otherUser != null && otherUser.ID != user.ID)
+                {
+                    user.UsernameError = Errors.UserErrors.DuplicateUsername;
+                }
+            }
+
+            if (user.Password == "")
+            {
+                user.PasswordError = Errors.UserErrors.EmptyPassword;
+            } else if (user.Password.Length < 5)
+            {
+                user.PasswordError = Errors.UserErrors.PasswordTooShort;
+            }
+
+            if (user.UsernameError != "" || user.EmailError != "" || user.PasswordError != "")
+            {
                 return user;
             }
 
-            var otherUser = GetByUsername(user.Username);
-            if (otherUser != null && otherUser.ID != user.ID)
-            {
-                user.UsernameError = Errors.UserErrors.DuplicateUsername;
-                return user;
-            }
-            var otherUser2 = GetByEmail(user.Email);
-            if (otherUser2 != null && otherUser2.ID != user.ID)
-            {
-                user.EmailError = Errors.UserErrors.DuplicateEmail;
-                return user;
-            }
-
-            user.Password = StringCipher.Encrypt(user.Password + user.Salt, "hello");
+            user.Password = StringCipher.Encrypt(user.Password + oldUser.Salt, "hello");
             usersAccess.Update(LogicToDB(user));
             return user;
         }
@@ -186,7 +204,10 @@ namespace Controllers
                 user.ID = userDB.ID;
                 user.Username = userDB.Username;
                 user.Email = userDB.Email;
-                user.Password = userDB.Password;
+
+                var saltedPassword = StringCipher.Decrypt(userDB.Password, "hello");
+                user.Password = saltedPassword.Substring(0, saltedPassword.Length - userDB.Salt.Length);
+
                 user.Salt = userDB.Salt;
                 user.FirstName = userDB.FirstName;
                 user.LastName = userDB.LastName;

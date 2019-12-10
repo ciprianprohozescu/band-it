@@ -18,7 +18,6 @@ namespace ControllersTest
     {
         static TestHelpers testHelpers;
         static IUserController userController;
-        static ModelsDB.BandItEntities db;
 
         private TestContext testContextInstance;
 
@@ -65,7 +64,6 @@ namespace ControllersTest
         {
             testHelpers = new TestHelpers();
             userController = new UserController();
-            db = new ModelsDB.BandItEntities();
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -163,7 +161,7 @@ namespace ControllersTest
             Assert.AreEqual("Dobra", user.LastName);
             Assert.AreEqual("I like music", user.Description);
             Assert.AreEqual("marian@email.com", user.Email);
-            Assert.AreEqual("12345" + user.Salt, StringCipher.Decrypt(user.Password, "hello"));
+            Assert.AreEqual("12345", user.Password);
         }
 
         [TestMethod]

@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <input class="form-control" name="description" value="@Model.User.Description"/>
+                <textarea class="form-control" name="description">@Model.User.Description</textarea>
             </div>
             <div class="form-group">
                 <label>Email</label>
@@ -33,7 +33,8 @@
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" name="password" value="@Model.User.Password"/>
+                <input type="password" class="form-control" name="password" value="@Model.User.Password" />
+                <p class="help-block text-danger">@Model.User.PasswordError</p>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>

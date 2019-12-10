@@ -15,6 +15,7 @@ namespace Models
         public string Username { get; set; }
         public string UsernameError { get; set; }
         public string Password { get; set; }
+        public string PasswordError { get; set; }
         public string Salt { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -17,9 +17,12 @@ namespace Models
         public static class UserErrors
         {
             public static string EmptyUsername { get { return "The username cannot be empty."; } }
+            public static string UsernameTooShort { get { return "The username must be at least 5 characters long."; } }
             public static string DuplicateUsername { get { return "That username is already taken."; } }
             public static string EmptyEmail { get { return "The email cannot be empty."; } }
             public static string DuplicateEmail { get { return "That email is already taken."; } }
+            public static string EmptyPassword { get { return "The password cannot be empty."; } }
+            public static string PasswordTooShort { get { return "The password must be at least 5 characters long."; } }
         }
     }
 }

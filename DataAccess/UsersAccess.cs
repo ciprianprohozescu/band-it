@@ -73,18 +73,17 @@ namespace DataAccess
             db.Users.Add(user);
             db.SaveChanges();
         }
-        public bool Update(User user)
+        public void Update(User user)
         {
-                var userDB = FindByID(user.ID);
-                userDB.Username = user.Username;
-                userDB.FirstName = user.FirstName;
-                userDB.LastName = user.LastName;
-                userDB.Description = user.Description;
-                userDB.Email = user.Email;
-                userDB.Password = user.Password;
-
-                db.SaveChanges();
-                return true;
+            var userDB = FindByID(user.ID);
+            userDB.Username = user.Username;
+            userDB.FirstName = user.FirstName;
+            userDB.LastName = user.LastName;
+            userDB.Description = user.Description;
+            userDB.Email = user.Email;
+            userDB.Password = user.Password;
+            
+            db.SaveChanges();
         }
         public void Delete(int id)
         {
