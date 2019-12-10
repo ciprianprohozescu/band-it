@@ -171,6 +171,11 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            if (Session["ID"] == null || (int)Session["ID"] != id)
+            {
+                return View("Error");
+            }
+
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"user/{id}", Method.GET);
             var content = client.Execute(request).Content;
@@ -188,7 +193,7 @@ namespace ClientMVC.Controllers
         [HttpPost]
         public ActionResult Update(int id, string username, string firstName, string lastName, string description, string email, string password)
         {
-            if ((int)Session["ID"] != id)
+            if (Session["ID"] == null || (int)Session["ID"] != id)
             {
                 return View("Error");
             }

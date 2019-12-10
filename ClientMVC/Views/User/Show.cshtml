@@ -18,10 +18,15 @@
     </div>
 
     <div class="col-md-8">
-        <h2>
-            <span class="mr-3">@Model.User.Username</span>
-            <span class="text-muted">@Model.User.FirstName @Model.User.LastName</span>
-        </h2>
+        <div class="row">
+            <h2 class="mr-2">@Model.User.Username <span class="text-muted" id="full-name">(@Model.User.FirstName @Model.User.LastName)</span></h2>
+            @if ((int)Session["ID"] == Model.User.ID)
+            {
+                <form action="~/user/edit/@Model.User.ID" method="get">
+                    <button type="submit" class="btn btn-primary">Edit your profile</button>
+                </form>
+            }
+        </div>
         <div style="max-height: 30vh; overflow-y: scroll;">
             @Model.User.Description
         </div>
@@ -197,10 +202,6 @@
     </div>
 </div>
 
-@using (Html.BeginForm("Edit/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return editClicked();" }))
-{
-    <input type="submit" class=" btn btn-primary" value="Edit profile" />
-}
 
 <div class="row">
     <div class="col-md-12">
@@ -293,10 +294,6 @@
                 return true;
             }
             return false;
-        }
-
-        function editClicked() {
-            location.href = '@Url.Action("Edit", new { id = Model.User.ID })';
         }
     </script>
 }
