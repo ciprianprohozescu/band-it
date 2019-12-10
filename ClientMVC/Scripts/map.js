@@ -13,6 +13,13 @@ function initMap() {
     });
 }
 
+function initMap(xlat, xlng) {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: xlat, lng: xlng },
+        zoom: 8
+    });
+}
+
 function initMarkerMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: mapCenter.lat, lng: mapCenter.lng },

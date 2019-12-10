@@ -25,15 +25,16 @@ namespace ClientMVC.Controllers
                 return View("Error");
             }
 
+
+            int userId = int.Parse(Session["ID"].ToString());
+            
             var model = new UserIndex();
+
+            var xclient = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var xrequest = new RestRequest($"user/{userId}", Method.GET);
+
+            var xcontent = xclient.Execute(xrequest);
             model.User = JsonConvert.DeserializeObject<User>(xcontent.Content);
-
-            }
-                markerLng = model.User.Location.Longitude;
-                markerLat = model.User.Location.Latitude;
-            {
-            if(model.User.Location != null)
-
 
             model.Search = search;
 
@@ -64,8 +65,6 @@ namespace ClientMVC.Controllers
             {
                 model.Users.Add(user);
             }
-
-
 
             return View(model);
         }
