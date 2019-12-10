@@ -1,4 +1,5 @@
 ﻿using Models;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -20,41 +21,47 @@ namespace ClientDesktop
     public partial class UserEdit : Page
     {
         MainWindow mainWindow;
+        User user;
 
-        public User user;
         public UserEdit(MainWindow mainWindow, User user)
         {
             InitializeComponent();
 
             this.mainWindow = mainWindow;
             this.user = user;
+
+            title.Content = $"Edit {user.Username}";
+            usernameText.Text = user.Username;
+            firstNameText.Text = user.FirstName;
+            lastNameText.Text = user.LastName;
+            descriptionText.Text = user.Description;
+            emailText.Text = user.Email;
+            passwordText.Password = user.Password;
+
+            usernameError.Content = user.UsernameError;
+            emailError.Content = user.EmailError;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            string username = usernameText.Text;
-            string firstName = firstNameText.Text;
-            string lastName = lastNameText.Text;
-            string description = descriptionText.Text;
-            string email = emailText.Text;
-            string password = passwordText.Password.ToString();
+            user.Username = usernameText.Text;
+            user.FirstName = firstNameText.Text;
+            user.LastName = lastNameText.Text;
+            user.Description = descriptionText.Text;
+            user.Email = emailText.Text;
+            user.Password = passwordText.Password;
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"user/update", Method.POST);
-
-            var user = new User();
-            user.Username = username;
-            user.FirstName = firstName;
-            user.LastName = lastName;
-            user.Description = description;
-            user.Email = email;
-            user.Password = password;
-
             request.AddJsonBody(user);
 
-            client.Execute(request);
+            var newUser = JsonConvert.DeserializeObject<User>(client.Execute(request).Content);
+            mainWindow.GoToUserEdit(newUser);
+        }
 
-            mainWindow.GoToUserShow(user);
+        private void Back_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.GoToUserIndex();
         }
     }
 }

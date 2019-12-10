@@ -13,6 +13,10 @@ namespace Controllers
     public class SkillController : ISkillController
     {
         SkillsAccess skillsAccess;
+        public SkillController()
+        {
+            skillsAccess = new SkillsAccess();
+        }
         public List<Skill> Get()
         {
             var skillAccess = new SkillsAccess();
@@ -48,11 +52,15 @@ namespace Controllers
         public Skill DBToLogic (SkillDB skillDB)
         {
             var skill = new Skill();
+            if(skillDB != null)
+            {
+                skill.ID = skillDB.ID;
+                skill.Name = skillDB.Name;
 
-            skill.ID = skillDB.ID;
-            skill.Name = skillDB.Name;
+                return skill;
+            }
 
-            return skill;
+            return null;
         }
 
         public SkillDB LogicToDB (Skill skill)

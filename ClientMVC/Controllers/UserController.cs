@@ -71,10 +71,10 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Show(int id)
         {
-            //if (Session["ID"] == null)
-            //{
-            //    return View("Error");
-            //}
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
 
             var model = new UserShow();
 
@@ -171,14 +171,18 @@ namespace ClientMVC.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model = new UserEdit();
-
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"user/{id}", Method.GET);
-            var content = client.Execute(request);
-            model.User = JsonConvert.DeserializeObject<User>(content.Content);
+            var content = client.Execute(request).Content;
 
-            return View(model);
+            var user = JsonConvert.DeserializeObject<User>(content);
+
+            ViewBag.Title = $"Edit { user.Username}";
+
+            var model = new UserEdit();
+            model.User = user;
+
+            return View("Edit", model);
         }
 
         [HttpPost]
@@ -189,11 +193,7 @@ namespace ClientMVC.Controllers
                 return View("Error");
             }
 
-            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"user/update", Method.POST);
-
             var user = new User();
-
             user.ID = id;
             user.Username = username;
             user.FirstName = firstName;
@@ -201,12 +201,22 @@ namespace ClientMVC.Controllers
             user.Description = description;
             user.Email = email;
             user.Password = password;
-            
-            doesEmailExist(email);
 
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
+            var request = new RestRequest($"user/update", Method.POST);
             request.AddJsonBody(user);
 
-            client.Execute(request);
+            var content = client.Execute(request).Content;
+            var responseUser = JsonConvert.DeserializeObject<User>(content);
+
+            if (responseUser.UsernameError != "" || responseUser.EmailError != "")
+            {
+                var model = new UserEdit();
+                model.User = responseUser;
+
+                return View("Edit", model);
+            }
 
             return RedirectToAction($"Show/{id}");
         }

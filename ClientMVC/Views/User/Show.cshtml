@@ -80,6 +80,16 @@
                             }
                         </ul>
                     }
+                    <p>
+                        <select>
+                            @foreach (var item in Model.Skills)
+                            {
+                                <option value="name">@item.Name</option>
+                            }
+                        </select>
+                        <input type="button" class="btn btn-success" value="Add skills" />
+                        <input type="button" class="btn btn-danger" value="Remove skills" />
+                    </p>
                 </div>
             </div>
         </div>
@@ -122,55 +132,43 @@
                 </div>
             </div>
         }
-    </ul>
-}
-<p>
-    <select>
-        @foreach (var item in Model.Skills)
-        {
-            <option value="name">@item.Name</option>
-        }
-    </select>
-    <input type="button" class="btn btn-success" value="Add skills" />
-    <input type="button" class="btn btn-danger" value="Remove skills" />
-</p>
-
-    <div class="col-md-3">
-        <div>
-            <h4 class="mr-2">Music</h4>
-            @if ((int)Session["ID"] == Model.User.ID)
-            {
-                <form action="~/user/savefile/@Model.User.ID"
-                      method="post" enctype="multipart/form-data">
-                    <input type="file" name="file" />
-                    <input type="hidden" name="type" value="music" />
-                    <button type="submit" class="btn-sm btn-primary mt-1"><i class="fas fa-plus"></i> Add music</button>
-                </form>
-            }
-            <div style="overflow-y: scroll; overflow-x: hidden">
-                @if (Model.Music.Count == 0)
+        <div class="col-md-3">
+            <div>
+                <h4 class="mr-2">Music</h4>
+                @if ((int)Session["ID"] == Model.User.ID)
                 {
-                    <p>No music found.</p>
+                    <form action="~/user/savefile/@Model.User.ID"
+                          method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" />
+                        <input type="hidden" name="type" value="music" />
+                        <button type="submit" class="btn-sm btn-primary mt-1"><i class="fas fa-plus"></i> Add music</button>
+                    </form>
                 }
-                @foreach (var file in Model.Music)
-                {
-                    <div class="row">
-                        <audio controls class="mt-2 w-75">
-                            <source src="@file.Name" class="mt-2" />
-                            Your browser does not support this audio format.
-                        </audio>
+                <div style="overflow-y: scroll; overflow-x: hidden">
+                    @if (Model.Music.Count == 0)
+                    {
+                        <p>No music found.</p>
+                    }
+                    @foreach (var file in Model.Music)
+                    {
+                        <div class="row">
+                            <audio controls class="mt-2 w-75">
+                                <source src="@file.Name" class="mt-2" />
+                                Your browser does not support this audio format.
+                            </audio>
 
-                        @if ((int)Session["ID"] == Model.User.ID)
-                        {
-                            <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
-                                <input type="hidden" name="userID" value="@Model.User.ID" />
-                                <input type="hidden" name="fileID" value="@file.ID" />
-                                <input type="hidden" name="fileName" value="@file.Name" />
-                                <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
-                            </form>
-                        }
-                    </div>
-                }
+                            @if ((int)Session["ID"] == Model.User.ID)
+                            {
+                                <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
+                                    <input type="hidden" name="userID" value="@Model.User.ID" />
+                                    <input type="hidden" name="fileID" value="@file.ID" />
+                                    <input type="hidden" name="fileName" value="@file.Name" />
+                                    <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                                </form>
+                            }
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -199,6 +197,11 @@
     </div>
 </div>
 
+@using (Html.BeginForm("Edit/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return editClicked();" }))
+{
+    <input type="submit" class=" btn btn-primary" value="Edit profile" />
+}
+
 <div class="row">
     <div class="col-md-12">
         <div class="delete-form">
@@ -213,8 +216,14 @@
     </div>
 </div>
 
-@section styles{
+@section styles {
     <style>
+        .skill-list {
+            display: inline-block;
+            border: 1px solid #000;
+            padding: 20px;
+        }
+
         .delete-form {
             margin-left: 37.5%;
             width: 50%;
@@ -231,9 +240,6 @@
             width: 100%;
         }
     </style>
-@using (Html.BeginForm("Edit/" + Model.User.ID, "User", FormMethod.Get, new { onsubmit = "return editClicked();"}))
-{
-    <input type="submit" class=" btn btn-primary" value="Edit profile" />
 }
 
 <p></p>
@@ -293,5 +299,4 @@
             location.href = '@Url.Action("Edit", new { id = Model.User.ID })';
         }
     </script>
-    }
 }

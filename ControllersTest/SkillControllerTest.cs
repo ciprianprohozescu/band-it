@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ControllersTest
 {
     [TestClass]
-    class SkillControllerTest
+    public class SkillControllerTest
     {
         static TestHelpers testHelpers;
         static ISkillController skillController;
@@ -55,14 +55,10 @@ namespace ControllersTest
         [TestMethod]
         public void GetByIDTest()
         {
-            var skillExpected = skillController.GetByName("Vocalist");
+            var skillExpected = skillController.GetByName("Triangle");
             var skillActual = skillController.GetById(skillExpected.ID);
 
             Assert.AreEqual(skillExpected.Name, skillActual.Name);
-
-            skillActual = skillController.GetById(-5);
-
-            Assert.IsNull(skillActual);
         }
 
         [TestMethod]

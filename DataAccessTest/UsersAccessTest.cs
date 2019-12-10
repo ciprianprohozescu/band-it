@@ -220,6 +220,27 @@ namespace DataAccessTest
             Assert.AreEqual("newpic.jpg", usersAccess.FindByUsername("Andrei1337").ProfilePicture);
         }
 
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var user = usersAccess.Get("")[0];
+            user.Username = "Marean99";
+            user.FirstName = "Marian";
+            user.LastName = "Dobra";
+            user.Description = "I like music";
+            user.Email = "marian@email.com";
+            user.Password = "12345";
+
+            usersAccess.Update(user);
+
+            Assert.AreEqual("Marean99", user.Username);
+            Assert.AreEqual("Marian", user.FirstName);
+            Assert.AreEqual("Dobra", user.LastName);
+            Assert.AreEqual("I like music", user.Description);
+            Assert.AreEqual("marian@email.com", user.Email);
+            Assert.AreEqual("12345", user.Password);
+        }
+
         [ClassCleanup]
         public static void Cleanup()
         {

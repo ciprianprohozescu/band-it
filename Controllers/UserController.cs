@@ -65,7 +65,7 @@ namespace Controllers
                 userDB = usersAccess.FindByEmail(userLogic.Email);
                 if(userDB == null)
                 {
-                    userLogic.Salt = StringCipher.RandomString();
+                    userLogic.Salt = StringCipher.RandomString().Substring(0, 5);
                     //TODO: Move passphrase (and Google Maps API) to secure location
                     userLogic.Password = StringCipher.Encrypt(userLogic.Password + userLogic.Salt, "hello");
                     userDB = LogicToDB(userLogic);
@@ -106,11 +106,39 @@ namespace Controllers
             var userDB = usersAccess.FindByID(id);
             return DBToLogic(userDB);
         }
-        public void Update(int id, string username, string firstName, string lastName, string description, string email, string password)
+        public User Update(User user)
         {
-            var user = GetById(id);
-            password = StringCipher.Encrypt(password + user.Salt, "hello");
-            usersAccess.Update(id, username, firstName, lastName, description, email, password);
+            user.UsernameError = "";
+            user.EmailError = "";
+
+            if (user.Username == "")
+            {
+                user.UsernameError = Errors.UserErrors.EmptyUsername;
+                return user;
+            }
+
+            if (user.Email == "")
+            {
+                user.UsernameError = Errors.UserErrors.EmptyEmail;
+                return user;
+            }
+
+            var otherUser = GetByUsername(user.Username);
+            if (otherUser != null && otherUser.ID != user.ID)
+            {
+                user.UsernameError = Errors.UserErrors.DuplicateUsername;
+                return user;
+            }
+            var otherUser2 = GetByEmail(user.Email);
+            if (otherUser2 != null && otherUser2.ID != user.ID)
+            {
+                user.EmailError = Errors.UserErrors.DuplicateEmail;
+                return user;
+            }
+
+            user.Password = StringCipher.Encrypt(user.Password + user.Salt, "hello");
+            usersAccess.Update(LogicToDB(user));
+            return user;
         }
 
         public User LogIn(string username, string password)

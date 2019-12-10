@@ -12,6 +12,7 @@
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" class="form-control" name="username" value="@Model.User.Username"/>
+                <p class="help-block text-danger">@Model.User.UsernameError</p>
             </div>
             <div class="form-group">
                 <label>First Name</label>
@@ -28,6 +29,7 @@
             <div class="form-group">
                 <label>Email</label>
                 <input type="text" class="form-control" name="email" value="@Model.User.Email"/>
+                <p class="help-block text-danger">@Model.User.EmailError</p>
             </div>
             <div class="form-group">
                 <label>Password</label>

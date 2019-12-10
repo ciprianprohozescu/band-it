@@ -55,6 +55,7 @@
                     <DropShadowEffect/>
                 </TextBlock.Effect><Run Text="Description"/></TextBlock>
         </ScrollViewer>
+        <Button Content="Edit profile" HorizontalAlignment="Left" Margin="389,14,0,0" VerticalAlignment="Top" Width="75" Click="Edit_Button_Click"/>
 
     </Grid>
 </Page>

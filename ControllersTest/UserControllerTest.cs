@@ -142,7 +142,30 @@ namespace ControllersTest
             Assert.AreEqual("Andrei1337", users[0].Username);
             #endregion
         }
-        
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var user = userController.Get("")[0];
+            user.Username = "Marean99";
+            user.FirstName = "Marian";
+            user.LastName = "Dobra";
+            user.Description = "I like music";
+            user.Email = "marian@email.com";
+            user.Password = "12345";
+
+            userController.Update(user);
+
+            user = userController.GetById(user.ID);
+
+            Assert.AreEqual("Marean99", user.Username);
+            Assert.AreEqual("Marian", user.FirstName);
+            Assert.AreEqual("Dobra", user.LastName);
+            Assert.AreEqual("I like music", user.Description);
+            Assert.AreEqual("marian@email.com", user.Email);
+            Assert.AreEqual("12345" + user.Salt, StringCipher.Decrypt(user.Password, "hello"));
+        }
+
         [TestMethod]
         public void DeleteTest()
         {
