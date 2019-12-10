@@ -64,6 +64,8 @@ function markerLocation() {
     }
 }
 
+
+
 function createMarkerInCenter() {
     marker = new google.maps.Marker({
         position: mapCenter,

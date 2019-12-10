@@ -16,6 +16,7 @@ namespace ClientMVC.Controllers
 {
     public class UserController : Controller
     {
+
         [HttpGet]
         public ActionResult Index(string search, double distance = -1, double markerLat = 0.0, double markerLng = 0.0)
         {
@@ -25,7 +26,6 @@ namespace ClientMVC.Controllers
             }
 
             var model = new UserIndex();
-
             model.Search = search;
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
