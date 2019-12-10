@@ -94,15 +94,6 @@ namespace ControllersTest
         }
 
         [TestMethod]
-        public void GetByIDTest()
-        {
-            var bandExpected = bandController.Get("Poleyn")[0];
-            var bandActual = bandController.GetByID(bandExpected.ID);
-
-            Assert.AreEqual(bandExpected.Name, bandActual.Name);
-        }
-
-        [TestMethod]
         public void GetByName()
         {
             var band = bandController.GetByName("Poylen");
