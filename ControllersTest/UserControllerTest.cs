@@ -4,13 +4,9 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Models;
-using ModelsDB;
 using DataAccess;
 using UserLogic = Models.User;
-using UserDB = ModelsDB.User;
 using Controllers;
-using System.Linq;
-using Moq;
 
 namespace ControllersTest
 {
@@ -177,33 +173,21 @@ namespace ControllersTest
         [TestMethod]
         public void SaveLocationTest()
         {
-            userController = new UserController(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
-            var sampleUser = userController.GetByUsername("Radu1337");
-            userController.SaveLocation(sampleUser);
-            var lat = userController.GetByUsername("Radu1337").Location.Latitude;
-            var lng = userController.GetByUsername("Radu1337").Location.Longitude;
-            //Checks user's latitude
-            Assert.AreEqual((decimal)53.003310, (decimal)lat);
-            //Checks user's longitude
-            Assert.AreEqual((decimal)13.982130, (decimal)lng);
+            var user = userController.GetByUsername("Ciprian1337");
+
+            user.Location = new LatLng();
+            user.Location.Latitude = 50;
+            user.Location.Longitude = 50;
+
+            userController.SaveLocation(user);
+
+            user = userController.GetByUsername("Ciprian1337");
+
+            #region Assert
+            Assert.AreEqual(50, user.Location.Latitude);
+            Assert.AreEqual(50, user.Location.Longitude);
+            #endregion
         }
-
-       /* [TestMethod]
-        public void UserLocation_CompareLocations_AreEqual()
-        {
-
-            //Arrange
-            Mock<UsersAccess> userAccessMock = new Mock<UsersAccess>();
-            Mock<SkillController> skillControler = new Mock<SkillController>();
-            var user = new Models.User();
-            userAccessMock.Setup(x => x.SaveLocation(It.IsAny<ModelsDB.User>()));
-            userController = new UserController(userAccessMock.Object, skillControler.Object);
-            //Act
-            userController.SaveLocation((Models.User)user);
-            //Assert
-
-        }
-        */
 
         [TestMethod]
         public void UpdateProfilePictureTest()

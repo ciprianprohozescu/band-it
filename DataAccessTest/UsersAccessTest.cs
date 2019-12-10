@@ -197,21 +197,19 @@ namespace DataAccessTest
         [TestMethod]
         public void SaveLocation()
         {
-            // https://stackoverflow.com/questions/5196669/moqing-methods-where-expressionfunct-bool-are-passed-in-as-parameters/5196875?fbclid=IwAR2wjUAccjn8zZnq7c9ESgqRrFVLuQi_0O_3cJOIP8JvT4rw9gGriU2ftI0
+            var user = usersAccess.FindByUsername("Ciprian1337");
 
-            //Arrange
-            var dbMock = new Mock<BandItEntities>();
-            dbMock.Setup(x => x.Users.SingleOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                .Returns(
-                    (Expression<Func<User, bool>> predicate) => new ModelsDB.User()
-                );
-            var userAccess = new UsersAccess(dbMock.Object);
-            //Act
-            userAccess.SaveLocation(It.IsAny<User>());
-            //Assert
-            dbMock.Verify(x => x.SaveChanges(), Times.Once);
+            user.Latitude = 50;
+            user.Longitude = 50;
 
+            usersAccess.SaveLocation(user);
 
+            user = usersAccess.FindByUsername("Ciprian1337");
+
+            #region Assert
+            Assert.AreEqual(50, user.Latitude);
+            Assert.AreEqual(50, user.Longitude);
+            #endregion
         }
 
         [TestMethod]
