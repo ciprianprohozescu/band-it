@@ -18,36 +18,32 @@ namespace ClientMVC.Controllers
     {
 
         [HttpGet]
-        public ActionResult Index(string search, double distance = -1, double markerLat = 0.0, double markerLng = 0.0)
+        public ActionResult Index(string search, double distance = -1)
         {
             if (Session["ID"] == null)
             {
                 return View("Error");
             }
 
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
 
-            int userId = int.Parse(Session["ID"].ToString());
+            int userId = (int)Session["ID"];
             
             var model = new UserIndex();
 
-            var xclient = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var xrequest = new RestRequest($"user/{userId}", Method.GET);
-
-            var xcontent = xclient.Execute(xrequest);
-            model.User = JsonConvert.DeserializeObject<User>(xcontent.Content);
+            var userRequest = new RestRequest($"user/{userId}", Method.GET);
+            model.User = JsonConvert.DeserializeObject<User>(client.Execute(userRequest).Content);
 
             model.Search = search;
 
-            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest("user", Method.GET);
-
             request.AddParameter("search", search);
 
             if (distance > -1)
             {
                 request.AddParameter("distance", distance);
-                request.AddParameter("markerLat", markerLat);
-                request.AddParameter("markerLng", markerLng);
+                request.AddParameter("markerLat", model.User.Location.Latitude);
+                request.AddParameter("markerLng", model.User.Location.Longitude);
 
                 model.Distance = distance;
                 model.DistanceEnabled = true;
@@ -63,7 +59,10 @@ namespace ClientMVC.Controllers
             model.Users = new List<User>();
             foreach (var user in users)
             {
-                model.Users.Add(user);
+                if (user.ID != model.User.ID)
+                {
+                    model.Users.Add(user);
+                }
             }
 
             return View(model);

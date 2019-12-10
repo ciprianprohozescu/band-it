@@ -1,7 +1,5 @@
 ﻿@model ClientMVC.Models.UserIndex
 
-
-
 <h1> Find musicians </h1>
 
 @{
@@ -15,23 +13,17 @@
                 @if (Model.User.Location != null)
                 {
                     <input type="checkbox" id="dist-checkbox" class="checkbox-inline" onchange="toggleDistanceFilter()" />
-                <label for="distance" id="dist-label" class="text-muted">
-                    Maximum distance:
-                    <span id="dist-val"></span>
-                </label>
-                <input type="range" min="1" max="100" value="50" class="form-control-range" id="dist-slider"
-                       name="distance" oninput="showDistance(event)" disabled>
-                } else
+                    <label for="distance" id="dist-label" class="text-muted">
+                        Maximum distance:
+                        <span id="dist-val"></span>
+                    </label>
+                    <input type="range" min="1" max="100" value="50" class="form-control-range" id="dist-slider"
+                           name="distance" oninput="showDistance(event)" disabled>
+                }
+                else
                 {
                     <p>Set up your location so that you can look for other users!</p>
                 }
-            </div>
-            <div class="row form-group">
-                <div class="col-md-12">
-                    <input type="hidden" id="marker-lat" name="markerLat" />
-                    <input type="hidden" id="marker-lng" name="markerLng" />
-                    <div id="map"></div>
-                </div>
             </div>
             <div class="form-group form-inline">
                 <input type="text" name="Search" class="form-control" value="@Model.Search" />
@@ -42,15 +34,7 @@
 </div>
 
 <h3>Users</h3>
-<style>
-    table, tr, td, th {
-        border: 2px solid black;
-    }
 
-    tr {
-        cursor: pointer;
-    }
-</style>
 <table class="table table-striped">
     <tbody>
         @if (Model.Users.Count() == 0)
@@ -84,7 +68,7 @@
     </tbody>
 </table>
 
-@section scripts{
+@section styles{
     <style>
 
         #map {
@@ -96,78 +80,35 @@
 
 
 <script type="text/javascript">
-        var distanceCheckbox = document.getElementById('dist-checkbox');
-        var distanceText = document.getElementById('dist-val');
-        var distanceLabel = document.getElementById('dist-label');
-        var distanceSlider = document.getElementById('dist-slider');
+    var distanceCheckbox = document.getElementById('dist-checkbox');
+    var distanceText = document.getElementById('dist-val');
+    var distanceLabel = document.getElementById('dist-label');
+    var distanceSlider = document.getElementById('dist-slider');
 
-        if ("@Model.DistanceEnabled" == "True") {
-            distanceCheckbox.setAttribute("checked", "true");
-            distanceLabel.classList.remove("text-muted");
-            distanceText.innerText = @Model.Distance + " km";
-            distanceSlider.removeAttribute('disabled');
-            distanceSlider.value = @Model.Distance;
-        }
-
-        function showDistance(event) {
-            distanceText.innerText = event.target.value + " km";
-        }
-
-        function toggleDistanceFilter() {
-            if (distanceSlider.hasAttribute('disabled')) {
-                distanceSlider.removeAttribute('disabled');
-                distanceLabel.classList.remove("text-muted");
-                distanceText.innerText = distanceSlider.value + " km";
-            } else {
-                distanceSlider.setAttribute("disabled", "disabled");
-                distanceLabel.classList.add("text-muted");
-                distanceText.innerText = "";
-            }
-        }
-</script>
+    if ("@Model.DistanceEnabled" == "True") {
+        distanceCheckbox.setAttribute("checked", "true");
+        distanceLabel.classList.remove("text-muted");
+        distanceText.innerText = @Model.Distance + " km";
+        distanceSlider.removeAttribute('disabled');
+        distanceSlider.value = @Model.Distance;
     }
+
+    function showDistance(event) {
+        distanceText.innerText = event.target.value + " km";
+    }
+
+    function toggleDistanceFilter() {
+        if (distanceSlider.hasAttribute('disabled')) {
+            distanceSlider.removeAttribute('disabled');
+            distanceLabel.classList.remove("text-muted");
+            distanceText.innerText = distanceSlider.value + " km";
+        } else {
+            distanceSlider.setAttribute("disabled", "disabled");
+            distanceLabel.classList.add("text-muted");
+            distanceText.innerText = "";
+        }
+    }
+</script>
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
-
-
-
-
-
-    <script type="text/javascript">
-        var distanceCheckbox = document.getElementById('dist-checkbox');
-        var distanceText = document.getElementById('dist-val');
-        var distanceLabel = document.getElementById('dist-label');
-        var distanceSlider = document.getElementById('dist-slider');
-
-
-        if ("@Model.DistanceEnabled" == "True") {
-            distanceCheckbox.setAttribute("checked", "true");
-            distanceLabel.classList.remove("text-muted");
-            distanceText.innerText = @Model.Distance + " km";
-            distanceSlider.removeAttribute('disabled');
-            distanceSlider.value = @Model.Distance;
-        }
-
-        function showDistance(event) {
-            distanceText.innerText = event.target.value + " km";
-        }
-
-        function toggleDistanceFilter() {
-            if (distanceSlider.hasAttribute('disabled')) {
-                distanceSlider.removeAttribute('disabled');
-                distanceLabel.classList.remove("text-muted");
-                distanceText.innerText = distanceSlider.value + " km";
-            } else {
-                distanceSlider.setAttribute("disabled", "disabled");
-                distanceLabel.classList.add("text-muted");
-                distanceText.innerText = "";
-            }
-        }
-    </script>
-
-
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer>
-    </script>
-}
