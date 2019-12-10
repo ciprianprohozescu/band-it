@@ -17,12 +17,14 @@ namespace Controllers
         UsersAccess usersAccess;
         ISkillController skillController;
         IApplicationController applicationController;
+
         public UserController()
         {
             usersAccess = new UsersAccess();
             skillController = new SkillController();
             applicationController = new ApplicationController();
         }
+
         public List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0)
         {
             var usersDB = usersAccess.Get(search);
@@ -56,24 +58,22 @@ namespace Controllers
 
         public void Add(User userLogic)
         {
-            var userAccess = new UsersAccess(ContextProvider.Instance.DB);
-            var userDB = userAccess.FindByUsername(userLogic.Username);
+            var userDB = usersAccess.FindByUsername(userLogic.Username);
             if(userDB == null)
             {
-                userDB = userAccess.FindByEmail(userLogic.Email);
+                userDB = usersAccess.FindByEmail(userLogic.Email);
                 if(userDB == null)
                 {
                     userLogic.Salt = StringCipher.RandomString();
                     //TODO: Move passphrase (and Google Maps API) to secure location
                     userLogic.Password = StringCipher.Encrypt(userLogic.Password + userLogic.Salt, "hello");
                     userDB = LogicToDB(userLogic);
-                    userAccess.Add(userDB);
+                    usersAccess.Add(userDB);
                 }
             }
         }
         public List<User> Get()
         {
-            var usersAccess = new UsersAccess(ContextProvider.Instance.DB);
             var userDB = usersAccess.Get("");
             var usersLogic = new List<User>();
 
@@ -86,14 +86,12 @@ namespace Controllers
         }
         public User GetByUsername(string username)
         {
-            var userAccess = new UsersAccess(ContextProvider.Instance.DB);
-            var userDB = userAccess.FindByUsername(username);
+            var userDB = usersAccess.FindByUsername(username);
             return DBToLogic(userDB);
         }
         public User GetByEmail(string email)
         {
-            var userAccess = new UsersAccess(ContextProvider.Instance.DB);
-            var userDB = userAccess.FindByEmail(email);
+            var userDB = usersAccess.FindByEmail(email);
             return DBToLogic(userDB);
         }
 
@@ -104,8 +102,7 @@ namespace Controllers
 
         public User GetById(int id)
         {
-            var userAccess = new UsersAccess(ContextProvider.Instance.DB);
-            var userDB = userAccess.FindByID(id);
+            var userDB = usersAccess.FindByID(id);
             return DBToLogic(userDB);
         }
 

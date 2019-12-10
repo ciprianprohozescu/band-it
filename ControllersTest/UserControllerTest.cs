@@ -64,7 +64,7 @@ namespace ControllersTest
         public static void Initialize(TestContext context) 
         {
             testHelpers = new TestHelpers();
-            userController = new UserController(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
+            userController = new UserController();
             db = new ModelsDB.BandItEntities();
 
             testHelpers.ClearData();

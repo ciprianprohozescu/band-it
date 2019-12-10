@@ -63,7 +63,7 @@ namespace ControllersTest
         {
             testHelpers = new TestHelpers();
             fileController = new FileController();
-            userController = new UserController(new UsersAccess(ContextProvider.Instance.DB), new SkillController());
+            userController = new UserController();
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();

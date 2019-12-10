@@ -13,9 +13,9 @@ namespace DataAccess
     {
         BandItEntities db;
 
-        public UsersAccess(BandItEntities bandItEntities)
+        public UsersAccess()
         {
-            this.db = bandItEntities;
+            db = ContextProvider.Instance.DB;
         }
 
         public List<User> Get(string search)

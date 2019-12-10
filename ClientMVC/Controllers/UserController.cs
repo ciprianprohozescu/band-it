@@ -16,7 +16,6 @@ namespace ClientMVC.Controllers
 {
     public class UserController : Controller
     {
-
         [HttpGet]
         public ActionResult Index(string search, double distance = -1)
         {

@@ -47,7 +47,7 @@ namespace DataAccessTest
         public static void Initialize(TestContext context)
         {
             testHelpers = new TestHelpers();
-            usersAccess = new UsersAccess(ContextProvider.Instance.DB);
+            usersAccess = new UsersAccess();
             db = ContextProvider.Instance.DB;
 
             testHelpers.ClearData();

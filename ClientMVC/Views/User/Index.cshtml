@@ -35,50 +35,43 @@
 
 <h3>Users</h3>
 
-<table class="table table-striped">
-    <tbody>
-        @if (Model.Users.Count() == 0)
-        {
-            <tr>
-                <td colspan="1">No users found.</td>
-            </tr>
-        }
-        else
-        {
-            foreach (var item in Model.Users)
-            {
-               
-                <div class="card">  
-                    <div class="card-body">
-                        <h3 style="color:darkblue">@item.FirstName @item.LastName </h3>
-                        <p></p>
-                        <p> <span style="color:dodgerblue ">Username: </span> @item.Username</p>
-                        <p> <span style="color:dodgerblue"> Email ID: </span> @item.Email</p>
-                        <span style="color:dodgerblue"> Description: </span> <p>  @item.Description</p>
-                        <p><span style="color:dodgerblue"> Skills:</span>@foreach (var skill in item.Skills) {<ul><li>@skill.Name</li></ul> } </p>
-                        <p>
-                            <button onclick="location.href = '@Url.Action("Show", new {id = item.ID})'" type="button" class="btn btn-primary">Show </button>
-                        </p>
-                    </div>
-                </div>
-
-            }
-        }
-
-    </tbody>
-</table>
+<div class="table table-striped">
+    @if (Model.Users.Count() == 0)
+    {
+        <p>No users found.</p>
+    }
+    else
+    {
+        foreach (var item in Model.Users)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <h3 style="color:darkblue">@item.FirstName @item.LastName </h3>
 
-@section styles{
-    <style>
+                    <p></p>
 
-        #map {
-            width: 100%;
+                    <p><span style="color:dodgerblue">Username: </span> @item.Username</p>
+
+                    <p><span style="color:dodgerblue"> Email ID: </span> @item.Email</p>
+
+                    <span style="color:dodgerblue"> Description: </span> <p>  @item.Description</p>
+
+                    <p>
+                        <span style="color:dodgerblue"> Skills:</span>@foreach (var skill in item.Skills)
+                        {<ul><li>@skill.Name</li></ul>}
+                    </p>
+
+                    <button onclick="location.href = '@Url.Action("Show", new {id = item.ID})'"
+                            type="button" class="btn btn-primary">Show</button>
+
+                </div>
+
+            </div>
         }
-    </style>
-}
+    }
+</div>
 
-
-
+@section scripts{
 <script type="text/javascript">
     var distanceCheckbox = document.getElementById('dist-checkbox');
     var distanceText = document.getElementById('dist-val');
@@ -110,5 +103,5 @@
     }
 </script>
 
-
 <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
+}

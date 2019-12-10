@@ -18,7 +18,10 @@
     </div>
 
     <div class="col-md-8">
-        <h2>@Model.User.Username <span class="text-muted" id="full-name">(@Model.User.FirstName @Model.User.LastName)</span></h2>
+        <h2>
+            <span class="mr-3">@Model.User.Username</span>
+            <span class="text-muted">@Model.User.FirstName @Model.User.LastName</span>
+        </h2>
         <div style="max-height: 30vh; overflow-y: scroll;">
             @Model.User.Description
         </div>
@@ -224,7 +227,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap"></script>
 
     <script type="text/javascript">
-        var fullName = document.getElementById('full-name');
         var formDelete = document.getElementById('form-delete');
 
         var lat = parseFloat(document.getElementById('marker-lat').value);
@@ -240,10 +242,6 @@
         if (@Session["ID"] != @Model.User.ID)
         {
             disableMap();
-        }
-
-        if ("@Model.User.FirstName" == "" && "@Model.User.LastName" == "") {
-            fullName.style.display = 'none';
         }
 
         function deleteClicked() {
