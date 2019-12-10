@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Models;
-using ModelsDB;
 using DataAccess;
 using UserLogic = Models.User;
-using UserDB = ModelsDB.User;
 using Controllers;
-using System.Linq;
 
 namespace ControllersTest
 {
@@ -172,6 +169,24 @@ namespace ControllersTest
 
             user = userController.LogIn("NewUser", "1234");
             Assert.IsNull(user);
+        }
+        [TestMethod]
+        public void SaveLocationTest()
+        {
+            var user = userController.GetByUsername("Ciprian1337");
+
+            user.Location = new LatLng();
+            user.Location.Latitude = 50;
+            user.Location.Longitude = 50;
+
+            userController.SaveLocation(user);
+
+            user = userController.GetByUsername("Ciprian1337");
+
+            #region Assert
+            Assert.AreEqual(50, user.Location.Latitude);
+            Assert.AreEqual(50, user.Location.Longitude);
+            #endregion
         }
 
         [TestMethod]

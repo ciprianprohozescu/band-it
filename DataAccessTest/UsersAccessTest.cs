@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
 using ModelsDB;
 using System.Linq;
+using Moq;
+using System.Linq.Expressions;
 
 namespace DataAccessTest
 {
@@ -190,6 +192,24 @@ namespace DataAccessTest
             userActual = usersAccess.FindByID(-5);
 
             Assert.IsNull(userActual);
+        }
+
+        [TestMethod]
+        public void SaveLocation()
+        {
+            var user = usersAccess.FindByUsername("Ciprian1337");
+
+            user.Latitude = 50;
+            user.Longitude = 50;
+
+            usersAccess.SaveLocation(user);
+
+            user = usersAccess.FindByUsername("Ciprian1337");
+
+            #region Assert
+            Assert.AreEqual(50, user.Latitude);
+            Assert.AreEqual(50, user.Longitude);
+            #endregion
         }
 
         [TestMethod]

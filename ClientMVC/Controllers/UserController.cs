@@ -10,33 +10,39 @@ using User = Models.User;
 
 using RestSharp;
 using Newtonsoft.Json;
+using Models;
 
 namespace ClientMVC.Controllers
 {
     public class UserController : Controller
     {
         [HttpGet]
-        public ActionResult Index(string search, double distance = -1, double markerLat = 0.0, double markerLng = 0.0)
+        public ActionResult Index(string search, double distance = -1)
         {
             if (Session["ID"] == null)
             {
                 return View("Error");
             }
 
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
+            int userId = (int)Session["ID"];
+            
             var model = new UserIndex();
+
+            var userRequest = new RestRequest($"user/{userId}", Method.GET);
+            model.User = JsonConvert.DeserializeObject<User>(client.Execute(userRequest).Content);
 
             model.Search = search;
 
-            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest("user", Method.GET);
-
             request.AddParameter("search", search);
 
             if (distance > -1)
             {
                 request.AddParameter("distance", distance);
-                request.AddParameter("markerLat", markerLat);
-                request.AddParameter("markerLng", markerLng);
+                request.AddParameter("markerLat", model.User.Location.Latitude);
+                request.AddParameter("markerLng", model.User.Location.Longitude);
 
                 model.Distance = distance;
                 model.DistanceEnabled = true;
@@ -52,7 +58,10 @@ namespace ClientMVC.Controllers
             model.Users = new List<User>();
             foreach (var user in users)
             {
-                model.Users.Add(user);
+                if (user.ID != model.User.ID)
+                {
+                    model.Users.Add(user);
+                }
             }
 
             return View(model);
@@ -177,6 +186,28 @@ namespace ClientMVC.Controllers
 
             var fileController = new FileController();
             fileController.SaveFile("user", id, type, file);
+
+            return RedirectToAction($"Show/{id}");
+        }
+
+        [HttpPost]
+        public ActionResult SaveLocation(int id, double lng, double lat)
+        {
+            if (Session["ID"] == null || (int)Session["ID"] != id)
+            {
+                return View("Error");
+            }
+
+            User user = new User();
+            user.ID = id;
+            user.Location = new LatLng(lat, lng);
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
+            var request = new RestRequest("user/savelocation", Method.PUT);
+            request.AddJsonBody(user);
+
+            client.Execute(request);
 
             return RedirectToAction($"Show/{id}");
         }

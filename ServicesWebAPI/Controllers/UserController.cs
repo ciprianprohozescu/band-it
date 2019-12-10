@@ -7,6 +7,7 @@ using System.Web.Http;
 using Controllers;
 using UserControllerLogic = Controllers.UserController;
 using Models;
+using DataAccess;
 
 namespace ServicesWebAPI.Controllers
 {
@@ -93,6 +94,13 @@ namespace ServicesWebAPI.Controllers
         public void DeleteFile(int id)
         {
             fileController.DeleteFile("user", id);
+        }
+
+        [Route("api/user/savelocation")]
+        [HttpPut]
+        public void SaveLocation(User user)
+        {
+            userController.SaveLocation(user);
         }
     }
 }

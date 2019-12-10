@@ -1,6 +1,7 @@
 ﻿using ModelsDB;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,6 +81,12 @@ namespace DataAccess
         {
             var user = FindByID(id);
             user.ProfilePicture = fileName;
+        }
+        public void SaveLocation(User user)
+        {
+            var validUser = db.Users.SingleOrDefault(u => u.ID == user.ID);
+            validUser.Latitude = user.Latitude;
+            validUser.Longitude = user.Longitude;
             db.SaveChanges();
         }
     }
