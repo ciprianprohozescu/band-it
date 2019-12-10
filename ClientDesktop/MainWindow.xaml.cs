@@ -65,10 +65,10 @@ namespace ClientDesktop
             UserShow userShow = new UserShow(this, user);
             Content = userShow;
         }
-        public void GoToCreate()
+        public void GoToBandCreate()
         {
-            CreateBand createBand = new CreateBand(this);
-            Content = createBand;
+            BandForm bandForm = new BandForm(this, new Band());
+            Content = bandForm;
         }
 
         public void GoToBandEdit(Band band)

@@ -17,10 +17,10 @@ namespace ServicesWebAPI.Controllers
         {
             bandController = new BandControllerLogic();
         }
+
         [Route("api/band")]
         public List<Band> Get(string search = "", double distance = -1, double markerLat = 0, double markerLng = 0)
         {
-            IBandController bandController = new BandControllerLogic();
             if (distance > -1)
             {
                 return bandController.Get(search, distance, markerLat, markerLng);
@@ -31,7 +31,6 @@ namespace ServicesWebAPI.Controllers
         [Route("api/band/{id}")]
         public Band Get(int id)
         {
-            IBandController bandController = new BandControllerLogic();
             return bandController.GetById(id);
         }
 
@@ -39,23 +38,18 @@ namespace ServicesWebAPI.Controllers
         [HttpPost]
         public Band Update(Band band)
         {
-            IBandController bandController = new BandControllerLogic();
-            var newBand = bandController.Update(band);
-
-            return newBand;
+            return bandController.Update(band);
         }
 
         [Route("api/band/register")]
-        public void Post(Band band)
+        public Band Post(Band band)
         {
-            IBandController bandController = new BandControllerLogic();
-            bandController.Add(band);
+            return bandController.Add(band);
         }
 
         [Route("api/band/name")]
         public Band GetByName(string name)
         {
-            IBandController bandController = new BandControllerLogic();
             return bandController.GetByName(name);
         }
     }

@@ -146,7 +146,6 @@
     <Compile Include="Models\ApplicationForm.cs" />
     <Compile Include="Models\BandShow.cs" />
     <Compile Include="Models\HomeIndex.cs" />
-    <Compile Include="Models\BandShow.cs" />
     <Compile Include="Models\UserForm.cs" />
     <Compile Include="Models\UserIndex.cs" />
     <Compile Include="Models\UserShow.cs" />
@@ -291,9 +290,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Application\" />
     <Folder Include="Content\Uploads\Bands\" />
     <Folder Include="Content\Uploads\Users\" />
+    <Folder Include="Views\Application\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

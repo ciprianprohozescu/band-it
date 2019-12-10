@@ -87,66 +87,23 @@ namespace ClientMVC.Controllers
                 return View("Error");
             }
 
-            var model = new BandForm();
+            ViewBag.Title = $"Create a new band";
 
-            return View(model);
+            var model = new BandForm();
+            model.Action = $"register";
+            model.Band = new Band();
+
+            return View("Form", model);
         }
 
-        public ActionResult Show()
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
             if (Session["ID"] == null)
             {
                 return View("Error");
             }
 
-            var model = new BandShow();
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(BandForm band)
-        {
-            if (ModelState.IsValid)
-            {
-                var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-                var request = new RestRequest("/band/register", Method.POST);
-                request.AddJsonBody(MVCToLogic(band));
-                var response = client.Execute(request);
-                Console.WriteLine(request.ToString());
-                return RedirectToAction("Index", "Band");
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        public JsonResult DoesBandNameExist(string Name)
-        {
-            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest("band/name", Method.GET);
-            request.AddParameter("name", Name);
-
-
-            var content = client.Execute(request).Content;
-            var band = JsonConvert.DeserializeObject<Band>(content);
-            return Json(band == null);
-
-        }
-
-        private Band MVCToLogic(BandForm bandMVC)
-        {
-            var bandLogic = new Band();
-
-            bandLogic.Name = bandMVC.Name;
-           
-            return bandLogic;
-        }
-
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"band/{id}", Method.GET);
             var content = client.Execute(request).Content;
@@ -168,8 +125,46 @@ namespace ClientMVC.Controllers
         }
 
         [HttpPost]
+        public ActionResult Register(string name, string description, string inviteMessage)
+        {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
+            var band = new Band();
+            band.Name = name;
+            band.Description = description;
+            band.InviteMessage = inviteMessage;
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
+            var request = new RestRequest("/band/register", Method.POST);
+            request.AddJsonBody(band);
+
+            var content = client.Execute(request).Content;
+            var responseBand = JsonConvert.DeserializeObject<Band>(content);
+
+            if (responseBand.NameError == "")
+            {
+                return RedirectToAction("Index", "Band");
+            }
+
+            var model = new BandForm();
+            model.Action = $"register";
+            model.Band = responseBand;
+
+            return View("Form", model);
+        }
+
+        [HttpPost]
         public ActionResult Update(int id, long rowVersion, string name, string description, string inviteMessage)
         {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
             var band = new Band();
             band.ID = id;
             band.RowVersion = rowVersion;

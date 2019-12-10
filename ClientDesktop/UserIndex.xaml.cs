@@ -25,7 +25,6 @@ namespace ClientDesktop
     public partial class UserIndex : Page
     {
         MainWindow mainWindow;
-        private CreateBand createBand;
 
         public UserIndex(MainWindow mainWindow)
         {
