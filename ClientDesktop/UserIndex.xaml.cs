@@ -25,6 +25,7 @@ namespace ClientDesktop
     public partial class UserIndex : Page
     {
         MainWindow mainWindow;
+
         public UserIndex(MainWindow mainWindow)
         {
             InitializeComponent();

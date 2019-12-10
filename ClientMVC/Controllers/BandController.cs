@@ -80,9 +80,30 @@ namespace ClientMVC.Controllers
             return View(model);
         }
 
+        public ActionResult Create()
+        {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
+            ViewBag.Title = $"Create a new band";
+
+            var model = new BandForm();
+            model.Action = $"register";
+            model.Band = new Band();
+
+            return View("Form", model);
+        }
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
             var request = new RestRequest($"band/{id}", Method.GET);
             var content = client.Execute(request).Content;
@@ -104,8 +125,46 @@ namespace ClientMVC.Controllers
         }
 
         [HttpPost]
+        public ActionResult Register(string name, string description, string inviteMessage)
+        {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
+            var band = new Band();
+            band.Name = name;
+            band.Description = description;
+            band.InviteMessage = inviteMessage;
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
+            var request = new RestRequest("/band/register", Method.POST);
+            request.AddJsonBody(band);
+
+            var content = client.Execute(request).Content;
+            var responseBand = JsonConvert.DeserializeObject<Band>(content);
+
+            if (responseBand.NameError == "")
+            {
+                return RedirectToAction("Index", "Band");
+            }
+
+            var model = new BandForm();
+            model.Action = $"register";
+            model.Band = responseBand;
+
+            return View("Form", model);
+        }
+
+        [HttpPost]
         public ActionResult Update(int id, long rowVersion, string name, string description, string inviteMessage)
         {
+            if (Session["ID"] == null)
+            {
+                return View("Error");
+            }
+
             var band = new Band();
             band.ID = id;
             band.RowVersion = rowVersion;

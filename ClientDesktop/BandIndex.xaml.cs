@@ -133,5 +133,10 @@ namespace ClientDesktop
         {
             mainWindow.GoToUserIndex();
         }
+
+        private void CreateBand_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.GoToBandCreate();
+        }
     }
 }

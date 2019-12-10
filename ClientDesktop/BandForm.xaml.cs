@@ -34,7 +34,8 @@ namespace ClientDesktop
             this.mainWindow = mainWindow;
             this.band = band;
 
-            title.Content = $"Edit {band.Name}";
+            title.Content = band.ID != 0 ? $"Edit {band.Name}" : "Create a new band";
+
             nameInput.Text = band.Name;
             descriptionInput.Text = band.Description;
             inviteMessageInput.Text = band.InviteMessage;
@@ -55,11 +56,24 @@ namespace ClientDesktop
             band.InviteMessage = inviteMessageInput.Text;
 
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest("band/update", Method.POST);
+            var request = new RestRequest(band.ID != 0 ? "band/update" : "band/register", Method.POST);
             request.AddJsonBody(band);
 
             var newBand = JsonConvert.DeserializeObject<Band>(client.Execute(request).Content);
-            mainWindow.GoToBandEdit(newBand);
+            if (band.ID != 0)
+            {
+                mainWindow.GoToBandEdit(newBand);
+            } else
+            {
+                if (newBand.NameError == "")
+                {
+                    mainWindow.GoToBandIndex();
+                } else
+                {
+                    mainWindow.GoToBandEdit(newBand);
+                }
+            }
+            
         }
     }
 }
