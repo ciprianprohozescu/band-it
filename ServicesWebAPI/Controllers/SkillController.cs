@@ -21,24 +21,20 @@ namespace ServicesWebAPI.Controllers
         [Route("api/skill")]
         public List<Skill> Get()
         {
-            ISkillController skillController = new SkillControllerLogic();
             return skillController.Get();
         }
 
         [Route("api/skill/add")]
         [HttpPut]
-        public void Add(Skill skill)
+        public void Add(User user)
         {
-            ISkillController skillController = new SkillControllerLogic();
-            skillController.Add(skill);
+            skillController.Add(user);
         }
 
-        [Route("api/skill/delete/{id}")]
-        public Skill Delete(int id)
+        [Route("api/skill/delete")]
+        public void Delete(User user)
         {
-            skillController.Delete(id);
-
-            return skillController.GetById(id);
+            skillController.Delete(user);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ControllersTest
     {
         static TestHelpers testHelpers;
         static ISkillController skillController;
-        static ModelsDB.BandItEntities db;
+        static IUserController userController;
 
         private TestContext testContextInstance;
 
@@ -35,7 +35,7 @@ namespace ControllersTest
         {
             testHelpers = new TestHelpers();
             skillController = new SkillController();
-            db = new ModelsDB.BandItEntities();
+            userController = new UserController();
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -64,11 +64,17 @@ namespace ControllersTest
         [TestMethod]
         public void DeleteTest()
         {
-            var skill = skillController.GetByName("Vocalist");
-            skillController.Delete(skill.ID);
-            var skill2 = skillController.GetByName("Vocalist");
+            var user = userController.Get().First();
+            var skill = skillController.Get().First();
 
-            Assert.IsNull(skill2);
+            user.Skills.Add(skill);
+            skillController.Add(user);
+
+            skillController.Delete(user);
+
+            user = userController.Get().First();
+
+            Assert.AreEqual(0, user.Skills.Count);
         }
 
         [ClassCleanup]

@@ -12,22 +12,47 @@ namespace ClientMVC.Controllers
     public class SkillController : Controller
     {
         [HttpPost]
-        public ActionResult Add(string name, int id)
+        public ActionResult Add(int userID, int skillID)
         {
             var user = new User();
-            user.ID = id;
+            user.ID = userID;
+            user.Skills = new List<Skill>();
 
-            return null;
+            var skill = new Skill();
+            skill.ID = skillID;
+
+            user.Skills.Add(skill);
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+
+            var request = new RestRequest($"skill/add", Method.PUT);
+            request.AddJsonBody(user);
+
+            var response = client.Execute(request);
+
+            return RedirectToAction("Show", "User", new { id = userID });
         }
 
-        [HttpGet]
-        public ActionResult Delete(int id)
+        [HttpPost]
+        public ActionResult Delete(int userID, int skillID)
         {
+            var user = new User();
+            user.ID = userID;
+            user.Skills = new List<Skill>();
+
+            var skill = new Skill();
+            skill.ID = skillID;
+
+            user.Skills.Add(skill);
+
             var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"skill/delete/{id}", Method.DELETE);
-            client.Execute(request);
-            
-            return RedirectToAction($"Show/{id}");
+
+            var request = new RestRequest($"skill/delete", Method.DELETE);
+            request.AddJsonBody(user);
+
+            var response = client.Execute(request);
+
+            return RedirectToAction("Show", "User", new { id = userID });
         }
     }
 }

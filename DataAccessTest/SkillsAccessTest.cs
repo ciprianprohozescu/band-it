@@ -96,11 +96,17 @@ namespace DataAccessTest
         [TestMethod]
         public void DeleteTest()
         {
-            var skill = skillsAccess.GetByName("Vocalist");
-            skillsAccess.Delete(skill.ID);
-            var skill2 = skillsAccess.GetByName("Vocalist");
+            var user = db.Users.FirstOrDefault();
+            var skill = db.Skills.FirstOrDefault();
 
-            Assert.IsNull(skill2);
+            user.Skills.Add(skill);
+            db.SaveChanges();
+
+            skillsAccess.Delete(user);
+
+            user = db.Users.FirstOrDefault();
+
+            Assert.AreEqual(0, user.Skills.Count);
         }
 
         [ClassCleanup]

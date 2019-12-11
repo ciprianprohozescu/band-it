@@ -76,6 +76,7 @@
   <ItemGroup>
     <Content Include="Scripts\create_tables.sql" />
     <Content Include="Scripts\insert_data.sql" />
+    <Content Include="Scripts\insert_skills.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -70,7 +70,23 @@
 
             <div class="col-md-6">
                 <div>
-                    <h4>Skills</h4>
+                    <div class="row">
+                        <h4 class="mr-2 my-auto">Skills</h4>
+
+                        @if ((int)Session["ID"] == Model.User.ID)
+                        {
+                            <form action="~/skill/add" method="post" class="form-inline">
+                                <input type="hidden" name="userID" value="@Model.User.ID" />
+                                <select class="custom-select mr-2" name="skillID">
+                                    @foreach (var item in Model.Skills)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                                <button type="submit" class="btn btn-success"><i class="fas fa-guitar"></i> Add skill</button>
+                            </form>
+                        }
+                    </div>
 
                     @if (Model.User.Skills.Count() == 0)
                     {
@@ -78,23 +94,21 @@
                     }
                     else
                     {
-                        <ul>
-                            @foreach (var item in Model.User.Skills)
-                            {
-                                <li>@item.Name</li>
-                            }
-                        </ul>
+                        foreach (var item in Model.User.Skills)
+                        {
+                            <div class="row">
+                                <span class="my-auto">@item.Name</span>
+                                @if ((int)Session["ID"] == Model.User.ID)
+                                {
+                                    <form class="float-right" action="~/skill/delete" method="post">
+                                        <input type="hidden" name="userID" value="@Model.User.ID" />
+                                        <input type="hidden" name="skillID" value="@item.ID" />
+                                        <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                                    </form>
+                                }
+                            </div>
+                        }
                     }
-                    <p>
-                        <select>
-                            @foreach (var item in Model.Skills)
-                            {
-                                <option value="name">@item.Name</option>
-                            }
-                        </select>
-                        <input type="button" class="btn btn-success" value="Add skills" />
-                        <input type="button" class="btn btn-danger" value="Remove skills" />
-                    </p>
                 </div>
             </div>
         </div>
@@ -137,43 +151,43 @@
                 </div>
             </div>
         }
-        <div class="col-md-3">
-            <div>
-                <h4 class="mr-2">Music</h4>
-                @if ((int)Session["ID"] == Model.User.ID)
+    </div>
+    <div class="col-md-3">
+        <div>
+            <h4 class="mr-2">Music</h4>
+            @if ((int)Session["ID"] == Model.User.ID)
+            {
+                <form action="~/user/savefile/@Model.User.ID"
+                      method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" />
+                    <input type="hidden" name="type" value="music" />
+                    <button type="submit" class="btn-sm btn-primary mt-1"><i class="fas fa-plus"></i> Add music</button>
+                </form>
+            }
+            <div style="overflow-y: scroll; overflow-x: hidden">
+                @if (Model.Music.Count == 0)
                 {
-                    <form action="~/user/savefile/@Model.User.ID"
-                          method="post" enctype="multipart/form-data">
-                        <input type="file" name="file" />
-                        <input type="hidden" name="type" value="music" />
-                        <button type="submit" class="btn-sm btn-primary mt-1"><i class="fas fa-plus"></i> Add music</button>
-                    </form>
+                    <p>No music found.</p>
                 }
-                <div style="overflow-y: scroll; overflow-x: hidden">
-                    @if (Model.Music.Count == 0)
-                    {
-                        <p>No music found.</p>
-                    }
-                    @foreach (var file in Model.Music)
-                    {
-                        <div class="row">
-                            <audio controls class="mt-2 w-75">
-                                <source src="@file.Name" class="mt-2" />
-                                Your browser does not support this audio format.
-                            </audio>
+                @foreach (var file in Model.Music)
+                {
+                    <div class="row">
+                        <audio controls class="mt-2 w-75">
+                            <source src="@file.Name" class="mt-2" />
+                            Your browser does not support this audio format.
+                        </audio>
 
-                            @if ((int)Session["ID"] == Model.User.ID)
-                            {
-                                <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
-                                    <input type="hidden" name="userID" value="@Model.User.ID" />
-                                    <input type="hidden" name="fileID" value="@file.ID" />
-                                    <input type="hidden" name="fileName" value="@file.Name" />
-                                    <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
-                                </form>
-                            }
-                        </div>
-                    }
-                </div>
+                        @if ((int)Session["ID"] == Model.User.ID)
+                        {
+                            <form class="float-right" action="~/user/deletefile" method="post" onsubmit="return deleteFileClicked();">
+                                <input type="hidden" name="userID" value="@Model.User.ID" />
+                                <input type="hidden" name="fileID" value="@file.ID" />
+                                <input type="hidden" name="fileName" value="@file.Name" />
+                                <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                            </form>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>

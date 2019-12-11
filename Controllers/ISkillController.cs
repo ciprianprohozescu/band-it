@@ -14,7 +14,7 @@ namespace Controllers
         Skill GetByName(string name);
         Skill DBToLogic(SkillDB skillDB);
         SkillDB LogicToDB(Skill skill);
-        void Add(Skill skill);
-        void Delete(int id);
+        void Add(User user);
+        void Delete(User user);
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using DataAccess;
 using SkillDB = ModelsDB.Skill;
+using UserDB = ModelsDB.User;
 using Models;
 
 namespace Controllers
@@ -39,14 +40,21 @@ namespace Controllers
             var skillDB = skillAccess.GetByName(name);
             return DBToLogic(skillDB);
         }
-        public void Add(Skill skill)
+        public void Add(User user)
         {
-            var skillDB = LogicToDB(skill);
-            skillsAccess.Add(skillDB);
+            var userDB = new UserDB();
+            userDB.ID = user.ID;
+            userDB.Skills.Add(LogicToDB(user.Skills[0]));
+
+            skillsAccess.Add(userDB);
         }
-        public void Delete(int id)
+        public void Delete(User user)
         {
-            skillsAccess.Delete(id);
+            var userDB = new UserDB();
+            userDB.ID = user.ID;
+            userDB.Skills.Add(LogicToDB(user.Skills[0]));
+
+            skillsAccess.Delete(userDB);
         }
 
         public Skill DBToLogic (SkillDB skillDB)
