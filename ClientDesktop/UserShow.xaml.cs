@@ -50,12 +50,7 @@ namespace ClientDesktop
 
         private void Edit_Button_Click(object sender, RoutedEventArgs e)
         {
-            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
-            var request = new RestRequest($"user/update", Method.POST);
-            request.AddJsonBody(user);
-
-            var newUser = JsonConvert.DeserializeObject<User>(client.Execute(request).Content);
-            mainWindow.GoToUserEdit(newUser);
+            mainWindow.GoToUserEdit(user);
         }
     }
 }

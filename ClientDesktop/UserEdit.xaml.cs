@@ -55,8 +55,15 @@ namespace ClientDesktop
             var request = new RestRequest($"user/update", Method.POST);
             request.AddJsonBody(user);
 
-            var newUser = JsonConvert.DeserializeObject<User>(client.Execute(request).Content);
-            mainWindow.GoToUserEdit(newUser);
+            var responseUser = JsonConvert.DeserializeObject<User>(client.Execute(request).Content);
+
+            if (responseUser.UsernameError != "" || responseUser.EmailError != "" || responseUser.PasswordError != "")
+            {
+                mainWindow.GoToUserEdit(responseUser);
+            } else
+            {
+                mainWindow.GoToUserIndex();
+            }
         }
 
         private void Back_Button_Click(object sender, RoutedEventArgs e)

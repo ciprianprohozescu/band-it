@@ -215,7 +215,7 @@ namespace ClientMVC.Controllers
             var content = client.Execute(request).Content;
             var responseUser = JsonConvert.DeserializeObject<User>(content);
 
-            if (responseUser.UsernameError != "" || responseUser.EmailError != "")
+            if (responseUser.UsernameError != "" || responseUser.EmailError != "" || responseUser.PasswordError != "")
             {
                 var model = new UserEdit();
                 model.User = responseUser;
