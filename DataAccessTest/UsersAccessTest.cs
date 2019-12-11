@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
 using ModelsDB;
 using System.Linq;
+using Moq;
+using System.Linq.Expressions;
 
 namespace DataAccessTest
 {
@@ -193,11 +195,50 @@ namespace DataAccessTest
         }
 
         [TestMethod]
+        public void SaveLocation()
+        {
+            var user = usersAccess.FindByUsername("Ciprian1337");
+
+            user.Latitude = 50;
+            user.Longitude = 50;
+
+            usersAccess.SaveLocation(user);
+
+            user = usersAccess.FindByUsername("Ciprian1337");
+
+            #region Assert
+            Assert.AreEqual(50, user.Latitude);
+            Assert.AreEqual(50, user.Longitude);
+            #endregion
+        }
+
+        [TestMethod]
         public void UpdateProfilePictureTest()
         {
             usersAccess.UpdateProfilePicture(usersAccess.FindByUsername("Andrei1337").ID, "newpic.jpg");
 
             Assert.AreEqual("newpic.jpg", usersAccess.FindByUsername("Andrei1337").ProfilePicture);
+        }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var user = usersAccess.Get("")[0];
+            user.Username = "Marean99";
+            user.FirstName = "Marian";
+            user.LastName = "Dobra";
+            user.Description = "I like music";
+            user.Email = "marian@email.com";
+            user.Password = "12345";
+
+            usersAccess.Update(user);
+
+            Assert.AreEqual("Marean99", user.Username);
+            Assert.AreEqual("Marian", user.FirstName);
+            Assert.AreEqual("Dobra", user.LastName);
+            Assert.AreEqual("I like music", user.Description);
+            Assert.AreEqual("marian@email.com", user.Email);
+            Assert.AreEqual("12345", user.Password);
         }
 
         [ClassCleanup]

@@ -17,6 +17,8 @@ namespace DataAccess
         }
         public void ClearData()
         {
+            db.Applications.RemoveRange(db.Applications.ToList());
+            db.BandUsers.RemoveRange(db.BandUsers.ToList());
             db.Users.RemoveRange(db.Users.ToList());
             db.Skills.RemoveRange(db.Skills.ToList());
             db.Genres.RemoveRange(db.Genres.ToList());
@@ -30,8 +32,8 @@ namespace DataAccess
 
             user.Username = "Andrei1337";
             user.Email = "andrei@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
+            user.Password = "RLSXJIskOm9BkzRcyK9p0y3CiO9psUMjxOxqo4/lpAbrBWgyZUPC4PKzb7fWJECZMTrtMS9ro7MDpCruzJeVoHv5urOrP/VKnijI6pixPfx0ujk8XKGzWE4aUdmSA7gB";
+            user.Salt = "GscAi";
             user.FirstName = "Andrei";
             user.LastName = "Mataoanu";
             user.Latitude = (decimal)57.006620;
@@ -43,8 +45,8 @@ namespace DataAccess
 
             user.Username = "Ciprian1337";
             user.Email = "ciprian@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
+            user.Password = "RLSXJIskOm9BkzRcyK9p0y3CiO9psUMjxOxqo4/lpAbrBWgyZUPC4PKzb7fWJECZMTrtMS9ro7MDpCruzJeVoHv5urOrP/VKnijI6pixPfx0ujk8XKGzWE4aUdmSA7gB";
+            user.Salt = "GscAi";
             user.FirstName = "Ciprian";
             user.LastName = "Prohozescu";
             user.Latitude = (decimal)52.006620;
@@ -56,8 +58,8 @@ namespace DataAccess
 
             user.Username = "Radu1337";
             user.Email = "radu@gmail.com";
-            user.Password = "1234";
-            user.Salt = "sgsefwer";
+            user.Password = "RLSXJIskOm9BkzRcyK9p0y3CiO9psUMjxOxqo4/lpAbrBWgyZUPC4PKzb7fWJECZMTrtMS9ro7MDpCruzJeVoHv5urOrP/VKnijI6pixPfx0ujk8XKGzWE4aUdmSA7gB";
+            user.Salt = "GscAi";
             user.FirstName = "Radu";
             user.LastName = "Matusa";
             user.Latitude = (decimal)53.003310;
@@ -113,6 +115,17 @@ namespace DataAccess
             genre.Name = "Jazz";
 
             db.Genres.Add(genre);
+
+            db.SaveChanges();
+
+            var application = new Application();
+            application.Message = "This is the messege";
+            application.Sent = DateTime.Now;
+
+            user.Applications.Add(application);
+            band.Applications.Add(application);
+
+            db.Applications.Add(application);
 
 
             db.SaveChanges();

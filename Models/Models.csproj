@@ -56,7 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
     <Compile Include="Band.cs" />
+    <Compile Include="Errors.cs" />
+    <Compile Include="BandUser.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="File.cs" />
     <Compile Include="LatLng.cs" />

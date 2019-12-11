@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,5 +14,6 @@ namespace ClientMVC.Models
         public double Distance { get; set; }
         public bool DistanceEnabled { get; set; }
         public List<User> Users { get; set; }
+        public User User { get; set; }
     }
 }

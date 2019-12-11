@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Models;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace ClientDesktop
     public partial class UserShow : Page
     {
         MainWindow mainWindow;
-        public User user;
+        User user;
 
         public UserShow(MainWindow mainWindow, User user)
         {
@@ -45,6 +46,11 @@ namespace ClientDesktop
         private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.GoToUserIndex();
+        }
+
+        private void Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.GoToUserEdit(user);
         }
     }
 }

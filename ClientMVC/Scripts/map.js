@@ -13,6 +13,13 @@ function initMap() {
     });
 }
 
+function initMap(xlat, xlng) {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: xlat, lng: xlng },
+        zoom: 8
+    });
+}
+
 function initMarkerMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: mapCenter.lat, lng: mapCenter.lng },
@@ -43,9 +50,6 @@ function initMarkerMap() {
         }
 
         markerLocation();
-        if (previousLocation.lat) {
-            showDistanceToPrevious();
-        }
     });
 }
 
@@ -57,4 +61,29 @@ function markerLocation() {
         document.getElementById('marker-lat').value = currentLocation.lat();
         document.getElementById('marker-lng').value = currentLocation.lng();
     }
+
+    var saveButton = document.getElementById('save-location');
+
+    if (saveButton) {
+        saveButton.disabled = false;
+        saveButton.classList.remove('btn-secondary');
+        saveButton.classList.add('btn-primary');
+    }
+}
+
+
+
+function createMarkerInCenter() {
+    marker = new google.maps.Marker({
+        position: mapCenter,
+        map: map,
+        draggable: true
+    });
+
+    map.setCenter(mapCenter);
+}
+
+function disableMap() {
+    google.maps.event.clearListeners(map);
+    marker.setDraggable(false);
 }

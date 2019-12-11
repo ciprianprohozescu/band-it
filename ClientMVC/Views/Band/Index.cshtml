@@ -1,7 +1,5 @@
 ﻿@model ClientMVC.Models.BandIndex
 
-
-
 <h1> Find bands </h1>
 
 @{
@@ -37,13 +35,13 @@
 
 <h3>Bands</h3>
 <style>
+
     table, tr, td, th {
         border: 2px solid black;
     }
 
-    tr{
-        cursor:pointer;
-        
+    tr {
+        cursor: pointer;
     }
 </style>
 <table class="table table-striped">
@@ -58,19 +56,53 @@
         {
             foreach (var item in Model.Bands)
             {
-               
-                <tr onclick="location.href = '@Url.Action("Show", new {id = item.ID})'">
-                    <td>
-                        <b><Span style="color:red">@item.Name </Span></b>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h3 style="color:darkblue">@item.Name </h3>
                         <p></p>
-                        <span style="color:orangered"> Description: </span> <p>  @item.Description</p>
-                        <p><span style="color:orangered"> Genre:</span>@foreach (var genre in item.Genres) {<ul><li>@genre.Name</li></ul> } </p>
-                       
-                    </td>
-                    <td align="center">
-                        <p> @item.ProfilePicture</p>
-                    </td>
-                </tr>
+                        <span style="color:dodgerblue"> Description: </span> <p>  @item.Description</p>
+                        <p>
+                            <span style="color:dodgerblue"> Genre:</span>@foreach (var genre in item.Genres)
+                            {<ul><li>@genre.Name</li></ul>}
+                        </p>
+                        <div class="row">
+                            <p>
+                                <button onclick="location.href = '@Url.Action("Show", new {id = item.ID})'" type="button" class="btn btn-primary mr-2">Show </button>
+                            </p>
+                            @{
+                                var i = 0;
+                                
+                                foreach(var bandUser in item.BandUsers)
+                                {
+                                    if(bandUser.BandID == item.ID && bandUser.UserID == Model.User.ID)
+                                    {
+                                        i--;
+                                    }
+                                }
+                                foreach (var application in item.Applications)
+                                {
+                                    if (application.UserID != Model.User.ID)
+                                    {
+                                        i++;
+                                    }
+                                }
+                                if (i == item.Applications.Count)
+                                {
+
+                                    <form class="form-inline" action="~/application/apply" method="post" name="frm" onsubmit="return checkMessage();">
+                                        <input type="hidden" name="userID" value="@Session["ID"]" />
+                                        <input type="hidden" name="bandID" value="@item.ID" />
+                                        <input type="hidden" name="message" id="message" value="" />
+                                        <p>
+                                            <button type="submit" class="btn btn-primary" onclick="setMessage()">Apply</button>
+                                        </p>
+                                    </form>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
 
             }
         }
@@ -80,11 +112,27 @@
 
 @section scripts{
     <style>
+
         #map {
             height: 500px;
             width: 100%;
         }
     </style>
+
+    <script type="text/javascript">
+        function setMessage() {
+            var messageInput = document.getElementById("message");
+            var apply = prompt("Enter your message");
+            if (!apply) {
+                return;
+            }
+            messageInput.value = apply;
+        }
+
+        function checkMessage() {
+            return document.getElementById("message").value != "";
+        }
+    </script>
 
     <script src="~/Scripts/map.js"></script>
 
@@ -117,9 +165,11 @@
                 distanceText.innerText = "";
             }
         }
+
+
     </script>
 
-   
+
 
     <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
 }

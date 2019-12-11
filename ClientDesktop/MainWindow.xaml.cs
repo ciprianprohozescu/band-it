@@ -65,6 +65,29 @@ namespace ClientDesktop
             UserShow userShow = new UserShow(this, user);
             Content = userShow;
         }
+        public void GoToBandCreate()
+        {
+            BandForm bandForm = new BandForm(this, new Band());
+            Content = bandForm;
+        }
+
+        public void GoToBandEdit(Band band)
+        {
+            BandForm bandForm = new BandForm(this, band);
+            Content = bandForm;
+        }
+
+        public void GoToBandShow(Band band)
+        {
+            BandShow bandShow = new BandShow(this, band);
+            Content = bandShow;
+        }
+
+        public void GoToUserEdit(User user)
+        {
+            UserEdit userEdit = new UserEdit(this, user);
+            Content = userEdit;
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -84,8 +107,9 @@ namespace ClientDesktop
             var response = client.Execute(request);
 
             GoToLogin();    
-        }
-
+        }
+
+
         private void txtUser_SelectionChanged(object sender, RoutedEventArgs e)
         {
             string Username = txtUser.Text;

@@ -3,6 +3,8 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccess;
+using BandLogic = Models.Band;
+using BandDB = ModelsDB.Band;
 using Controllers;
 using ModelsDB;
 
@@ -16,7 +18,6 @@ namespace ControllersTest
     {
         static TestHelpers testHelpers;
         static IBandController bandController;
-        static BandItEntities db;
 
         private TestContext testContextInstance;
 
@@ -41,7 +42,6 @@ namespace ControllersTest
         {
             testHelpers = new TestHelpers();
             bandController = new BandController();
-            db = new BandItEntities();
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -90,6 +90,65 @@ namespace ControllersTest
             Assert.AreEqual(1, bands.Count);
 
             Assert.AreEqual("Poleyn", bands[0].Name);
+            #endregion
+        }
+
+        [TestMethod]
+        public void GetByName()
+        {
+            var band = bandController.GetByName("Poylen");
+        }
+
+        [TestMethod]
+        public void GetByDistanceTest()
+        {
+            var distance = 75.0;
+            var marker = new Models.LatLng(55.708916, 12.483776);
+
+            List<BandLogic> bands = bandController.Get("", distance, marker.Latitude, marker.Longitude);
+
+            #region Assert
+            Assert.AreEqual(1, bands.Count);
+            Assert.AreEqual("LaLaLa", bands[0].Name);
+            #endregion
+        }
+
+        [TestMethod]
+        public void GetByIDTest()
+        {
+            var id = bandController.Get("Pol")[0].ID;
+            var band = bandController.GetById(id);
+
+            #region Assert
+            Assert.AreEqual("Poleyn", band.Name);
+            Assert.AreEqual("This is the description of Poleyn", band.Description);
+            #endregion
+        }
+
+        [TestMethod]
+        public void FindByNameTest()
+        {
+            var band = bandController.GetByName("Poleyn");
+
+            Assert.AreEqual("This is the description of Poleyn", band.Description);
+        }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var band = bandController.Get("")[0];
+            band.Name = "Music Band";
+            band.Description = "We play music.";
+            band.InviteMessage = "Join us.";
+
+            bandController.Update(band);
+
+            band = bandController.Get("")[0];
+
+            #region Assert
+            Assert.AreEqual("Music Band", band.Name);
+            Assert.AreEqual("We play music.", band.Description);
+            Assert.AreEqual("Join us.", band.InviteMessage);
             #endregion
         }
 

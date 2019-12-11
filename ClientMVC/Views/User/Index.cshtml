@@ -1,7 +1,5 @@
 ﻿@model ClientMVC.Models.UserIndex
 
-
-
 <h1> Find musicians </h1>
 
 @{
@@ -12,20 +10,20 @@
     <div class="col-12">
         <form method="get">
             <div class="form-group">
-                <input type="checkbox" id="dist-checkbox" class="checkbox-inline" onchange="toggleDistanceFilter()" />
-                <label for="distance" id="dist-label" class="text-muted">
-                    Maximum distance:
-                    <span id="dist-val"></span>
-                </label>
-                <input type="range" min="1" max="100" value="50" class="form-control-range" id="dist-slider"
-                       name="distance" oninput="showDistance(event)" disabled>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-12">
-                    <input type="hidden" id="marker-lat" name="markerLat" />
-                    <input type="hidden" id="marker-lng" name="markerLng" />
-                    <div id="map"></div>
-                </div>
+                @if (Model.User.Location != null)
+                {
+                    <input type="checkbox" id="dist-checkbox" class="checkbox-inline" onchange="toggleDistanceFilter()" />
+                    <label for="distance" id="dist-label" class="text-muted">
+                        Maximum distance:
+                        <span id="dist-val"></span>
+                    </label>
+                    <input type="range" min="1" max="100" value="50" class="form-control-range" id="dist-slider"
+                           name="distance" oninput="showDistance(event)" disabled>
+                }
+                else
+                {
+                    <p>Set up your location so that you can look for other users!</p>
+                }
             </div>
             <div class="form-group form-inline">
                 <input type="text" name="Search" class="form-control" value="@Model.Search" />
@@ -36,94 +34,74 @@
 </div>
 
 <h3>Users</h3>
-<style>
-    table, tr, td, th {
-        border: 2px solid black;
+
+<div class="table table-striped">
+    @if (Model.Users.Count() == 0)
+    {
+        <p>No users found.</p>
     }
+    else
+    {
+        foreach (var item in Model.Users)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <h3 style="color:darkblue">@item.FirstName @item.LastName </h3>
 
-    tr{
-        cursor:pointer;
-        
+                    <p></p>
+
+                    <p><span style="color:dodgerblue">Username: </span> @item.Username</p>
+
+                    <p><span style="color:dodgerblue"> Email ID: </span> @item.Email</p>
+
+                    <span style="color:dodgerblue"> Description: </span> <p>  @item.Description</p>
+
+                    <p>
+                        <span style="color:dodgerblue"> Skills:</span>@foreach (var skill in item.Skills)
+                        {<ul><li>@skill.Name</li></ul>}
+                    </p>
+
+                    <button onclick="location.href = '@Url.Action("Show", new {id = item.ID})'"
+                            type="button" class="btn btn-primary">Show</button>
+
+                </div>
+
+            </div>
+        }
     }
-</style>
-<table class="table table-striped">
-    <tbody>
-        @if (Model.Users.Count() == 0)
-        {
-            <tr>
-                <td colspan="1">No users found.</td>
-            </tr>
-        }
-        else
-        {
-            foreach (var item in Model.Users)
-            {
-               
-                <tr onclick="location.href = '@Url.Action("Show", new {id = item.ID})'">
-                    <td>
-                        <b><Span style="color:red">@item.FirstName @item.LastName </Span></b>
-                        <p></p>
-                        <p> <span style="color:orangered ">Username: </span> @item.Username</p>
-                        <p> <span style="color:orangered"> Email ID: </span> @item.Email</p>
-                        <span style="color:orangered"> Description: </span> <p>  @item.Description</p>
-                        <p><span style="color:orangered"> Skills:</span>@foreach (var skill in item.Skills) {<ul><li>@skill.Name</li></ul> } </p>
-                       
-                    </td>
-                    <td align="center">
-                        <p> @item.ProfilePicture</p>
-                    </td>
-                </tr>
-
-            }
-        }
-
-    </tbody>
-</table>
-
-@section styles{
-    <style>
-        #map {
-            height: 500px;
-            width: 100%;
-        }
-    </style>
-}
+</div>
 
 @section scripts{
-    <script src="~/Scripts/map.js"></script>
+<script type="text/javascript">
+    var distanceCheckbox = document.getElementById('dist-checkbox');
+    var distanceText = document.getElementById('dist-val');
+    var distanceLabel = document.getElementById('dist-label');
+    var distanceSlider = document.getElementById('dist-slider');
 
-    <script type="text/javascript">
-        var distanceCheckbox = document.getElementById('dist-checkbox');
-        var distanceText = document.getElementById('dist-val');
-        var distanceLabel = document.getElementById('dist-label');
-        var distanceSlider = document.getElementById('dist-slider');
+    if ("@Model.DistanceEnabled" == "True") {
+        distanceCheckbox.setAttribute("checked", "true");
+        distanceLabel.classList.remove("text-muted");
+        distanceText.innerText = @Model.Distance + " km";
+        distanceSlider.removeAttribute('disabled');
+        distanceSlider.value = @Model.Distance;
+    }
 
-        if ("@Model.DistanceEnabled" == "True") {
-            distanceCheckbox.setAttribute("checked", "true");
-            distanceLabel.classList.remove("text-muted");
-            distanceText.innerText = @Model.Distance + " km";
+    function showDistance(event) {
+        distanceText.innerText = event.target.value + " km";
+    }
+
+    function toggleDistanceFilter() {
+        if (distanceSlider.hasAttribute('disabled')) {
             distanceSlider.removeAttribute('disabled');
-            distanceSlider.value = @Model.Distance;
+            distanceLabel.classList.remove("text-muted");
+            distanceText.innerText = distanceSlider.value + " km";
+        } else {
+            distanceSlider.setAttribute("disabled", "disabled");
+            distanceLabel.classList.add("text-muted");
+            distanceText.innerText = "";
         }
+    }
+</script>
 
-        function showDistance(event) {
-            distanceText.innerText = event.target.value + " km";
-        }
-
-        function toggleDistanceFilter() {
-            if (distanceSlider.hasAttribute('disabled')) {
-                distanceSlider.removeAttribute('disabled');
-                distanceLabel.classList.remove("text-muted");
-                distanceText.innerText = distanceSlider.value + " km";
-            } else {
-                distanceSlider.setAttribute("disabled", "disabled");
-                distanceLabel.classList.add("text-muted");
-                distanceText.innerText = "";
-            }
-        }
-    </script>
-
-   
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=@System.Configuration.ConfigurationManager.AppSettings["GoogleMapsAPI"]&callback=initMarkerMap" async defer></script>
 }

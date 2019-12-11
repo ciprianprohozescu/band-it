@@ -165,8 +165,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\BandController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SkillController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -246,6 +248,14 @@
     <ProjectReference Include="..\Controllers\Controllers.csproj">
       <Project>{c2794a4f-dac8-4ff3-86ac-a50c3f484822}</Project>
       <Name>Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{5ED9A6BA-F5EC-4F12-8336-4D38978F593D}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelsDB\ModelsDB.csproj">
+      <Project>{F80AD705-FB45-40C1-A124-67C75DD6DA60}</Project>
+      <Name>ModelsDB</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{77771283-1731-4f99-bed6-cb729e7de565}</Project>

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using UserDB = ModelsDB.User;
 using Models;
+using UserDB = ModelsDB.User;
 using System.Web;
 
 namespace Controllers
@@ -20,6 +20,8 @@ namespace Controllers
         List<User> Get(string search, double distance = -1, double markerLat = 0, double markerLng = 0);
         void Delete(int id);
         User LogIn(string username, string password);
+        User Update(User user);
         void UpdateProfilePicture(int id, string fileName);
+        void SaveLocation(User user);
     }
 }

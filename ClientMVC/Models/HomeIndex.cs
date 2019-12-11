@@ -20,7 +20,7 @@ namespace ClientMVC.Models
 
         [Display(Name = "Username")]
         [Remote("DoesUserNameExist", "User", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
-        [StringLength(100, MinimumLength = 5, ErrorMessage = "Password is too short. Please make sure you password is at least 7 characters long.")]
+        [StringLength(100, MinimumLength = 5, ErrorMessage = "Password is too short. Please make sure you password is at least 5 characters long.")]
         [RegularExpression(@"^.{5,}$", ErrorMessage = "Username is too short. Please make sure you username is at least 5 characters long.")]
         public string Username { get; set; }
 

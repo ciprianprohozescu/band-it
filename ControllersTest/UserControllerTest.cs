@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Models;
-using ModelsDB;
 using DataAccess;
 using UserLogic = Models.User;
-using UserDB = ModelsDB.User;
 using Controllers;
-using System.Linq;
 
 namespace ControllersTest
 {
@@ -21,7 +18,6 @@ namespace ControllersTest
     {
         static TestHelpers testHelpers;
         static IUserController userController;
-        static ModelsDB.BandItEntities db;
 
         private TestContext testContextInstance;
 
@@ -68,7 +64,6 @@ namespace ControllersTest
         {
             testHelpers = new TestHelpers();
             userController = new UserController();
-            db = new ModelsDB.BandItEntities();
 
             testHelpers.ClearData();
             testHelpers.InsertTestData();
@@ -145,7 +140,30 @@ namespace ControllersTest
             Assert.AreEqual("Andrei1337", users[0].Username);
             #endregion
         }
-        
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var user = userController.Get("")[0];
+            user.Username = "Marean99";
+            user.FirstName = "Marian";
+            user.LastName = "Dobra";
+            user.Description = "I like music";
+            user.Email = "marian@email.com";
+            user.Password = "12345";
+
+            userController.Update(user);
+
+            user = userController.GetById(user.ID);
+
+            Assert.AreEqual("Marean99", user.Username);
+            Assert.AreEqual("Marian", user.FirstName);
+            Assert.AreEqual("Dobra", user.LastName);
+            Assert.AreEqual("I like music", user.Description);
+            Assert.AreEqual("marian@email.com", user.Email);
+            Assert.AreEqual("12345", user.Password);
+        }
+
         [TestMethod]
         public void DeleteTest()
         {
@@ -172,6 +190,24 @@ namespace ControllersTest
 
             user = userController.LogIn("NewUser", "1234");
             Assert.IsNull(user);
+        }
+        [TestMethod]
+        public void SaveLocationTest()
+        {
+            var user = userController.GetByUsername("Ciprian1337");
+
+            user.Location = new LatLng();
+            user.Location.Latitude = 50;
+            user.Location.Longitude = 50;
+
+            userController.SaveLocation(user);
+
+            user = userController.GetByUsername("Ciprian1337");
+
+            #region Assert
+            Assert.AreEqual(50, user.Location.Latitude);
+            Assert.AreEqual(50, user.Location.Longitude);
+            #endregion
         }
 
         [TestMethod]

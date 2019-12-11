@@ -52,7 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationAccess.cs" />
     <Compile Include="BandsAccess.cs" />
+    <Compile Include="BandUserAccess.cs" />
     <Compile Include="GenreAccess.cs" />
     <Compile Include="ContextProvider.cs" />
     <Compile Include="FilesAccess.cs" />
@@ -73,7 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\create_tables.sql" />
-    <Content Include="Scripts\insert_users_profiles.sql" />
+    <Content Include="Scripts\insert_data.sql" />
+    <Content Include="Scripts\insert_skills.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

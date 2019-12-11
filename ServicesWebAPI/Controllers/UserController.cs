@@ -7,6 +7,7 @@ using System.Web.Http;
 using Controllers;
 using UserControllerLogic = Controllers.UserController;
 using Models;
+using DataAccess;
 
 namespace ServicesWebAPI.Controllers
 {
@@ -30,7 +31,7 @@ namespace ServicesWebAPI.Controllers
         [Route("api/user/username")]
         public User GetUsername(string username)
         {
-            IUserController userController = new UserControllerLogic();
+           IUserController userController = new UserControllerLogic();
             return userController.GetByUsername(username);
         }
 
@@ -81,6 +82,13 @@ namespace ServicesWebAPI.Controllers
             userController.UpdateProfilePicture(user.ID, user.ProfilePicture);
         }
 
+        [Route("api/user/update")]
+        [HttpPost]
+        public User Update(User user)
+        {
+            return userController.Update(user);
+        }
+
         [Route("api/user/add/file")]
         [HttpPost]
         public void AddFile(User user)
@@ -93,6 +101,13 @@ namespace ServicesWebAPI.Controllers
         public void DeleteFile(int id)
         {
             fileController.DeleteFile("user", id);
+        }
+
+        [Route("api/user/savelocation")]
+        [HttpPut]
+        public void SaveLocation(User user)
+        {
+            userController.SaveLocation(user);
         }
     }
 }

@@ -1,8 +1,11 @@
 use BandIt;
 
+delete from Applications;
 delete from Users;
 delete from Skills;
 delete from UserSkills;
+delete from Bands;
+
 
 insert into Users (Username, Email, Password, Salt, FirstName, LastName, Latitude, Longitude) 
 values ('greg79', 'greglarrison@yahoo.com', 'greg', 'ihow5ihesto', 'Greg', 'Larrison', 56.982860, 9.638097);
@@ -61,6 +64,26 @@ values ((select ID from Users where Username = 'marthaaa'), (select ID from Skil
 insert into UserSkills (UserID, SkillID) 
 values ((select ID from Users where Username = 'nadeem'), (select ID from Skills where Name = 'Trumpeter'));
 
+insert into Bands (Name, Description, Latitude, Longitude, InviteMessage)
+values ('The Mosquitos', 'Buzzing at night.', 56.890805, 9.813984, 'Come buzz with us.');
+
+insert into Bands (Name, Description, Latitude, Longitude, InviteMessage)
+values ('Steak eaters', 'No vegans allowed.', 57.020911, 9.884767, 'Hope you''re not vegan.');
+
+insert into Bands (Name, Description, Latitude, Longitude, InviteMessage)
+values ('Peace on Earth', 'World peace, baby!', 57.020911, 9.884767, 'Peace in?');
+
+insert into Bands (Name, Description, Latitude, Longitude)
+values('Poleyn', 'This is the description of Poleyn', 56.976405, 9.910906);
+
+insert into Bands (Name, Description, Latitude, Longitude)
+values('Dansk Rap', 'This is the description of Dansk Rap', 57.050832, 9.910391);
+
+insert into Bands (Name, Description, Latitude, Longitude)
+values('LaLaLa', 'This is the description of LaLaLa', 55.708916, 12.483776);
+
+
 select * from Users;
 select * from Skills;
 select * from UserSkills;
+select * from Bands;

@@ -14,7 +14,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="username" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF0F0F0" Height="48" Width="127" FontSize="22">
+        <Label x:Name="username" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF0F0F0" Height="48" Width="363" FontSize="22">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
@@ -48,13 +48,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Back to people search" HorizontalAlignment="Left" Margin="666,0,0,0" VerticalAlignment="Top" Width="124" Click="Back_Button_Click"/>
+        <Button Content="Back to Index" HorizontalAlignment="Left" Margin="703,0,0,0" VerticalAlignment="Top" Width="87" Click="Back_Button_Click"/>
         <ScrollViewer HorizontalAlignment="Left" Height="183" Margin="10,48,0,0" VerticalAlignment="Top" Width="492">
             <TextBlock x:Name="description" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="183" Width="472" Foreground="White" FontSize="16">
                 <TextBlock.Effect>
                     <DropShadowEffect/>
                 </TextBlock.Effect><Run Text="Description"/></TextBlock>
         </ScrollViewer>
+        <Button Content="Edit profile" HorizontalAlignment="Left" Margin="389,14,0,0" VerticalAlignment="Top" Width="75" Click="Edit_Button_Click"/>
 
     </Grid>
 </Page>

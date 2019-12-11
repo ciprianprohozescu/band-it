@@ -11,16 +11,46 @@ using Controllers;
 namespace ServicesWebAPI.Controllers
 {
     public class BandController : ApiController
-    {
+    {
+        IBandController bandController;
+        public BandController()
+        {
+            bandController = new BandControllerLogic();
+        }
+
         [Route("api/band")]
         public List<Band> Get(string search = "", double distance = -1, double markerLat = 0, double markerLng = 0)
         {
-            IBandController bandController = new BandControllerLogic();
             if (distance > -1)
             {
                 return bandController.Get(search, distance, markerLat, markerLng);
             }
             return bandController.Get(search);
+        }
+
+        [Route("api/band/{id}")]
+        public Band Get(int id)
+        {
+            return bandController.GetById(id);
+        }
+
+        [Route("api/band/update")]
+        [HttpPost]
+        public Band Update(Band band)
+        {
+            return bandController.Update(band);
+        }
+
+        [Route("api/band/register")]
+        public Band Post(Band band)
+        {
+            return bandController.Add(band);
+        }
+
+        [Route("api/band/name")]
+        public Band GetByName(string name)
+        {
+            return bandController.GetByName(name);
         }
     }
 }

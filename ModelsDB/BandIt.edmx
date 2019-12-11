@@ -657,7 +657,7 @@
           <Property Name="Longitude" Type="Decimal" Precision="9" Scale="6" />
           <Property Name="ProfilePicture" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
           <Property Name="InviteMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <Property Name="Deleted" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Applications" Relationship="Self.FK__Applicati__BandI__3AC1AA49" FromRole="Bands" ToRole="Applications" />
           <NavigationProperty Name="BandUsers" Relationship="Self.FK__BandUsers__BandI__1E256B9B" FromRole="Bands" ToRole="BandUsers" />

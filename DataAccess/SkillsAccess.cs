@@ -10,10 +10,12 @@ namespace DataAccess
     public class SkillsAccess
     {
         BandItEntities db;
+        UsersAccess usersAccess;
 
         public SkillsAccess()
         {
             db = ContextProvider.Instance.DB;
+            usersAccess = new UsersAccess();
         }
 
         public List<Skill> Get()
@@ -27,6 +29,7 @@ namespace DataAccess
         {
             var skill = db.Skills
                 .Where(s => s.Name == name)
+                .Where(s => s.Deleted == null)
                 .FirstOrDefault<Skill>();
             return skill;
         }
@@ -34,8 +37,27 @@ namespace DataAccess
         {
             var skill = db.Skills
                 .Where(s => s.ID == id)
+                .Where(s => s.Deleted == null)
                 .FirstOrDefault<Skill>();
             return skill;
+        }
+        public void Add(User user)
+        {
+            var userDB = usersAccess.FindByID(user.ID);
+            var skillDB = GetByID(user.Skills.FirstOrDefault().ID);
+
+            userDB.Skills.Add(skillDB);
+
+            db.SaveChanges();
+        }
+        public void Delete(User user)
+        {
+            var userDB = usersAccess.FindByID(user.ID);
+            var skillDB = GetByID(user.Skills.FirstOrDefault().ID);
+
+            userDB.Skills.Remove(skillDB);
+
+            db.SaveChanges();
         }
     }
 }
