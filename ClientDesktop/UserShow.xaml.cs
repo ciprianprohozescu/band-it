@@ -23,12 +23,14 @@ namespace ClientDesktop
     public partial class UserShow : Page
     {
         MainWindow mainWindow;
+        User user;
 
         public UserShow(MainWindow mainWindow, User user)
         {
             InitializeComponent();
 
             this.mainWindow = mainWindow;
+            this.user = user;
 
             listSkills.ItemsSource = user.Skills;
 
@@ -44,6 +46,11 @@ namespace ClientDesktop
         private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.GoToUserIndex();
+        }
+
+        private void Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.GoToUserEdit(user);
         }
     }
 }

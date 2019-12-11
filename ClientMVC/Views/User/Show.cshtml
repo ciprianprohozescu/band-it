@@ -18,10 +18,18 @@
     </div>
 
     <div class="col-md-8">
-        <h2>
-            <span class="mr-3">@Model.User.Username</span>
-            <span class="text-muted">@Model.User.FirstName @Model.User.LastName</span>
-        </h2>
+        <div class="row">
+            <h2 class="mr-2">
+                <span class="mr-3">@Model.User.Username</span>
+                <span class="text-muted">@Model.User.FirstName @Model.User.LastName</span>
+            </h2>
+            @if ((int)Session["ID"] == Model.User.ID)
+            {
+                <form action="~/user/edit/@Model.User.ID" method="get">
+                    <button type="submit" class="btn btn-primary">Edit your profile</button>
+                </form>
+            }
+        </div>
         <div style="max-height: 30vh; overflow-y: scroll;">
             @Model.User.Description
         </div>
@@ -65,7 +73,23 @@
 
             <div class="col-md-6">
                 <div>
-                    <h4>Skills</h4>
+                    <div class="row">
+                        <h4 class="mr-2 my-auto">Skills</h4>
+
+                        @if ((int)Session["ID"] == Model.User.ID)
+                        {
+                            <form action="~/skill/add" method="post" class="form-inline">
+                                <input type="hidden" name="userID" value="@Model.User.ID" />
+                                <select class="custom-select mr-2" name="skillID">
+                                    @foreach (var item in Model.Skills)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                                <button type="submit" class="btn btn-success"><i class="fas fa-guitar"></i> Add skill</button>
+                            </form>
+                        }
+                    </div>
 
                     @if (Model.User.Skills.Count() == 0)
                     {
@@ -73,12 +97,20 @@
                     }
                     else
                     {
-                        <ul>
-                            @foreach (var item in Model.User.Skills)
-                            {
-                                <li>@item.Name</li>
-                            }
-                        </ul>
+                        foreach (var item in Model.User.Skills)
+                        {
+                            <div class="row">
+                                <span class="my-auto">@item.Name</span>
+                                @if ((int)Session["ID"] == Model.User.ID)
+                                {
+                                    <form class="float-right" action="~/skill/delete" method="post">
+                                        <input type="hidden" name="userID" value="@Model.User.ID" />
+                                        <input type="hidden" name="skillID" value="@item.ID" />
+                                        <button type="submit" class="btn text-danger"><i class="fas fa-window-close"></i></button>
+                                    </form>
+                                }
+                            </div>
+                        }
                     }
                 </div>
             </div>
@@ -123,7 +155,6 @@
             </div>
         }
     </div>
-
     <div class="col-md-3">
         <div>
             <h4 class="mr-2">Music</h4>
@@ -188,6 +219,7 @@
     </div>
 </div>
 
+
 <div class="row">
     <div class="col-md-12">
         <div class="delete-form">
@@ -202,8 +234,14 @@
     </div>
 </div>
 
-@section styles{
+@section styles {
     <style>
+        .skill-list {
+            display: inline-block;
+            border: 1px solid #000;
+            padding: 20px;
+        }
+
         .delete-form {
             margin-left: 37.5%;
             width: 50%;

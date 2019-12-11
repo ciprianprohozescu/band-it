@@ -70,7 +70,7 @@ namespace DataAccessTest
         #endregion
 
         [TestMethod]
-        public void GetAllSkillsTest()
+        public void GetTest()
         {
             var skills = skillsAccess.Get();
 
@@ -83,7 +83,7 @@ namespace DataAccessTest
         [TestMethod]
         public void GetByIDTest()
         {
-            var skillExpected = skillsAccess.GetByName("Vocalist");
+            var skillExpected = skillsAccess.GetByName("Triangle");
             var skillActual = skillsAccess.GetByID(skillExpected.ID);
 
             Assert.AreEqual(skillExpected.Name, skillActual.Name);
@@ -91,6 +91,22 @@ namespace DataAccessTest
             skillActual = skillsAccess.GetByID(-5);
 
             Assert.IsNull(skillActual);
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var user = db.Users.FirstOrDefault();
+            var skill = db.Skills.FirstOrDefault();
+
+            user.Skills.Add(skill);
+            db.SaveChanges();
+
+            skillsAccess.Delete(user);
+
+            user = db.Users.FirstOrDefault();
+
+            Assert.AreEqual(0, user.Skills.Count);
         }
 
         [ClassCleanup]

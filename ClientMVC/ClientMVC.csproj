@@ -137,11 +137,13 @@
     <Compile Include="Controllers\BandController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SkillController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BandForm.cs" />
+    <Compile Include="Models\UserEdit.cs" />
     <Compile Include="Models\BandIndex.cs" />
     <Compile Include="Models\ApplicationForm.cs" />
     <Compile Include="Models\BandShow.cs" />
@@ -287,12 +289,14 @@
     <Content Include="Views\Band\Show.cshtml" />
     <Content Include="Views\Shared\_Gallery.cshtml" />
     <Content Include="Views\Band\Form.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Uploads\Bands\" />
     <Folder Include="Content\Uploads\Users\" />
     <Folder Include="Views\Application\" />
+    <Folder Include="Views\Skill\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

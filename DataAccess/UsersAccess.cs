@@ -46,6 +46,7 @@ namespace DataAccess
                 .Where(x => x.Email == email)
                 .Where(x => x.Deleted == null)
                 .FirstOrDefault<User>();
+
             return user;
         }
         public User FindByEmailOrUsername(string search)
@@ -64,12 +65,25 @@ namespace DataAccess
                 .Where(x => x.ID == id)
                 .Where(x => x.Deleted == null)
                 .FirstOrDefault<User>();
+
             return user;
         }
         public void Add(User user)
         {
-                    db.Users.Add(user);
-                    db.SaveChanges();
+            db.Users.Add(user);
+            db.SaveChanges();
+        }
+        public void Update(User user)
+        {
+            var userDB = FindByID(user.ID);
+            userDB.Username = user.Username;
+            userDB.FirstName = user.FirstName;
+            userDB.LastName = user.LastName;
+            userDB.Description = user.Description;
+            userDB.Email = user.Email;
+            userDB.Password = user.Password;
+            
+            db.SaveChanges();
         }
         public void Delete(int id)
         {

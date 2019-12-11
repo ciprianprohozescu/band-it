@@ -31,7 +31,7 @@ namespace ServicesWebAPI.Controllers
         [Route("api/user/username")]
         public User GetUsername(string username)
         {
-            IUserController userController = new UserControllerLogic();
+           IUserController userController = new UserControllerLogic();
             return userController.GetByUsername(username);
         }
 
@@ -80,6 +80,13 @@ namespace ServicesWebAPI.Controllers
         public void UpdateProfilePicture(User user)
         {
             userController.UpdateProfilePicture(user.ID, user.ProfilePicture);
+        }
+
+        [Route("api/user/update")]
+        [HttpPost]
+        public User Update(User user)
+        {
+            return userController.Update(user);
         }
 
         [Route("api/user/add/file")]

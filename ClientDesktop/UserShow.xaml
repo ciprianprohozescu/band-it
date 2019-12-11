@@ -14,7 +14,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="username" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF0F0F0" Height="48" Width="127" FontSize="22">
+        <Label x:Name="username" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF0F0F0" Height="48" Width="363" FontSize="22">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
@@ -55,6 +55,7 @@
                     <DropShadowEffect/>
                 </TextBlock.Effect><Run Text="Description"/></TextBlock>
         </ScrollViewer>
+        <Button Content="Edit profile" HorizontalAlignment="Left" Margin="389,14,0,0" VerticalAlignment="Top" Width="75" Click="Edit_Button_Click"/>
 
     </Grid>
 </Page>
