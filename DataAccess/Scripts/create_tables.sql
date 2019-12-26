@@ -27,207 +27,149 @@ drop table if exists Users;
 
 
 create table Users (
-	ID int auto_increment,
+	ID int identity(1,1) primary key,
 	Username varchar(225) NOT NULL,
 	Email varchar(225) NOT NULL,
 	Password varchar(225) NOT NULL,
 	Salt varchar(225) NOT NULL,
 	FirstName varchar(225),
 	LastName varchar(225),
-	Description longtext,
+	Description text,
 	Longitude decimal(9,6),
 	Latitude decimal(9,6),
 	ProfilePicture varchar(225),
-	Deleted datetime(3),
-    
-    primary key (ID)
+	Deleted datetime
 );
 
 create table Bands (
-	ID int auto_increment,
+	ID int identity(1,1) primary key,
 	Name varchar(225) NOT NULL UNIQUE,
 	Description varchar(225), 
 	Latitude decimal(9,6),
 	Longitude decimal(9,6),
 	ProfilePicture varchar(225),
-	InviteMessage longtext,
-	RowVersion binary(8),
-	Deleted datetime(3),
-    
-    primary key (ID)
+	InviteMessage text,
+	RowVersion timestamp,
+	Deleted datetime
 );
 
 create table Permissions (
-	ID int auto_increment,
-	UserID int,
+	ID int identity(1,1) primary key,
+	UserID int foreign key references Users(ID),
 	Name varchar(225) NOT NULL,
 	Description varchar(225),
-	Deleted datetime,
-    
-    primary key (ID),
-    foreign key (UserID) references Users(ID)
+	Deleted datetime
 );
 
 create table BandUsers (
-     ID int auto_increment,
-	 PermisionID int,
-	 UserID int,
-	 BandID int,
-     
-     primary key (ID),
-     foreign key (PermisionID) references Permissions(ID),
-     foreign key (UserID) references Users(ID),
-     foreign key (BandID) references Bands(ID)
+     ID int identity(1,1) primary key,
+	 PermisionID int foreign key references Permissions(ID),
+	 UserID int foreign key references Users(ID),
+	 BandID int foreign key references Bands(ID),
 );
 
 create table Files (
-	ID int,
+	ID int identity(1,1) primary key,
 	Name varchar(225) NOT NULL,
-	Deleted datetime(3),
-    
-    primary key (ID)
+	Deleted datetime,
 );
 
 create table Blocks (
-	ID int auto_increment,
-	BlockerID int NOT NULL,
-	ReceiverID int NOT NULL,
+	ID int identity (1,1) primary key,
+	BlockerID int foreign key references Users(ID) NOT NULL,
+	ReceiverID int foreign key references Users(ID) NOT NULL,
 	Blocked datetime NOT NULL,
-	Deleted datetime,
-    
-    primary key (ID),
-    foreign key (BlockerID) references Users(ID),
-    foreign key (ReceiverID) references Users(ID)
+	Deleted datetime
 );
 
 create table Messages (
-	ID int auto_increment,
-	SenderID int NOT NULL,
+	ID int identity (1,1) primary key,
+	SenderID int foreign key references Users(ID) NOT NULL,
 	Sent datetime NOT NULL,
-	Deleted datetime,
-    
-    primary key (ID),
-    foreign key (SenderID) references Users(ID)
+	Deleted datetime
 );
 
 create table UserMessages (
-	UserID int,
-	MessageID int,
-    
-	primary key (UserID, MessageID),
-    foreign key (UserID) references Users(ID),
-    foreign key (MessageID) references Messages(ID)
+	UserID int foreign key references Users(ID),
+	MessageID int foreign key references Messages(ID),
+	primary key (UserID, MessageID)
 );
 
 create table BandMessages (
-	BandID int,
-	MessageID int,
-    
-	primary key (BandID, MessageID),
-    foreign key (BandID) references Bands(ID),
-    foreign key (MessageID) references Messages(ID)
+	BandID int foreign key references Bands(ID),
+	MessageID int foreign key references Messages(ID),
+	primary key (BandID, MessageID)
 );
 
 create table UserFiles (
-	UserID int,
-	FileID int,
-    
-	primary key (UserID, FileID),
-    foreign key (UserID) references Users(ID) on delete cascade,
-    foreign key (FileID) references Files(ID) on delete cascade
+	UserID int foreign key references Users(ID) on delete cascade,
+	FileID int foreign key references Files(ID) on delete cascade,
+	primary key (UserID, FileID)
 );
 
 create table Genres (
-	ID int auto_increment,
+	ID int identity(1,1) primary key,
 	Name varchar(225) NOT NULL, 
-	Deleted datetime(3),
-    
-    primary key (ID)
+	Deleted datetime
 );
 
 create table BandGenres(
-	BandID int,
-	GenreID int,
-    
-	primary key (BandID, GenreID),
-    foreign key (BandID) references Bands(ID),
-    foreign key (GenreID) references Genres(ID)
+	BandID int foreign key references Bands(ID),
+	GenreID int foreign key references Genres(ID),
+	primary key (BandID, GenreID)
 );
 
 
 create table Applications (
-	ID int auto_increment,
-	BandID int NOT NULL,
-	UserID int NOT NULL,
+	ID int identity(1,1) primary key,
+	BandID int foreign key references Bands(ID) NOT NULL,
+	UserID int foreign key references Users(ID) NOT NULL,
 	Sent datetime NOT NULL,
 	Message text NOT NULL,
 	Result bit,
-	Deleted datetime,
-    
-    primary key (ID),
-    foreign key (BandID) references Bands(ID),
-    foreign key (UserID) references Users(ID)
+	Deleted datetime
 );
 
 create table Invites (
-	ID int auto_increment,
-	BandID int NOT NULL,
-	UserID int NOT NULL,
+	ID int identity(1, 1) primary key,
+	BandID int foreign key references Bands(ID) NOT NULL,
+	UserID int foreign key references Users(ID) NOT NULL,
 	Sent datetime NOT NULL,
 	Result bit,
-	Deleted datetime,
-    
-    primary key (ID),
-    foreign key (BandID) references Bands(ID),
-    foreign key (UserID) references Users(ID)
+	Deleted datetime
 );
 
 create table NotificationTypes (
-	ID int auto_increment,
+	ID int identity(1, 1) primary key,
 	Name varchar(255) NOT NULL,
-	Message longtext NOT NULL,
-	Deleted datetime(3),
-    
-    primary key (ID)
+	Message text NOT NULL,
+	Deleted datetime
 );
 
 create table Notifications (
-	ID int auto_increment,
-	BandID int,
-	UserID int,
-	TypeID int NOT NULL,
+	ID int identity(1, 1) primary key,
+	BandID int foreign key references Bands(ID),
+	UserID int foreign key references Users(ID),
+	TypeID int foreign key references NotificationTypes(ID) NOT NULL,
 	Sent datetime NOT NULL,
 	Status bit NOT NULL,
-	Deleted datetime,
-    
-    primary key (ID),
-    foreign key (BandID) references Bands(ID),
-    foreign key (UserID) references Users(ID),
-    foreign key (TypeID) references NotificationTypes(ID)
+	Deleted datetime
 );
 
 create table Skills (
-	ID int auto_increment,
+	ID int identity(1, 1) primary key,
 	Name varchar(255) NOT NULL,
-	Deleted datetime(3),
-    
-    primary key (ID)
+	Deleted datetime
 );
 
 create table UserSkills (
-	UserID int,
-	SkillID int,
-    
-	primary key (UserID, SkillID),
-    foreign key (UserID) references Users(ID) on delete cascade,
-    foreign key (SkillID) references Skills(ID) on delete cascade
+	UserID int foreign key references Users(ID) on delete cascade,
+	SkillID int foreign key references Skills(ID) on delete cascade,
+	primary key (UserID, SkillID)
 );
 
 create table BandUserSkills (
-	BandUserID int,
-	SkillID int,
-    
-	primary key (BandUserID, SkillID),
-    foreign key (BandUserID) references BandUsers(ID),
-    foreign key (SkillID) references Skills(ID)
+	BandUserID int foreign key references BandUsers(ID),
+	SkillID int foreign key references Skills(ID),
+	primary key (BandUserID, SkillID)
 );
