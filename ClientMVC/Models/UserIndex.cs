@@ -1,0 +1,18 @@
+﻿using Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using User = Models.User;
+
+namespace ClientMVC.Models
+{
+    public class UserIndex
+    {
+        public string Search { get; set; }
+        public double Distance { get; set; }
+        public bool DistanceEnabled { get; set; }
+        public List<User> Users { get; set; }
+        public User User { get; set; }
+    }
+}

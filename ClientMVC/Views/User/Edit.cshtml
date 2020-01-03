@@ -1,0 +1,42 @@
+﻿@model ClientMVC.Models.UserEdit
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit your profile</h2>
+
+<div class="row">
+    <div class="col-sm-6">
+        <form action="~/user/update/@Model.User.ID" method="post">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" name="username" value="@Model.User.Username"/>
+                <p class="help-block text-danger">@Model.User.UsernameError</p>
+            </div>
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" class="form-control" name="firstName" value="@Model.User.FirstName"/>
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" class="form-control" name="lastName" value="@Model.User.LastName"/>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" name="description">@Model.User.Description</textarea>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" name="email" value="@Model.User.Email"/>
+                <p class="help-block text-danger">@Model.User.EmailError</p>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" value="@Model.User.Password" />
+                <p class="help-block text-danger">@Model.User.PasswordError</p>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>

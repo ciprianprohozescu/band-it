@@ -1,37 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Models;
 using ClientMVC.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System.Configuration;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace ClientMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private Nullable<int> _loggedInUserId;
+        private ISession _session;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
+        public HomeController(IHttpContextAccessor httpContextAccessor) {
+            _loggedInUserId = httpContextAccessor.HttpContext.Session.GetInt32("ID");
+            _session = httpContextAccessor.HttpContext.Session;
         }
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            return View();
+            if (_loggedInUserId == null)
+                return View(new HomeIndex());
+
+            return RedirectToAction("Index", "User");
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public ActionResult LogIn(string username, string password)
         {
-            return View();
+            var model = new HomeIndex();
+
+            var client = new RestClient(ConfigurationManager.AppSettings.Get("APIURL"));
+            var request = new RestRequest("user/login", Method.GET);
+
+            request.AddParameter("username", username);
+            request.AddParameter("password", password);
+
+            var content = client.Execute(request);
+            
+            var user = JsonConvert.DeserializeObject<User>(content.Content);
+
+            if (user != null)
+            {
+                _session.SetInt32("ID", user.ID);
+                return RedirectToAction("Index", "User");
+            }
+
+            model.LogInFailed = true;
+
+            return View("Index", model);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public ActionResult LogOut()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            _loggedInUserId = null;
+
+            return View("Index", new HomeIndex());
         }
     }
 }
